@@ -1,0 +1,3 @@
+$DOTFILES/config/karabiner/=$HOME/.config/karabiner/
+$DOTFILES/config/.managed-by-dotfiles=$HOME/.config/.managed-by-dotfiles
+$DOTFILES/config/nvim/=$HOME/.config/nvim/
