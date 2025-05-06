@@ -1,3 +1,7 @@
 $DOTFILES/config/karabiner/=$HOME/.config/karabiner/
 $DOTFILES/config/.managed-by-dotfiles=$HOME/.config/.managed-by-dotfiles
 $DOTFILES/config/nvim/=$HOME/.config/nvim/
+
+# zsh
+$DOTFILES/config/zsh/=$HOME/.config/zsh/
+$DOTFILES/config/zsh/zshrc=$HOME/.zshrc

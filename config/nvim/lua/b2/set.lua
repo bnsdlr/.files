@@ -9,7 +9,6 @@ vim.api.nvim_create_autocmd('FileType', {
     callback = function(filetype)
         local ext = filetype.match
 
-        print(ext)
         if util.contains({ 'nix' }, ext) then
             vim.opt.tabstop = 2
             vim.opt.softtabstop = 2
