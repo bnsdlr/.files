@@ -17,4 +17,3 @@ alias icloud="cd ~/Library/Mobile\ Documents/com\~apple\~CloudDocs"
 
 # script shortcuts
 alias uconf="$DOTFILES/setup.sh"
-
