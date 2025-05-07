@@ -8,6 +8,7 @@ export DOTFILES=$dotfiles
 
 config_bf_dotfiles="$HOME/.config-bf-dotfiles"
 zshrc_bf_dotfiles="$HOME/.zshrc-bf-dotfiles"
+scripts_bf_dotfiles="$HOME/.scripts-bf-dotfiles"
 
 if [[ "$flag" == "-r" ]]; then
     read -p "Are you shure you want to remove the dotfiles and get your old config back? [y/N]: " continue
@@ -25,6 +26,14 @@ if [[ "$flag" == "-r" ]]; then
             rsync -a --delete "$zshrc_bf_dotfiles" "$HOME/.zshrc"
             rm "$zshrc_bf_dotfiles"
         fi
+
+        if [[ -d "$scripts_bf_dotfiles" ]]; then
+            echo "Resetting .scripts..."
+            rsync -a --delete "$scripts_bf_dotfiles" "$HOME/.scripts"
+            rm "$scripts_bf_dotfiles"
+        else
+            echo "Make sure to delte the $HOME/.scripts direcotry your self, if you want to."
+        fi
     else
         echo "Exiting"
     fi
@@ -35,8 +44,13 @@ else
     fi
     
     if [[ ! -f "$zshrc_bf_dotfiles" ]]; then
-        echo "Making copy of $HOME~/.zshrc to $zshrc_bf_dotfiles"
+        echo "Making copy of $HOME/.zshrc to $zshrc_bf_dotfiles"
         cp "$HOME/.zshrc" "$zshrc_bf_dotfiles"
+    fi
+
+    if [[ ! -d "$scripts_bf_dotfiles" ]] && [[ -d "$HOME/.scripts" ]]; then
+        echo "Making copy of $HOME/.scripts to $scripts_bf_dotfiles"
+        cp "$HOME/.scripts" "$scripts_bf_dotfiles"
     fi
     
     for file in $(find $dotfiles -name 'links.prop'); do
