@@ -34,6 +34,8 @@ if [[ "$flag" == "-r" ]]; then
         else
             echo "Make sure to delte the $HOME/.scripts direcotry your self, if you want to."
         fi
+
+        echo "Make sure to delte the $dotfiles direcotry."
     else
         echo "Exiting"
     fi
