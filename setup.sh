@@ -50,7 +50,7 @@ else
 
     if [[ ! -d "$scripts_bf_dotfiles" ]] && [[ -d "$HOME/.scripts" ]]; then
         echo "Making copy of $HOME/.scripts to $scripts_bf_dotfiles"
-        cp "$HOME/.scripts" "$scripts_bf_dotfiles"
+        cp -r "$HOME/.scripts" "$scripts_bf_dotfiles"
     fi
     
     for file in $(find $dotfiles -name 'links.prop'); do
@@ -68,7 +68,9 @@ else
     export="export DOTFILES=$dotfiles"
     if [[ ! $(cat "$HOME/.zshrc" | grep "$export" >> /dev/null; echo $?) -eq 0 ]]; then
         echo "Adding line to .zshrc: $export"
-        echo -e "\n$export" >> $HOME/.zshrc
+        zshrc="$HOME/.zshrc"
+        temp="$DOTFILES/temp-zshrc"
+        { echo -e "$export\n"; cat "$zshrc"; } > "$temp" && mv "$temp" "$zshrc"
     fi
 fi
 
