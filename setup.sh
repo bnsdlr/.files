@@ -30,7 +30,7 @@ if [[ "$flag" == "-r" ]]; then
         if [[ -d "$scripts_bf_dotfiles" ]]; then
             echo "Resetting .scripts..."
             rsync -a --delete "$scripts_bf_dotfiles" "$HOME/.scripts"
-            rm "$scripts_bf_dotfiles"
+            rm -rf "$scripts_bf_dotfiles"
         else
             echo "Make sure to delte the $HOME/.scripts direcotry your self, if you want to."
         fi
