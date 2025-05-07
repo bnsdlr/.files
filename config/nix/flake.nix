@@ -24,6 +24,7 @@
           pkgs.bat              # better cat
           pkgs.ripgrep          # better grep
           pkgs.oh-my-zsh        # Oh My Zsh!
+          pkgs.rustup           # rust, rust-analyzer, cargo...
         ];
 
       homebrew = {
