@@ -1,0 +1,21 @@
+window-save-state = always
+window-padding-color = background
+window-colorspace = "display-p3"
+
+background-opacity = 0.9
+
+theme = vesper
+font-family = JetBrainsMono Nerd Font
+font-size = 20
+font-feature = -liga
+font-feature = -calt
+font-feature = -dlig
+
+keybind = cmd+r=reset_font_size
+
+cursor-style-blink = false
+cursor-style = bar
+cursor-color = cyan1
+adjust-cursor-thickness = 20
+
+macos-titlebar-style = hidden

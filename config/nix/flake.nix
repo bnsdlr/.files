@@ -1,5 +1,5 @@
 {
-  description = "My first nix-darwin flake.";
+  description = "nix-darwin flake.";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -17,7 +17,6 @@
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [ 
-          pkgs.kitty            # Terminal
           pkgs.mkalias          # Make Alias for mac apps (so they appear in spotlight)
           pkgs.neovim           # Text Editor
           pkgs.tmux             # Multiplexer (I think)
@@ -26,6 +25,17 @@
           pkgs.ripgrep          # better grep
           pkgs.oh-my-zsh        # Oh My Zsh!
         ];
+
+      homebrew = {
+          enable = true;
+          onActivation.cleanup = "uninstall";
+
+          taps = [];
+          brews = [];
+          casks = [ 
+            "ghostty"           # Terminal
+          ];
+      };
 
       system.activationScripts.applications.text = let
         env = pkgs.buildEnv {
