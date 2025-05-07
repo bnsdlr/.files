@@ -31,9 +31,12 @@ if [[ "$flag" == "-r" ]]; then
             scripts_directory="$HOME/.scripts-by-niemand8080"
             echo "Deleting $scripts_directory..."
             rm -rf "$scripts_directory"
-        elif [[ -d "$scripts_directory" ]]; then
+        elif [[ -d "$scripts_directory" ]] && [[ -f "$scripts_directory/.managed-by-niemand8080" ]]; then
             echo "Deleting $scripts_directory..."
             rm -rf "$scripts_directory"
+        else
+            echo "No .scripts directory detected, please remove one your self if you find one..."
+            echo "Paths of the .scripts directory may be: $HOME/.scripts; $HOME/.scripts-by-niemand8080" 
         fi
 
         echo "Make sure to delte the $dotfiles direcotry."
@@ -51,7 +54,7 @@ else
         cp "$HOME/.zshrc" "$zshrc_bf_dotfiles"
     fi
 
-    if [[ -d "$scripts_directory" ]]; then
+    if [[ -d "$scripts_directory" ]] && [[ ! -f "$scripts_directory/.managed-by-niemand8080" ]]; then
         scripts_directory="$HOME/.scripts-by-niemand8080"
         echo "$HOME/.scripts direcotry exists changing path to $scripts_directory"
     fi
