@@ -6,43 +6,37 @@ dotfiles=$(pwd)
 
 export DOTFILES=$dotfiles
 
-# export="export DOTFILES=$dotfiles"
-# if [[ ! $(cat "$HOME/.zshrc" | grep "$export" >> /dev/null; echo $?) -eq 0 ]]; then
-#     echo "Adding line to .zshrc: $export"
-#     echo -e "\n$export" >> $HOME/.zshrc
-# fi
-
-config_bf_dofiles="$HOME/.config-bf-dotfiles"
-zshrc_bf_dofiles="$HOME/.zshrc-bf-dotfiles"
+config_bf_dotfiles="$HOME/.config-bf-dotfiles"
+zshrc_bf_dotfiles="$HOME/.zshrc-bf-dotfiles"
 
 if [[ "$flag" == "-r" ]]; then
     read -p "Are you shure you want to remove the dotfiles and get your old config back? [y/N]: " continue
     continue=${continue:-n}
 
     if [[ "$continue" == "y" ]]; then
-        if [[ -d "$config_bf_dofiles" ]]; then
+        if [[ -d "$config_bf_dotfiles" ]]; then
             echo "Resetting .config..."
-            rsync -a --delete "$config_bf_dofiles/" "$HOME/.config/"
-            rm -rf "$config_bf_dofiles"
+            rsync -a --delete "$config_bf_dotfiles/" "$HOME/.config/"
+            rm -rf "$config_bf_dotfiles"
         fi
 
-        if [[ -f "$zshrc_bf_dofiles" ]]; then
+        if [[ -f "$zshrc_bf_dotfiles" ]]; then
             echo "Resetting .zshrc..."
-            rsync -a --delete "$zshrc_bf_dofiles" "$HOME/.zshrc"
-            rm "$zshrc_bf_dofiles"
+            rsync -a --delete "$zshrc_bf_dotfiles" "$HOME/.zshrc"
+            rm "$zshrc_bf_dotfiles"
         fi
     else
         echo "Exiting"
     fi
 else
     if [[ ! -f "$HOME/.config/.managed-by-dotfiles" ]]; then
-        echo "Making copy of $HOME/.config to $config_bf_dofiles"
-        cp -r "$HOME/.config" "$config_bf_dofiles"
+        echo "Making copy of $HOME/.config to $config_bf_dotfiles"
+        cp -r "$HOME/.config" "$config_bf_dotfiles"
     fi
     
-    if [[ ! -f "$zshrc_bf_dofiles" ]]; then
-        echo "Making copy of $HOME~/.zshrc to $zshrc_bf_dofiles"
-        cp "$HOME/.zshrc" "$zshrc_bf_dofiles"
+    if [[ ! -f "$zshrc_bf_dotfiles" ]]; then
+        echo "Making copy of $HOME~/.zshrc to $zshrc_bf_dotfiles"
+        cp "$HOME/.zshrc" "$zshrc_bf_dotfiles"
     fi
     
     for file in $(find $dotfiles -name 'links.prop'); do

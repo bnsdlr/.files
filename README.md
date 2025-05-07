@@ -1,1 +1,5 @@
 # Dotfiles
+
+## TO DO
+
+ - [ ] Nix

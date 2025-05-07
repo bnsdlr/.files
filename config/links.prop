@@ -1,7 +1,18 @@
-$DOTFILES/config/karabiner/=$HOME/.config/karabiner/
+# mark
 $DOTFILES/config/.managed-by-dotfiles=$HOME/.config/.managed-by-dotfiles
+
+# karabiner
+$DOTFILES/config/karabiner/=$HOME/.config/karabiner/
+
+# nvim
 $DOTFILES/config/nvim/=$HOME/.config/nvim/
+
+# tmux
+$DOTFILES/config/tmux/=$HOME/.config/tmux/
 
 # zsh
 $DOTFILES/config/zsh/=$HOME/.config/zsh/
 $DOTFILES/config/zsh/zshrc=$HOME/.zshrc
+
+# nix
+$DOTFILES/config/nix/=$HOME/.config/nix/
