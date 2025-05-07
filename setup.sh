@@ -8,7 +8,7 @@ export DOTFILES=$dotfiles
 
 config_bf_dotfiles="$HOME/.config-bf-dotfiles"
 zshrc_bf_dotfiles="$HOME/.zshrc-bf-dotfiles"
-scripts_bf_dotfiles="$HOME/.scripts-bf-dotfiles"
+scripts_directory="$HOME/.scripts"
 
 if [[ "$flag" == "-r" ]]; then
     read -p "Are you shure you want to remove the dotfiles and get your old config back? [y/N]: " continue
@@ -27,13 +27,13 @@ if [[ "$flag" == "-r" ]]; then
             rm "$zshrc_bf_dotfiles"
         fi
 
-        if [[ -d "$scripts_bf_dotfiles" ]]; then
-            scripts_bf_dotfiles="$HOME/.scripts-by-niemand8080"
-            echo "Deleting $scripts_bf_dotfiles..."
-            rm -rf "$scripts_bf_dotfiles"
-        elif [[ -d "$HOME/.scripts" ]]; then
-            echo "Deleting $HOME/.scripts..."
-            rm -rf "$HOME/.scripts"
+        if [[ -d "$HOME/.scripts-by-niemand8080" ]]; then
+            scripts_directory="$HOME/.scripts-by-niemand8080"
+            echo "Deleting $scripts_directory..."
+            rm -rf "$scripts_directory"
+        elif [[ -d "$scripts_directory" ]]; then
+            echo "Deleting $scripts_directory..."
+            rm -rf "$scripts_directory"
         fi
 
         echo "Make sure to delte the $dotfiles direcotry."
@@ -51,11 +51,12 @@ else
         cp "$HOME/.zshrc" "$zshrc_bf_dotfiles"
     fi
 
-    if [[ -d "$HOME/.scripts" ]]; then
-        scripts_bf_dotfiles="$HOME/.scripts-by-niemand8080"
+    if [[ -d "$scripts_directory" ]]; then
+        scripts_directory="$HOME/.scripts-by-niemand8080"
+        echo "$HOME/.scripts direcotry exists changing path to $scripts_directory"
     fi
-    if [[ ! -d "$scripts_bf_dotfiles" ]]; then
-        mkdir "$scripts_bf_dotfiles"
+    if [[ ! -d "$scripts_directory" ]]; then
+        mkdir "$scripts_directory"
     fi
     
     for file in $(find $dotfiles -name 'links.prop'); do
