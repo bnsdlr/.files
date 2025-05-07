@@ -50,4 +50,11 @@ else
             fi
         done <$file
     done
+
+    export="export DOTFILES=$dotfiles"
+    if [[ ! $(cat "$HOME/.zshrc" | grep "$export" >> /dev/null; echo $?) -eq 0 ]]; then
+        echo "Adding line to .zshrc: $export"
+        echo -e "\n$export" >> $HOME/.zshrc
+    fi
 fi
+
