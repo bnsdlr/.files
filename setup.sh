@@ -2,7 +2,7 @@
 
 flag=$1
 
-dotfiles=$(pwd)
+dotfiles=$(realpath "$0" | sed 's|\(.*\)/.*|\1|')
 
 export DOTFILES=$dotfiles
 
