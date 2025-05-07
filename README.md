@@ -23,3 +23,11 @@ echo "Successfully cloned dotfiles, running setup script..."
 
 "$dotfiles/setup.sh"
 ```
+
+# Uninstall
+
+Run the `setup.sh` script inside the dotfiles direcotry with the `-r` attribute.
+
+```shell
+$HOME/.dotfiles/setup.sh -r
+```
