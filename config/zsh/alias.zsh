@@ -11,10 +11,6 @@ fnvim() {
     fi
 }
 
-# cd shortcuts
-alias projects="cd ~/Library/Mobile\ Documents/com\~apple\~CloudDocs/projects"
-alias icloud="cd ~/Library/Mobile\ Documents/com\~apple\~CloudDocs"
-
 # script shortcuts
-alias uconf="$DOTFILES/setup.sh"
+alias uconf="$DOTFILES/update.sh"
 alias rnix="$HOME/.scripts/darwin-rebuild.sh"
