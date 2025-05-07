@@ -29,7 +29,7 @@ if [[ "$flag" == "-r" ]]; then
         echo "Exiting"
     fi
 else
-    if [[ ! -f "$HOME/.config/.managed-by-dotfiles" ]]; then
+    if [[ ! -d "$config_bf_dotfiles" ]]; then
         echo "Making copy of $HOME/.config to $config_bf_dotfiles"
         cp -r "$HOME/.config" "$config_bf_dotfiles"
     fi
