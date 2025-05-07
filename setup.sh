@@ -28,11 +28,12 @@ if [[ "$flag" == "-r" ]]; then
         fi
 
         if [[ -d "$scripts_bf_dotfiles" ]]; then
-            echo "Resetting .scripts..."
-            rsync -a --delete "$scripts_bf_dotfiles" "$HOME/.scripts"
+            scripts_bf_dotfiles="$HOME/.scripts-by-niemand8080"
+            echo "Deleting $scripts_bf_dotfiles..."
             rm -rf "$scripts_bf_dotfiles"
-        else
-            echo "Make sure to delte the $HOME/.scripts direcotry your self, if you want to."
+        elif [[ -d "$HOME/.scripts" ]]; then
+            echo "Deleting $HOME/.scripts..."
+            rm -rf "$HOME/.scripts"
         fi
 
         echo "Make sure to delte the $dotfiles direcotry."
@@ -50,9 +51,11 @@ else
         cp "$HOME/.zshrc" "$zshrc_bf_dotfiles"
     fi
 
-    if [[ ! -d "$scripts_bf_dotfiles" ]] && [[ -d "$HOME/.scripts" ]]; then
-        echo "Making copy of $HOME/.scripts to $scripts_bf_dotfiles"
-        cp -r "$HOME/.scripts" "$scripts_bf_dotfiles"
+    if [[ -d "$HOME/.scripts" ]]; then
+        scripts_bf_dotfiles="$HOME/.scripts-by-niemand8080"
+    fi
+    if [[ ! -d "$scripts_bf_dotfiles" ]]; then
+        mkdir "$scripts_bf_dotfiles"
     fi
     
     for file in $(find $dotfiles -name 'links.prop'); do
