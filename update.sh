@@ -4,10 +4,8 @@ dotfiles=$(realpath "$0" | sed 's/\(.*\)\/.*/\1/')
 
 cd "$dotfiles"
 
-echo "Pulling updates from github..."
+echo "Pulling updates..."
 
 git pull origin main
-
-echo "Pulled changes from github, executing setup.sh..."
 
 ./setup.sh
