@@ -25,6 +25,7 @@
           pkgs.ripgrep              # better grep
           pkgs.oh-my-zsh            # Oh My Zsh!
           pkgs.rustup               # rust, rust-analyzer, cargo...
+          pkgs.nodejs_23            # NodeJs
         ];
 
       homebrew = {

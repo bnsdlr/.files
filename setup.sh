@@ -113,3 +113,4 @@ else
     add_line_to_zshrc_if_not_exists "$device_export"
 fi
 
+echo "For the changes to take effect you need to resource your shell."
