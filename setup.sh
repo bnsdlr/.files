@@ -10,25 +10,6 @@ add_line_to_zshrc_if_not_exists() {
     fi
 }
 
-device="$DOTFILES_DEVICE"
-
-devices=("air" "imac")
-devices_string=$(echo "${devices[@]}" | tr ' ' '/')
-
-device_prompt="Device [$devices_string]: "
-
-if [[ ! -z "$device" ]]; then
-    device_prompt="Device [$devices_string] (default: $device): "
-fi
-
-read -p "$device_prompt" selected_device
-device=${selected_device:-$device}
-
-if [[ ! ${devices[@]} =~ $device ]]; then
-    echo "Please enter a valid device name."
-    exit 1
-fi
-
 arg=$1
 
 dotfiles=$(realpath "$0" | sed 's|\(.*\)/.*|\1|')
@@ -37,7 +18,6 @@ dotfiles=$(realpath "$0" | sed 's|\(.*\)/.*|\1|')
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 
 export DOTFILES="$dotfiles"
-export DOTFILES_DEVICE=$device
 
 config_bf_dotfiles="$HOME/.config-bf-dotfiles"
 zshrc_bf_dotfiles="$HOME/.zshrc-bf-dotfiles"
@@ -77,6 +57,25 @@ if [[ "$arg" == "-r" ]]; then
         echo "Exiting"
     fi
 else
+    device="$DOTFILES_DEVICE"
+
+    devices=("air" "imac")
+    devices_string=$(echo "${devices[@]}" | tr ' ' '/')
+
+    device_prompt="Device [$devices_string]: "
+
+    if [[ ! -z "$device" ]]; then
+        device_prompt="Device [$devices_string] (default: $device): "
+    fi
+
+    read -p "$device_prompt" selected_device
+    device=${selected_device:-$device}
+
+    if [[ ! ${devices[@]} =~ $device ]]; then
+        echo "Please enter a valid device name."
+        exit 1
+    fi
+
     if [[ ! -d "$config_bf_dotfiles" ]]; then
         echo "Making copy of $HOME/.config to $config_bf_dotfiles"
         cp -r "$HOME/.config" "$config_bf_dotfiles"
