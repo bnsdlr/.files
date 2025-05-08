@@ -35,6 +35,7 @@
           brews = [];
           casks = [ 
             "ghostty"           # Terminal
+            "hammerspoon"       # App launcher, small scripts and stuff
           ];
       };
 

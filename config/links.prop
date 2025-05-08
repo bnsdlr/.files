@@ -13,3 +13,6 @@ $DOTFILES/config/zsh/zshrc=$HOME/.zshrc
 
 # nix
 $DOTFILES/config/nix/=$HOME/.config/nix/
+
+# hammerspoon
+$DOTFILES/config/hammerspoon/=$HOME/.config/hammerspoon/

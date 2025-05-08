@@ -4,6 +4,9 @@ flag=$1
 
 dotfiles=$(realpath "$0" | sed 's|\(.*\)/.*|\1|')
 
+# Change the hammerspoon config path
+defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
+
 export DOTFILES=$dotfiles
 
 config_bf_dotfiles="$HOME/.config-bf-dotfiles"
