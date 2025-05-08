@@ -93,8 +93,15 @@
   in
   {
     # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#air
+    # air
     darwinConfigurations."air" = nix-darwin.lib.darwinSystem {
+      modules = [ 
+        configuration 
+      ];
+    };
+
+    # imac
+    darwinConfigurations."imac" = nix-darwin.lib.darwinSystem {
       modules = [ 
         configuration 
       ];
