@@ -1,5 +1,5 @@
 {
-  description = "nix-darwin flake.";
+  description = "nix-darwin flake";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -17,14 +17,14 @@
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [ 
-          pkgs.mkalias          # Make Alias for mac apps (so they appear in spotlight)
-          pkgs.neovim           # Text Editor
-          pkgs.tmux             # Multiplexer (I think)
-          pkgs.fzf              # Fuzzy Finder
-          pkgs.bat              # better cat
-          pkgs.ripgrep          # better grep
-          pkgs.oh-my-zsh        # Oh My Zsh!
-          pkgs.rustup           # rust, rust-analyzer, cargo...
+          pkgs.mkalias              # Make Alias for mac apps (so they appear in spotlight)
+          pkgs.neovim               # Text Editor
+          pkgs.tmux                 # Multiplexer (I think)
+          pkgs.fzf                  # Fuzzy Finder
+          pkgs.bat                  # better cat
+          pkgs.ripgrep              # better grep
+          pkgs.oh-my-zsh            # Oh My Zsh!
+          pkgs.rustup               # rust, rust-analyzer, cargo...
         ];
 
       homebrew = {
@@ -34,8 +34,9 @@
           taps = [];
           brews = [];
           casks = [ 
-            "ghostty"           # Terminal
-            "hammerspoon"       # App launcher, small scripts and stuff
+            "ghostty"               # Terminal
+            "hammerspoon"           # App launcher, small scripts and stuff
+            "karabiner-elements"    # Keyboard remaping
           ];
       };
 

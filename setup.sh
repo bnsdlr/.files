@@ -1,19 +1,40 @@
 #!/bin/bash
 
-flag=$1
+add_line_to_zshrc_if_not_exists() {
+    line="$1"
+    if [[ ! $(cat "$HOME/.zshrc" | grep "$line" >> /dev/null; echo $?) -eq 0 ]]; then
+        echo "Adding line to .zshrc: $line"
+        zshrc="$HOME/.zshrc"
+        temp="$DOTFILES/temp-zshrc"
+        { echo -e "$line\n"; cat "$zshrc"; } > "$temp" && mv "$temp" "$zshrc"
+    fi
+}
+
+devices=("air" "imac")
+
+devices_string=$(echo "${devices[@]}" | tr ' ' '/')
+read -p "Device [$devices_string]: " device
+
+if [[ ! ${devices[@]} =~ $device ]]; then
+    echo "Please enter a valid device name."
+    exit 1
+fi
+
+arg=$1
 
 dotfiles=$(realpath "$0" | sed 's|\(.*\)/.*|\1|')
 
 # Change the hammerspoon config path
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 
-export DOTFILES=$dotfiles
+export DOTFILES="$dotfiles"
+export DOTFILES_DEVICE=$device
 
 config_bf_dotfiles="$HOME/.config-bf-dotfiles"
 zshrc_bf_dotfiles="$HOME/.zshrc-bf-dotfiles"
 scripts_directory="$HOME/.scripts"
 
-if [[ "$flag" == "-r" ]]; then
+if [[ "$arg" == "-r" ]]; then
     read -p "Are you shure you want to remove the dotfiles and get your old config back? [y/N]: " continue
     continue=${continue:-n}
 
@@ -77,12 +98,10 @@ else
         done <$file
     done
 
-    export="export DOTFILES=$dotfiles"
-    if [[ ! $(cat "$HOME/.zshrc" | grep "$export" >> /dev/null; echo $?) -eq 0 ]]; then
-        echo "Adding line to .zshrc: $export"
-        zshrc="$HOME/.zshrc"
-        temp="$DOTFILES/temp-zshrc"
-        { echo -e "$export\n"; cat "$zshrc"; } > "$temp" && mv "$temp" "$zshrc"
-    fi
+    dotfiles_export="export DOTFILES=\"$dotfiles\""
+    add_line_to_zshrc_if_not_exists "$dotfiles_export"
+
+    device_export="export DOTFILES_DEVICE=$device"
+    add_line_to_zshrc_if_not_exists "$device_export"
 fi
 
