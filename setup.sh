@@ -10,10 +10,19 @@ add_line_to_zshrc_if_not_exists() {
     fi
 }
 
-devices=("air" "imac")
+device="$DOTFILES_DEVICE"
 
+devices=("air" "imac")
 devices_string=$(echo "${devices[@]}" | tr ' ' '/')
-read -p "Device [$devices_string]: " device
+
+device_prompt="Device [$devices_string]: "
+
+if [[ ! -z "$device" ]]; then
+    device_prompt="Device [$devices_string] (default: $device): "
+fi
+
+read -p "$device_prompt" selected_device
+device=${selected_device:-$device}
 
 if [[ ! ${devices[@]} =~ $device ]]; then
     echo "Please enter a valid device name."
