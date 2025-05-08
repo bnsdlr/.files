@@ -26,6 +26,8 @@
           pkgs.oh-my-zsh            # Oh My Zsh!
           pkgs.rustup               # rust, rust-analyzer, cargo...
           pkgs.nodejs_23            # NodeJs
+          pkgs.ffmpeg               # ffmpeg
+          pkgs.yt-dlp               # yt-dlp
         ];
 
       homebrew = {
