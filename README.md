@@ -24,6 +24,22 @@ echo "Successfully cloned dotfiles, running setup script..."
 "$dotfiles/setup.sh"
 ```
 
+Install nix by following the instructions [here](https://www.youtube.com/watch?v=Z8BL8mdzWHI&t=282s).
+
+Here are some things you need to do...
+
+```shell
+sh <(curl -L https://nixos.org/nix/install)
+```
+
+```shell
+nix flake init -t nix-darwin --extra-experimental-features "nix-command flakes"
+```
+
+```shell
+nix run nix-darwin --extra-experimental-features "nix-command flakes" -- switch --flake .#imac
+```
+
 # Uninstall
 
 Run the `setup.sh` script inside the dotfiles direcotry with the `-r` attribute.
