@@ -13,4 +13,4 @@ fi
 
 echo "Rebuilding profile: $profile"
 
-darwin-rebuild switch --flake "$HOME/.config/nix#$profile"
+darwin-rebuild switch --flake "$HOME/.config/nix-darwin#$profile"

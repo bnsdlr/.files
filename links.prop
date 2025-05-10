@@ -1,1 +1,2 @@
 $DOTFILES/scripts/=$HOME/.scripts/
+$DOTFILES/config/=$HOME/.config/

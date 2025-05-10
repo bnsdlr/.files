@@ -4,6 +4,8 @@ Just some config so I can share it between my devices.
 
 # Installation
 
+## Download and setup dotfiles
+
 Just run this script in your terminal.
 
 ```bash
@@ -24,9 +26,11 @@ echo "Successfully cloned dotfiles, running setup script..."
 "$dotfiles/setup.sh"
 ```
 
-Install nix by following the instructions [here](https://www.youtube.com/watch?v=Z8BL8mdzWHI&t=282s).
+## Install nix-darwin
 
-Here are some things you need to do...
+Install nix-darwin by following the instructions [here](https://www.youtube.com/watch?v=Z8BL8mdzWHI&t=282s).
+
+Here are somethings for you to copy...
 
 ```shell
 sh <(curl -L https://nixos.org/nix/install)
