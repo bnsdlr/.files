@@ -108,7 +108,7 @@ return {
                 vim.keymap.set('n', '<leader>lrr', function() vim.lsp.buf.references() end, opts)
                 vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format() end, opts)
                 vim.keymap.set('n', 'gi', function() vim.lsp.buf.implementation() end, opts)
-                vim.keymap.set('n', 'go', function() vim.lsp.buf.type_definition() end, opts)
+                vim.keymap.set('n', 'gt', function() vim.lsp.buf.type_definition() end, opts)
 
                 -- insert mode
                 vim.keymap.set('i', '<C-h>', function() vim.lsp.buf.signature_help() end, opts)
