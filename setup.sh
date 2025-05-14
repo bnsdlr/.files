@@ -30,13 +30,13 @@ if [[ "$arg" == "-r" ]]; then
     if [[ "$continue" == "y" ]]; then
         if [[ -d "$config_bf_dotfiles" ]]; then
             echo "Resetting .config..."
-            rsync -a --delete "$config_bf_dotfiles/" "$HOME/.config/"
+            rsync -ia --delete "$config_bf_dotfiles/" "$HOME/.config/"
             rm -rf "$config_bf_dotfiles"
         fi
 
         if [[ -f "$zshrc_bf_dotfiles" ]]; then
             echo "Resetting .zshrc..."
-            rsync -a --delete "$zshrc_bf_dotfiles" "$HOME/.zshrc"
+            rsync -ia --delete "$zshrc_bf_dotfiles" "$HOME/.zshrc"
             rm "$zshrc_bf_dotfiles"
         fi
 
@@ -101,7 +101,7 @@ else
                 from=$(echo "$link" | cut -d "=" -f 1)
                 to=$(echo "$link" | cut -d "=" -f 2)
                 printf "\x1b[32mRsyncing $from to $to...\x1b[0m\n"
-                rsync -a --delete "$from" "$to"
+                rsync -ia --delete "$from" "$to"
             fi
         done <$file
     done
