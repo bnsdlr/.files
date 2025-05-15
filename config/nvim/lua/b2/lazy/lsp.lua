@@ -74,16 +74,6 @@ return {
 
                 local border = "rounded"
 
-                -- specific keymaps
-                if client and client.name == "rust_analyzer" then
-                    vim.keymap.set('n', 'K', function() vim.cmd.RustLsp({ 'hover', 'actions' }) end, opts)
-                    vim.keymap.set('n', '<leader>la', function() vim.cmd.RustLsp('codeAction') end, opts)
-                else
-                    -- fallback keymaps
-                    vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
-                    vim.keymap.set('n', '<leader>la', function() vim.lsp.buf.code_action() end, opts)
-                end
-
                 -- styling
                 client.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
                 client.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help,
@@ -99,15 +89,15 @@ return {
                     float = { border = border },
                 }
 
-                -- lsp_outgoing_calls
-                -- lsp_incoming_calls
-
                 -- global keymaps
                 local builtin = require('telescope.builtin')
                 vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
                 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
                 vim.keymap.set('n', '<leader>lws', vim.lsp.buf.workspace_symbol, opts)
                 vim.keymap.set('n', '<leader>ld', vim.diagnostic.open_float, opts)
+                vim.keymap.set('n', 'K',
+                    function() vim.lsp.buf.hover { border = border, max_height = 25, max_width = 120 } end, opts)
+                vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, opts)
                 vim.keymap.set('n', '<leader>lrn', vim.lsp.buf.rename, opts)
                 -- vim.keymap.set('n', '<leader>lrr', vim.lsp.buf.references, opts)
                 vim.keymap.set('n', '<leader>lrr', builtin.lsp_references, opts)
@@ -121,9 +111,26 @@ return {
             end,
         })
 
+        local ELLIPSIS_CHAR = '…'
+        local MAX_LABEL_WIDTH = 120
+        local MIN_LABEL_WIDTH = 20
+
         -- nvim-cmp setup for autocompletion
         local cmp = require('cmp')
         cmp.setup({
+            formatting = {
+                format = function(entry, vim_item)
+                    local label = vim_item.abbr
+                    local truncated_label = vim.fn.strcharpart(label, 0, MAX_LABEL_WIDTH)
+                    if truncated_label ~= label then
+                        vim_item.abbr = truncated_label .. ELLIPSIS_CHAR
+                    elseif string.len(label) < MIN_LABEL_WIDTH then
+                        local padding = string.rep(' ', MIN_LABEL_WIDTH - string.len(label))
+                        vim_item.abbr = label .. padding
+                    end
+                    return vim_item
+                end,
+            },
             snippet = {
                 expand = function(args)
                     vim.snippet.expand(args.body) -- Requires Neovim v0.10+

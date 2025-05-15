@@ -12,6 +12,7 @@ fnvim() {
 }
 
 alias nvimconf="cd $HOME/.config/nvim; nvim ."
+alias nvimdot="cd $HOME/.dotfiles; nvim ."
 
 # script shortcuts
 alias uconf="$DOTFILES/update.sh"

@@ -3,7 +3,6 @@ window-padding-color = background
 window-colorspace = "display-p3"
 
 background-opacity = 1
-background = #000
 
 theme = rose-pine
 font-family = JetBrainsMono Nerd Font
