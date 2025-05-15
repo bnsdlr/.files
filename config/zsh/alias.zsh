@@ -11,6 +11,8 @@ fnvim() {
     fi
 }
 
+alias nvimconf="cd $HOME/.config/nvim; nvim ."
+
 # script shortcuts
 alias uconf="$DOTFILES/update.sh"
 alias rnix="$HOME/.scripts/darwin-rebuild.sh"

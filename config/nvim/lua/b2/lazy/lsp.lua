@@ -26,10 +26,10 @@ return {
         -- Mason setup to install and manage LSP servers
         require("mason").setup()
         require("mason-lspconfig").setup({
-            ensure_installed = { "tailwindcss", "rust_analyzer", "eslint", "html", "cssls", "jsonls", "ts_ls", "lua_ls", "bashls" }, -- Add more as needed
-            automatic_installation = true,                                                                                           -- Automatically install if not present
+            ensure_installed = { "tailwindcss", "eslint", "html", "cssls", "jsonls", "ts_ls", "lua_ls", "bashls" }, -- Add more as needed
+            automatic_installation = true,                                                                          -- Automatically install if not present
             handlers = {
-                function(server_name)                                                                                                -- Default handler for servers
+                function(server_name)                                                                               -- Default handler for servers
                     if server_name ~= "rust_analyzer" then
                         require("lspconfig")[server_name].setup({
                             capabilities = lspconfig_defaults.capabilities
@@ -104,22 +104,20 @@ return {
 
                 -- global keymaps
                 local builtin = require('telescope.builtin')
-                vim.keymap.set('n', 'gD', function() vim.lsp.buf.declaration() end, opts)
-                vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
-                vim.keymap.set('n', '<leader>ld', function() vim.diagnostic.open_float() end, opts)
-                vim.keymap.set('n', '<leader>lrn', function() vim.lsp.buf.rename() end, opts)
-                vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format() end, opts)
+                vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+                vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+                vim.keymap.set('n', '<leader>lws', vim.lsp.buf.workspace_symbol, opts)
+                vim.keymap.set('n', '<leader>ld', vim.diagnostic.open_float, opts)
+                vim.keymap.set('n', '<leader>lrn', vim.lsp.buf.rename, opts)
+                -- vim.keymap.set('n', '<leader>lrr', vim.lsp.buf.references, opts)
                 vim.keymap.set('n', '<leader>lrr', builtin.lsp_references, opts)
                 vim.keymap.set('n', '<leader>ps', builtin.lsp_document_symbols, opts)
                 vim.keymap.set('n', '<leader>pw', builtin.lsp_workspace_symbols, opts)
-                vim.keymap.set('n', '<leader>pd', builtin.lsp_dynamic_workspace_symbols, opts)
-                vim.keymap.set('n', '<leader>o', builtin.lsp_outgoing_calls, opts)
-                vim.keymap.set('n', '<leader>i', builtin.lsp_incoming_calls, opts)
+                vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, opts)
+                -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
                 vim.keymap.set('n', 'gi', builtin.lsp_implementations, opts)
+                -- vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts)
                 vim.keymap.set('n', 'gt', builtin.lsp_type_definitions, opts)
-
-                -- insert mode
-                vim.keymap.set('i', '<C-h>', function() vim.lsp.buf.signature_help() end, opts)
             end,
         })
 
