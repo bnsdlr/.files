@@ -57,16 +57,32 @@ vim.keymap.set("n", "<leader>r", function()
 
     command = command:gsub("{filepath}", filepath)
 
+    local tmux_mode = "window" -- "window" or "pane"
+
     if in_tmux then
-        local pane_id = vim.fn.system("tmux split-window -h -P -F '#{pane_id}'"):gsub("%s+", "")
-        if pane_id and pane_id ~= "" then
-            vim.fn.system(string.format('tmux resize-pane -Z'))
-            vim.fn.system(string.format(
-                'tmux send-keys -t %s "%s ; echo Press Enter to close...; read; tmux kill-pane" Enter',
-                pane_id, command
-            ))
+        if tmux_mode == "pane" then
+            local pane_id = vim.fn.system("tmux split-window -h -P -F '#{pane_id}'"):gsub("%s+", "")
+            if pane_id and pane_id ~= "" then
+                vim.fn.system(string.format('tmux resize-pane -Z'))
+                vim.fn.system(string.format(
+                    'tmux send-keys -t %s "%s ; echo Press Enter to close...; read; tmux kill-pane" Enter',
+                    pane_id, command
+                ))
+            else
+                print("Failed to create a pane...")
+            end
+        elseif tmux_mode == "window" then
+            local window_id = vim.fn.system("tmux new-window -P -F '#{window_id}'"):gsub("%s+", "")
+            if window_id and window_id ~= "" then
+                vim.fn.system(string.format(
+                    'tmux send-keys -t %s "%s ; echo Press Enter to close...; read; tmux kill-window" Enter',
+                    window_id, command
+                ))
+            else
+                print("Failed to create a window...")
+            end
         else
-            print("Failed to create a pane...")
+            print("tmux_mode " .. tmux_mode .. " unknown")
         end
     else
         vim.cmd(string.format("term bash -c '%s ; echo Press Enter to close...; read'", command))
