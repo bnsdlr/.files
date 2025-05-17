@@ -5,7 +5,7 @@ local function read_scheme()
         file:close()
         return scheme
     end
-    return 'vesper' -- fallback
+    return 'rose-pine' -- fallback
 end
 
 local function save_scheme(scheme)
@@ -21,37 +21,12 @@ local current_scheme = read_scheme()
 function SetColorscheme(scheme_name)
     vim.cmd('colorscheme ' .. scheme_name)
     save_scheme(scheme_name)
-    if scheme_name == "catppuccin" then
-        require("feline").setup({
-            components = require("catppuccin.groups.integrations.feline").get(),
-        })
-    elseif scheme_name == "bamboo" then
+    if scheme_name == "bamboo" then
         require('bamboo').load()
     end
 end
 
 return {
-    {
-        "catppuccin/nvim",
-        name = "catppuccin",
-        lazy = false,
-        dependencies = {
-            "famiu/feline.nvim"
-        },
-        priority = 1000,
-        config = function()
-            require("catppuccin").setup({
-                flavour = "mocha",
-                transparent_background = true,
-                integrations = {
-                    cmp = true,
-                    gitsigns = true,
-                    nvimtree = true,
-                    treesitter = true,
-                }
-            })
-        end,
-    },
     {
         "rose-pine/neovim",
         name = "rose-pine",
@@ -76,6 +51,7 @@ return {
                     -- Visual = { fg = "base", bg = "text", inherit = false },
                 },
             })
+            SetColorscheme(current_scheme)
         end
     },
     {
@@ -95,7 +71,6 @@ return {
                 overrides = {},       -- A dictionary of group names, can be a function returning a dictionary or a table.
                 palette_overrides = {}
             })
-            SetColorscheme(current_scheme)
         end,
     },
     {

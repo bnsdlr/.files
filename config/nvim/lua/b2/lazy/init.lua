@@ -1,12 +1,6 @@
 return {
-    -- Status bar
-    { 'famiu/feline.nvim' },
-    -- For nvim-tree
-    { "nvim-tree/nvim-web-devicons" },
-    { 'b0o/nvim-tree-preview.lua' },
-    -- { '3rd/image.nvim' }, -- Uncomment the lines in the tree.lua file
     -- For telescope
-    { "nvim-lua/plenary.nvim" }, -- Also for nvim-tree
+    { "nvim-lua/plenary.nvim" },
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     -- VimBeGood
     { 'ThePrimeagen/vim-be-good' },
@@ -15,4 +9,11 @@ return {
     { 'hrsh7th/cmp-nvim-lsp' },
     { 'hrsh7th/nvim-cmp' },
     { "williamboman/mason-lspconfig.nvim" },
+    -- gitsigns
+    {
+        'lewis6991/gitsigns.nvim',
+        config = function()
+            require('gitsigns').setup()
+        end
+    }
 }
