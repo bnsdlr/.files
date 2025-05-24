@@ -28,6 +28,10 @@
           pkgs.nodejs_23            # NodeJs
           pkgs.ffmpeg               # ffmpeg
           pkgs.yt-dlp               # yt-dlp
+          pkgs.firefox              # Firefox
+          pkgs.discord              # Discord
+          pkgs.btop                 # btop
+
         ];
 
       homebrew = {
