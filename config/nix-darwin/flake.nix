@@ -15,23 +15,23 @@
 
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
-      environment.systemPackages =
+      environment.systemPackages = with pkgs;
         [ 
-          pkgs.mkalias              # Make Alias for mac apps (so they appear in spotlight)
-          pkgs.neovim               # Text Editor
-          pkgs.tmux                 # Multiplexer (I think)
-          pkgs.fzf                  # Fuzzy Finder
-          pkgs.bat                  # better cat
-          pkgs.ripgrep              # better grep
-          pkgs.oh-my-zsh            # Oh My Zsh!
-          pkgs.rustup               # rust, rust-analyzer, cargo...
-          pkgs.nodejs_23            # NodeJs
-          pkgs.ffmpeg               # ffmpeg
-          pkgs.yt-dlp               # yt-dlp
-          pkgs.firefox              # Firefox
-          pkgs.discord              # Discord
-          pkgs.btop                 # btop
-
+          mkalias              # Make Alias for mac apps (so they appear in spotlight)
+          neovim               # Text Editor
+          tmux                 # Multiplexer (I think)
+          fzf                  # Fuzzy Finder
+          bat                  # better cat
+          ripgrep              # better grep
+          oh-my-zsh            # Oh My Zsh!
+          rustup               # rust, rust-analyzer, cargo...
+          nodejs_23            # NodeJs
+          ffmpeg               # ffmpeg
+          yt-dlp               # yt-dlp
+          firefox              # Firefox
+          discord              # Discord
+          btop                 # btop
+          wget                 # wget
         ];
 
       homebrew = {
