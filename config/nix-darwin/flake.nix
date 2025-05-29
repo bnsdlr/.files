@@ -17,21 +17,21 @@
       # $ nix-env -qaP | grep wget
       environment.systemPackages = with pkgs;
         [ 
-          mkalias              # Make Alias for mac apps (so they appear in spotlight)
-          neovim               # Text Editor
-          tmux                 # Multiplexer (I think)
-          fzf                  # Fuzzy Finder
-          bat                  # better cat
-          ripgrep              # better grep
-          oh-my-zsh            # Oh My Zsh!
-          rustup               # rust, rust-analyzer, cargo...
-          nodejs_23            # NodeJs
-          ffmpeg               # ffmpeg
-          yt-dlp               # yt-dlp
-          firefox              # Firefox
-          discord              # Discord
-          btop                 # btop
-          wget                 # wget
+          mkalias               # Make Alias for mac apps (so they appear in spotlight)
+          neovim                # Text Editor
+          tmux                  # Multiplexer (I think)
+          fzf                   # Fuzzy Finder
+          bat                   # better cat
+          ripgrep               # better grep
+          oh-my-zsh             # Oh My Zsh!
+          rustup                # rust, rust-analyzer, cargo...
+          nodejs_23             # NodeJs
+          ffmpeg                # ffmpeg
+          yt-dlp                # yt-dlp
+          discord               # Discord
+          btop                  # btop
+          wget                  # wget
+          pkg-config            # pkg-config
         ];
 
       homebrew = {
@@ -44,6 +44,7 @@
             "ghostty"               # Terminal
             "hammerspoon"           # App launcher, small scripts and stuff
             "karabiner-elements"    # Keyboard remaping
+            "firefox"               # FireFox
           ];
       };
 
