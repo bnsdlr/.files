@@ -18,14 +18,14 @@ vim.keymap.set("n", "<leader>r", function()
             r = "cargo run",         -- run command
             b = "cargo build",       -- build command
             t = "cargo test",        -- test command
-            c = "cargo {input}",     -- default preset
+            c = "{input}",           -- default preset
             i = "cargo add {input}", -- install preset
         },
         [{ "python" }] = {
             r = "python {filepath}",   -- run command
             b = "{input}",             -- build command
             t = "{input}",             -- test command
-            c = "python {input}",      -- default preset
+            c = "{input}",             -- default preset
             i = "pip install {input}", -- install preset
         },
     }
