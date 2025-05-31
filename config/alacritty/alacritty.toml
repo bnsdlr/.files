@@ -1,0 +1,44 @@
+[general]
+# import theme
+import = ["~/.config/alacritty/themes/rose-pine.toml"]
+live_config_reload = true
+
+[window]
+# "Full" | "None" | "Transparent" (macos only) | "Buttonless" (macos only)
+decorations = "Buttonless"
+opacity = 1.0
+blur = true
+
+[font]
+normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
+size = 18
+
+[colors]
+# cursor = { text = "#ffffff", cursor = "#00ffff" }
+
+[selection]
+save_to_clipboard = true
+
+[cursor]
+# shape: "Block" | "Underline" | "Beam"
+# blinking: "Never" | "Off" | "On" | "Always"
+style = { shape = "Block", blinking = "Never" } 
+
+[mouse]
+hide_when_typing = true
+
+[keyboard]
+# https://alacritty.org/config-alacritty.html#s91
+# key: "Command" | "Control" | "Option" | "Super" | "Shift" | "Alt"
+#   They can becombined like this "Command | Shift"
+# mode: "AppCursor" | "AppKeypad" | "Search" | "Alt" | "Vi"
+#   Multiple via "|" and excluding via "~" bf ("~Vi" -> not in Vi)
+# command: "<string>" | { program = "<string>", args = ["<string>",] }
+# chars: "<string>" 
+#   Writes the string to the terminal
+bindings = [
+    { key = "r", mods = "Command", mode = "AppKeypad", action = "ResetFontSize" },
+]
+
+[debug]
+# render_timer = true

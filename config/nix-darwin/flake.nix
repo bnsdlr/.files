@@ -26,7 +26,6 @@
           oh-my-zsh             # Oh My Zsh!
           rustup                # rust, rust-analyzer, cargo...
           nodejs_23             # NodeJs
-          ffmpeg                # ffmpeg
           yt-dlp                # yt-dlp
           discord               # Discord
           btop                  # btop
@@ -39,9 +38,11 @@
           onActivation.cleanup = "uninstall";
 
           taps = [];
-          brews = [];
+          brews = [
+            "ffmpeg"                # ffmpeg
+          ];
           casks = [ 
-            "ghostty"               # Terminal
+            "alacritty"             # Terminal
             "hammerspoon"           # App launcher, small scripts and stuff
             "karabiner-elements"    # Keyboard remaping
             "firefox"               # FireFox
