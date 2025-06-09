@@ -26,7 +26,7 @@ vim.keymap.set("n", "<leader>r", function()
             b = "{input}",           -- build command
             t = "{input}",           -- test command
             c = "{input}",           -- default preset
-            i = "uv add {input}",    -- install preset
+            i = "uv pip {input}",    -- install preset
         },
     }
 
