@@ -5,7 +5,7 @@ hs = hs
 --
 
 hs.hotkey.bind({ "cmd" }, "1", function()
-    hs.application.launchOrFocus("Ghostty")
+    hs.application.launchOrFocus("Alacritty")
 end)
 
 hs.hotkey.bind({ "cmd" }, "2", function()

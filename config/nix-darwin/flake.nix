@@ -31,6 +31,7 @@
           btop                  # btop
           wget                  # wget
           pkg-config            # pkg-config
+          uv                    # python package manager
         ];
 
       homebrew = {
