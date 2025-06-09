@@ -22,11 +22,11 @@ vim.keymap.set("n", "<leader>r", function()
             i = "cargo add {input}", -- install preset
         },
         [{ "python" }] = {
-            r = "python {filepath}", -- run command
+            r = "uv run {filepath}", -- run command
             b = "{input}",           -- build command
             t = "{input}",           -- test command
             c = "{input}",           -- default preset
-            i = "uv pip {input}",    -- install preset
+            i = "uv add {input}",    -- install preset
         },
     }
 
