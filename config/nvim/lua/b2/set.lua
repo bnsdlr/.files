@@ -9,7 +9,7 @@ vim.api.nvim_create_autocmd('FileType', {
     callback = function(filetype)
         local ext = filetype.match
 
-        if util.contains({ 'nix' }, ext) then
+        if util.contains({ 'nix', 'markdown' }, ext) then
             vim.opt.tabstop = 2
             vim.opt.softtabstop = 2
             vim.opt.shiftwidth = 2
