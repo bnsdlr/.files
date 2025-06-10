@@ -31,7 +31,6 @@
           btop                  # btop
           wget                  # wget
           pkg-config            # pkg-config
-          ghostty               # What is better than one terminal?
           uv                    # python package manager
         ];
 
@@ -45,6 +44,7 @@
           ];
           casks = [ 
             "alacritty"             # Terminal
+            "ghostty"               # What is better than one terminal?
             "hammerspoon"           # App launcher, small scripts and stuff
             "karabiner-elements"    # Keyboard remaping
             "firefox"               # FireFox
