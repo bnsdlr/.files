@@ -31,6 +31,7 @@
           btop                  # btop
           wget                  # wget
           pkg-config            # pkg-config
+          ghostty               # What is better than one terminal?
           uv                    # python package manager
         ];
 
