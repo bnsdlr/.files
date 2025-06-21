@@ -13,4 +13,8 @@ fi
 
 echo "Rebuilding profile: $profile"
 
-darwin-rebuild switch --flake "$HOME/.config/nix-darwin#$profile"
+if [[ "$profile" == "win" ]]; then
+    nix profile install --extra-experimental-features 'nix-command flakes' "$HOME/.config/nix-darwin#$profile"
+else
+    darwin-rebuild switch --flake "$HOME/.config/nix-darwin#$profile"
+fi
