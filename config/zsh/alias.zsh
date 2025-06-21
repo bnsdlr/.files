@@ -1,13 +1,25 @@
-ff() {
-    echo "$(fzf --height=20 --reverse --tabstop=4 --border --preview='bat --color=always --style=numbers --line-range=:50 {}')"
+pg() {
+    p=$(sk --regex --ansi -i -c 'rg --color=always --line-number "{}"')
+
+    if (( $? == 0 )); then
+        num="${p#*:}"
+        num="${num%%:*}"
+
+        p="${p%%:*}"
+
+        dir="${p%/*}"
+        file="${p##*/}"
+
+        cd "$dir" && nvim "$file" +$num
+    fi
 }
 
-fnvim() {
-    selected_file=$(ff)
-    if [ -n "$selected_file" ]; then
-        nvim "$selected_file"
-    else
-        echo "no file selected"
+pf() {
+    p=$(sk --regex --ansi)
+
+    if (( $? == 0 )); then
+        p="${p%%:*}"
+        nvim "$p"
     fi
 }
 

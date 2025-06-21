@@ -9,31 +9,7 @@
 
   outputs = inputs@{ self, nix-darwin, nixpkgs }:
   let
-    configuration = { pkgs, config, ... }: {
-      # Configures nix to be able to download non open source packages
-      nixpkgs.config.allowUnfree = true;
-
-      # List packages installed in system profile. To search by name, run:
-      # $ nix-env -qaP | grep wget
-      environment.systemPackages = with pkgs;
-        [ 
-          mkalias               # Make Alias for mac apps (so they appear in spotlight)
-          neovim                # Text Editor
-          tmux                  # Multiplexer (I think)
-          fzf                   # Fuzzy Finder
-          bat                   # better cat
-          ripgrep               # better grep
-          oh-my-zsh             # Oh My Zsh!
-          rustup                # rust, rust-analyzer, cargo...
-          nodejs_23             # NodeJs
-          yt-dlp                # yt-dlp
-          discord               # Discord
-          btop                  # btop
-          wget                  # wget
-          pkg-config            # pkg-config
-          uv                    # python package manager
-        ];
-
+    mac = { pkgs, config, ... }: {
       homebrew = {
           enable = true;
           onActivation.cleanup = "uninstall";
@@ -71,19 +47,6 @@
         done
             '';
 
-      # Necessary for using flakes on this system.
-      nix.settings.experimental-features = "nix-command flakes";
-
-      # Enable alternative shell support in nix-darwin.
-      # programs.fish.enable = true;
-
-      # Set Git commit hash for darwin-version.
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-
-      # Used for backwards compatibility, please read the changelog before changing.
-      # $ darwin-rebuild changelog
-      system.stateVersion = 6;
-
       system.defaults = {
         dock = {
             autohide = true;
@@ -102,12 +65,49 @@
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
     };
+    configuration = { pkgs, config, ... }: {
+      # Configures nix to be able to download non open source packages
+      nixpkgs.config.allowUnfree = true;
+
+      # List packages installed in system profile. To search by name, run:
+      # $ nix-env -qaP | grep wget
+      environment.systemPackages = with pkgs;
+        [ 
+          mkalias               # Make Alias for mac apps (so they appear in spotlight)
+          neovim                # Text Editor
+          tmux                  # Multiplexer (I think)
+          skim                  # Fuzzy Finder
+          bat                   # better cat
+          ripgrep               # better grep
+          oh-my-zsh             # Oh My Zsh!
+          rustup                # rust, rust-analyzer, cargo...
+          nodejs_23             # NodeJs
+          yt-dlp                # yt-dlp
+          discord               # Discord
+          btop                  # btop
+          wget                  # wget
+          pkg-config            # pkg-config
+          uv                    # python package manager
+        ];
+
+      # Necessary for using flakes on this system.
+      nix.settings.experimental-features = "nix-command flakes";
+
+      # Set Git commit hash for darwin-version.
+      system.configurationRevision = self.rev or self.dirtyRev or null;
+
+      # Used for backwards compatibility, please read the changelog before changing.
+      # $ darwin-rebuild changelog
+      system.stateVersion = 6;
+
+    };
   in
   {
     # Build darwin flake using:
     # air
     darwinConfigurations."air" = nix-darwin.lib.darwinSystem {
       modules = [ 
+        mac
         configuration 
       ];
     };
@@ -115,8 +115,11 @@
     # imac
     darwinConfigurations."imac" = nix-darwin.lib.darwinSystem {
       modules = [ 
+        mac
         configuration 
       ];
     };
+
+    darwinConfigurations."win" = 
   };
 }
