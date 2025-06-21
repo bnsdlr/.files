@@ -59,7 +59,7 @@ if [[ "$arg" == "-r" ]]; then
 else
     device="$DOTFILES_DEVICE"
 
-    devices=("air" "imac")
+    devices=("air" "imac" "win")
     devices_string=$(echo "${devices[@]}" | tr ' ' '/')
 
     device_prompt="Device [$devices_string]: "
