@@ -26,7 +26,21 @@ echo "Successfully cloned dotfiles, running setup script..."
 "$dotfiles/setup.sh"
 ```
 
-## Install nix-darwin
+## Install Nix
+
+### For Linux
+
+[Download nix](https://nixos.org/download/#nix-install-linux)
+
+```
+sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
+```
+
+```
+nix profile install --extra-experimental-features 'nix-command flakes' .#win
+```
+
+### For Darwin
 
 Install nix-darwin by following the instructions [here](https://www.youtube.com/watch?v=Z8BL8mdzWHI&t=282s).
 
