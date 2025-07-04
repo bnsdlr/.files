@@ -100,7 +100,7 @@ else
                 link=$(eval echo "$link")
                 from=$(echo "$link" | cut -d "=" -f 1)
                 to=$(echo "$link" | cut -d "=" -f 2)
-                printf "\x1b[32mRsyncing $from to $to...\x1b[0m\n"
+                printf "\x1b[32mrsync -ia --delete \"$from\" \"$to\"...\x1b[0m\n"
                 rsync -ia --delete "$from" "$to"
             fi
         done <$file
