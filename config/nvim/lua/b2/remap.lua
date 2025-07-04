@@ -44,6 +44,8 @@ vim.keymap.set("n", "<leader>r", function()
         command = commands[key]
     end
 
+    command = command:gsub("{filepath}", filepath)
+
     if not command then
         print(string.format('No action for key "%s" found!', key))
         return
@@ -55,7 +57,9 @@ vim.keymap.set("n", "<leader>r", function()
         end
     end
 
-    command = command:gsub("{filepath}", filepath)
+    -- escape quotes
+    command = command:gsub("\\\"", "\\\\\"")
+    command = command:gsub("\"", "\\\"")
 
     local tmux_mode = "window" -- "window" or "pane"
 
