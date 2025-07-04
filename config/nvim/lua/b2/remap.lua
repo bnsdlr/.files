@@ -8,14 +8,14 @@ vim.keymap.set("n", "<leader>r", function()
     local key = vim.fn.getcharstr()
     local filetype = vim.bo.filetype
     local in_tmux = string.gsub(vim.fn.system("echo $TERM_PROGRAM"), "%s+", "") == "tmux"
-    local filepath = vim.fn.expand('%:p:.')
-    local basename = vim.fn.expand('%:r')
-    local ext = vim.fn.expand('%:e')
 
     -- * {input}    - prompts the user for input (doesn't move the cursor to the position of {input})
-    -- * {filepath} - replaces this with the relative path to the file
-    -- * {basename} - replaces this with the relative path to the file (with out extentions)
-    -- * {ext}      - replaces this with the extention of the file
+    --
+    -- replace - with
+    -- * {abspath}  - absolute path
+    -- * {filepath} - relative path
+    -- * {basename} - relative path (with out extentions)
+    -- * {ext}      - extention
     local config = {
         [{ "rust" }] = {
             r = "cargo run",         -- run command
@@ -31,6 +31,9 @@ vim.keymap.set("n", "<leader>r", function()
             c = "{input}",           -- default preset
             i = "uv add {input}",    -- install preset
         },
+        [{ "c" }] = {
+            r = "make {basename} && {basename} {input}",
+        }
     }
 
     local commands = util.getByPartialKey(config, filetype)
@@ -45,23 +48,37 @@ vim.keymap.set("n", "<leader>r", function()
         end
     else
         command = commands[key]
+        if command == nil and key == "c" then
+            command = "{input}"
+        end
     end
 
     if not command then
         print(string.format('No action for key "%s" found!', key))
         return
-    elseif command:find("{filepath}") then
-        command = command:gsub("{filepath}", filepath)
-    elseif command:find("{basename}") then
-        command = command:gsub("{basename}", basename)
-    elseif command:find("{ext}") then
-        command = command:gsub("{ext}", ext)
     elseif command:find("{input}") then
         command = vim.fn.input({ prompt = "Change Command Preset: ", default = command:gsub("{input}", "") })
         if not command or command == "" then
             print("No command provided")
             return
         end
+    end
+
+    if command:find("{abspath}") ~= nil then
+        local abspath = vim.fn.expand('%:p')
+        command = command:gsub("{abspath}", abspath)
+    end
+    if command:find("{filepath}") ~= nil then
+        local filepath = vim.fn.expand('%:p:.')
+        command = command:gsub("{filepath}", filepath)
+    end
+    if command:find("{basename}") ~= nil then
+        local basename = vim.fn.expand('%:r')
+        command = command:gsub("{basename}", "./" .. basename)
+    end
+    if command:find("{ext}") ~= nil then
+        local ext = vim.fn.expand('%:e')
+        command = command:gsub("{ext}", ext)
     end
 
     -- escape quotes
@@ -101,7 +118,7 @@ vim.keymap.set("n", "<leader>r", function()
     else
         -- vim.cmd(string.format("term bash -c '%s ; echo Press Enter to close...; read'", command))
         print(
-        "1. Make sure you're in a tmux session\n2. Make sure the environment variable $TERM_PROGRAM is set to tmux")
+            "1. Make sure you're in a tmux session\n2. Make sure the environment variable $TERM_PROGRAM is set to tmux")
     end
 end)
 
