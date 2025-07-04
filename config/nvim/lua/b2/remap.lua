@@ -9,10 +9,13 @@ vim.keymap.set("n", "<leader>r", function()
     local filetype = vim.bo.filetype
     local in_tmux = string.gsub(vim.fn.system("echo $TERM_PROGRAM"), "%s+", "") == "tmux"
     local filepath = vim.fn.expand('%:p:.')
+    local basename = vim.fn.expand('%:r')
+    local ext = vim.fn.expand('%:e')
 
-    -- If you add the "{input}" string any where in the command, it will prompt
-    -- you to enter a command (with the default value you set the command to)
-    -- It will also replce the "{input}" string...
+    -- * {input}    - prompts the user for input (doesn't move the cursor to the position of {input})
+    -- * {filepath} - replaces this with the relative path to the file
+    -- * {basename} - replaces this with the relative path to the file (with out extentions)
+    -- * {ext}      - replaces this with the extention of the file
     local config = {
         [{ "rust" }] = {
             r = "cargo run",         -- run command
@@ -37,18 +40,22 @@ vim.keymap.set("n", "<leader>r", function()
         if key == "c" then
             command = "{input}"
         else
-            print(string.format("No commands for file type %s found!", filetype))
+            print(string.format("No commands for file type %s found! (use <leader>rc)", filetype))
             return
         end
     else
         command = commands[key]
     end
 
-    command = command:gsub("{filepath}", filepath)
-
     if not command then
         print(string.format('No action for key "%s" found!', key))
         return
+    elseif command:find("{filepath}") then
+        command = command:gsub("{filepath}", filepath)
+    elseif command:find("{basename}") then
+        command = command:gsub("{basename}", basename)
+    elseif command:find("{ext}") then
+        command = command:gsub("{ext}", ext)
     elseif command:find("{input}") then
         command = vim.fn.input({ prompt = "Change Command Preset: ", default = command:gsub("{input}", "") })
         if not command or command == "" then
@@ -60,6 +67,9 @@ vim.keymap.set("n", "<leader>r", function()
     -- escape quotes
     command = command:gsub("\\\"", "\\\\\"")
     command = command:gsub("\"", "\\\"")
+    command = command:gsub("!", "\\!");
+
+    print("Run command: " .. command)
 
     local tmux_mode = "window" -- "window" or "pane"
 
@@ -89,7 +99,9 @@ vim.keymap.set("n", "<leader>r", function()
             print("tmux_mode " .. tmux_mode .. " unknown")
         end
     else
-        vim.cmd(string.format("term bash -c '%s ; echo Press Enter to close...; read'", command))
+        -- vim.cmd(string.format("term bash -c '%s ; echo Press Enter to close...; read'", command))
+        print(
+        "1. Make sure you're in a tmux session\n2. Make sure the environment variable $TERM_PROGRAM is set to tmux")
     end
 end)
 
