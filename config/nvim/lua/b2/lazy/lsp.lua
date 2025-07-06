@@ -26,10 +26,10 @@ return {
         -- Mason setup to install and manage LSP servers
         require("mason").setup()
         require("mason-lspconfig").setup({
-            ensure_installed = { "tailwindcss", "eslint", "html", "cssls", "jsonls", "ts_ls", "lua_ls", "bashls" }, -- Add more as needed
-            automatic_installation = true,                                                                          -- Automatically install if not present
+            ensure_installed = { "clangd", "jsonls", "lua_ls", "bashls" }, -- Add more as needed
+            automatic_installation = true,                                 -- Automatically install if not present
             handlers = {
-                function(server_name)                                                                               -- Default handler for servers
+                function(server_name)                                      -- Default handler for servers
                     if server_name ~= "rust_analyzer" then
                         require("lspconfig")[server_name].setup({
                             capabilities = lspconfig_defaults.capabilities
@@ -38,14 +38,31 @@ return {
                 end,
 
                 -- Custom config for ts_ls
-                ["ts_ls"] = function()
-                    require("lspconfig").ts_ls.setup({
+                -- ["ts_ls"] = function()
+                --     require("lspconfig").ts_ls.setup({
+                --         capabilities = lspconfig_defaults.capabilities,
+                --         inti_options = {
+                --             preferences = {
+                --                 disableSuggestoins = true,
+                --             }
+                --         }
+                --     })
+                -- end,
+                ["clangd"] = function()
+                    require("lspconfig").clangd.setup({
                         capabilities = lspconfig_defaults.capabilities,
-                        inti_options = {
-                            preferences = {
-                                disableSuggestoins = true,
-                            }
-                        }
+                        cmd = {
+                            "clangd",
+                            "--background-index",
+                            "--background-index-priority=normal", -- low | normal | high
+                            "--clang-tidy",
+                            "--enable-config",                    -- enable .clangd config files
+                            "--header-insertion=never",           -- auto insert missing headers (iwyu | never)
+                            "--header-insertion-decorators",
+                            "--completion-style=detailed",
+                            "--function-arg-placeholders",
+                            "--all-scopes-completion",
+                        },
                     })
                 end,
                 -- Custom config for Lua LSP
@@ -103,7 +120,10 @@ return {
                 vim.keymap.set('n', '<leader>lrr', builtin.lsp_references, opts)
                 vim.keymap.set('n', '<leader>ps', builtin.lsp_document_symbols, opts)
                 vim.keymap.set('n', '<leader>pw', builtin.lsp_workspace_symbols, opts)
-                vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, opts)
+                -- disable format if clangd
+                if not client or client.name ~= "clangd" then
+                    vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, opts)
+                end
                 -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
                 vim.keymap.set('n', 'gi', builtin.lsp_implementations, opts)
                 -- vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts)
