@@ -2,6 +2,10 @@
 
 Just some config so I can share it between my devices. 
 
+# Notes
+
+1. (`kanata`)[https://github.com/jtroo/kanata] - Keyborad remap, cross platform.
+
 # Installation
 
 ## Download and setup dotfiles
