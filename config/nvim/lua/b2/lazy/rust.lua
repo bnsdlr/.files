@@ -2,7 +2,18 @@ return {
     'mrcjkb/rustaceanvim',
     version = '^6', -- Recommended
     lazy = false,
-    -- config = function()
+    config = function()
+        vim.g.rustaceanvim = {
+            lsp = {
+                standalone = true,
+            },
+            server = {
+                status_notify_level = false,
+            },
+            rustc = {
+                default_edition = "2024",
+            },
+        }
     --     local mason_rigistry = require('mason-registry')
     --     local codelldb = mason_rigistry.get_package('codelldb')
     --     local extension_path = codelldb:get_install_path() .. "/extension/"
@@ -15,5 +26,5 @@ return {
     --             adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
     --         },
     --     }
-    -- end
+    end
 }

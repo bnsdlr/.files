@@ -38,50 +38,91 @@ local function open_tmux_pane(pane_id, command)
     ))
 end
 
+local key_config = {
+    r = "run",
+    b = "build",
+    t = "test",
+    i = "install",
+    c = "custom",
+}
+
+-- * {input}    - prompts the user for input (doesn't move the cursor to the position of {input})
+--
+-- replace - with
+-- * {abspath}  - absolute path
+-- * {filepath} - relative path
+-- * {basename} - absolute path (with out extentions)
+-- * {ext}      - extention
+local config = {
+    [{ "rust" }] = {
+        run = "cargo run",                                   -- run command
+        build = "cargo build",                               -- build command
+        test = "cargo test",                                 -- test command
+        install = "cargo add {input}",                       -- install preset
+        is_standalone = function()
+            return vim.fn.findfile("Cargo.toml", ".;") == "" -- search for Cargo.toml in parent dirs
+        end,
+        standalone_conf = {
+            run = "rustc {filepath} && {basename}",
+            build = "rustc {filepath}",
+            test = "rustc {filepath} --test && {basename}",
+        }
+    },
+    [{ "python" }] = {
+        run = "uv run {filepath}",  -- run command
+        build = "{input}",          -- build command
+        test = "{input}",           -- test command
+        install = "uv add {input}", -- install preset
+    },
+    [{ "c" }] = {
+        run = "make",
+        build = "make build",
+        is_standalone = function()
+            return vim.fn.findfile("Makefile", ".;") == ""
+        end,
+        standalone_conf = {
+            run = "make {basename} && {basename} {input}",
+        }
+    }
+}
+
 vim.keymap.set("n", "<leader>r", function()
     local key = vim.fn.getcharstr()
     local filetype = vim.bo.filetype
     local in_tmux = string.gsub(vim.fn.system("echo $TERM_PROGRAM"), "%s+", "") == "tmux"
 
-    -- * {input}    - prompts the user for input (doesn't move the cursor to the position of {input})
-    --
-    -- replace - with
-    -- * {abspath}  - absolute path
-    -- * {filepath} - relative path
-    -- * {basename} - relative path (with out extentions)
-    -- * {ext}      - extention
-    local config = {
-        [{ "rust" }] = {
-            r = "cargo run",         -- run command
-            b = "cargo build",       -- build command
-            t = "cargo test",        -- test command
-            c = "{input}",           -- default preset
-            i = "cargo add {input}", -- install preset
-        },
-        [{ "python" }] = {
-            r = "uv run {filepath}", -- run command
-            b = "{input}",           -- build command
-            t = "{input}",           -- test command
-            c = "{input}",           -- default preset
-            i = "uv add {input}",    -- install preset
-        },
-        [{ "c" }] = {
-            r = "make {basename} && {basename} {input}",
-        }
-    }
-
     local commands = util.getByPartialKey(config, filetype)
+
+    for k, v in pairs(config) do
+        if type(k) == "table" then
+            for _, v2 in ipairs(k) do
+                if v2 == filetype then
+                    if v.standalone_conf ~= nil and v.is_standalone ~= nil then
+                        if v.is_standalone() then
+                            commands = v.standalone_conf
+                        else
+                            commands = v
+                        end
+                    else
+                        commands = v
+                    end
+                end
+            end
+        end
+    end
+
     local command
 
     if not commands then
         if key == "c" then
             command = "{input}"
         else
-            vim.notify(string.format("No commands for file type %s found! (use <leader>rc)", filetype), vim.log.levels.ERROR)
+            vim.notify(string.format("No commands for file type %s found! (use <leader>rc)", filetype),
+                vim.log.levels.ERROR)
             return
         end
     else
-        command = commands[key]
+        command = commands[key_config[key]]
         if command == nil and key == "c" then
             command = "{input}"
         end
