@@ -63,9 +63,9 @@ local config = {
             return vim.fn.findfile("Cargo.toml", ".;") == "" -- search for Cargo.toml in parent dirs
         end,
         standalone_conf = {
-            run = "rustc {filepath} && {basename}",
-            build = "rustc {filepath}",
-            test = "rustc {filepath} --test && {basename}",
+            run = "rustc {filepath} -o {basename} && {basename}",
+            build = "rustc {filepath} -o {basename}",
+            test = "rustc {filepath} -o {basename} --test && {basename}",
         }
     },
     [{ "python" }] = {
