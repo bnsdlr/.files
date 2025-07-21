@@ -47,10 +47,10 @@ local config = {
 }
 
 local replace = {
-    ["{abspath}"] = function() vim.fn.expand('%:p') end,
-    ["{filepath}"] = function() vim.fn.expand('%:p:.') end,
-    ["{basename}"] = function() vim.fn.expand('%:r') end,
-    ["{ext}"] = function() vim.fn.expand('%:e') end,
+    ["{abspath}"] = function() return vim.fn.expand('%:p') end,
+    ["{filepath}"] = function() return vim.fn.expand('%:p:.') end,
+    ["{basename}"] = function() return vim.fn.expand('%:r') end,
+    ["{ext}"] = function() return vim.fn.expand('%:e') end,
     -- escape
     ["\\\""] = "\\\\\"",
     ["\""] = "\\\"",
@@ -113,8 +113,6 @@ vim.keymap.set("n", "<leader>r", function()
             return
         end
     end
-
-    print(type(replace))
 
     for k, v in pairs(replace) do
         if command:find(k) ~= nil then
