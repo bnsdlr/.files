@@ -106,28 +106,41 @@ return {
                     float = { border = border },
                 }
 
-                -- global keymaps
+                -- use defaults
                 local builtin = require('telescope.builtin')
-                vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+                -- grn (n)      - vim.lsp.buf.rename()
+                vim.keymap.set('n', '<leader>lrn', function() vim.notify("use grn instead", vim.log.levels.WARN) end,
+                    opts)
+                -- grr (n)      - vim.lsp.buf.references()
+                vim.keymap.set('n', '<leader>lrr', function() vim.notify("use grr instead", vim.log.levels.WARN) end,
+                    opts)
+                vim.keymap.set('n', 'grr', builtin.lsp_references, opts)
+                -- gri (n)      - vim.lsp.buf.implementation()
+                vim.keymap.set('n', 'gi', function() vim.notify("use gri instead", vim.log.levels.WARN) end, opts)
+                vim.keymap.set('n', 'gri', builtin.lsp_implementations, opts)
+                -- gO  (n)      - vim.lsp.buf.document_symbol()
+                vim.keymap.set('n', '<leader>ps', function() vim.notify("use gO instead", vim.log.levels.WARN) end, opts)
+                vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, opts)
+                -- gra (n,v)    - vim.lsp.buf.code_action()
+                vim.keymap.set('n', '<leader>la', function() vim.notify("use gra instead", vim.log.levels.WARN) end, opts)
+                -- CTRL-S (n,s) - vim.lsp.buf.signature_help()
+                -- [d and ]d move between diagnostics in the current buffer ([D jumps to the first diagnostic, ]D jumps to the last)
+
+                -- global keymaps
                 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-                vim.keymap.set('n', '<leader>lws', vim.lsp.buf.workspace_symbol, opts)
-                vim.keymap.set('n', '<leader>ld', vim.diagnostic.open_float, opts)
-                vim.keymap.set('n', 'K',
-                    function() vim.lsp.buf.hover { border = border, max_height = 25, max_width = 120 } end, opts)
-                vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, opts)
-                vim.keymap.set('n', '<leader>lrn', vim.lsp.buf.rename, opts)
-                -- vim.keymap.set('n', '<leader>lrr', vim.lsp.buf.references, opts)
-                vim.keymap.set('n', '<leader>lrr', builtin.lsp_references, opts)
-                vim.keymap.set('n', '<leader>ps', builtin.lsp_document_symbols, opts)
-                vim.keymap.set('n', '<leader>pw', builtin.lsp_workspace_symbols, opts)
-                -- disable format if clangd
+                vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+                vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts)
+                -- vim.keymap.set('n', 'gt', builtin.lsp_type_definitions, opts)
+                vim.keymap.set('n', 'go', vim.diagnostic.open_float, opts)
+                vim.keymap.set('n', '<leader>ld', function() vim.notify("use go instead", vim.log.levels.WARN) end, opts)
                 if not client or client.name ~= "clangd" then
                     vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, opts)
                 end
-                -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-                vim.keymap.set('n', 'gi', builtin.lsp_implementations, opts)
-                -- vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts)
-                vim.keymap.set('n', 'gt', builtin.lsp_type_definitions, opts)
+
+                -- vim.keymap.set('n', 'K', function() vim.lsp.buf.hover { border = border, max_height = 25, max_width = 120 } end, opts)
+                -- vim.keymap.set('n', '<leader>lws', vim.lsp.buf.workspace_symbol, opts)
+                -- vim.keymap.set('n', '<leader>pw', builtin.lsp_workspace_symbols, opts)
+                -- disable format if clangd
             end,
         })
 
