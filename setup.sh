@@ -40,16 +40,16 @@ if [[ "$arg" == "-r" ]]; then
             rm "$zshrc_bf_dotfiles"
         fi
 
-        if [[ -d "$HOME/.scripts-by-niemand8080" ]]; then
-            scripts_directory="$HOME/.scripts-by-niemand8080"
+        if [[ -d "$HOME/.scripts-by-bnsdlr" ]]; then
+            scripts_directory="$HOME/.scripts-by-bnsdlr"
             echo "Deleting $scripts_directory..."
             rm -rf "$scripts_directory"
-        elif [[ -d "$scripts_directory" ]] && [[ -f "$scripts_directory/.managed-by-niemand8080" ]]; then
+        elif [[ -d "$scripts_directory" ]] && [[ -f "$scripts_directory/.managed-by-bnsdlr" ]]; then
             echo "Deleting $scripts_directory..."
             rm -rf "$scripts_directory"
         else
             echo "No .scripts directory detected, please remove one your self if you find one..."
-            echo "Paths of the .scripts directory may be: $HOME/.scripts; $HOME/.scripts-by-niemand8080" 
+            echo "Paths of the .scripts directory may be: $HOME/.scripts; $HOME/.scripts-by-bnsdlr" 
         fi
 
         echo "Make sure to delte the $dotfiles direcotry."
@@ -86,8 +86,8 @@ else
         cp "$HOME/.zshrc" "$zshrc_bf_dotfiles"
     fi
 
-    if [[ -d "$scripts_directory" ]] && [[ ! -f "$scripts_directory/.managed-by-niemand8080" ]]; then
-        scripts_directory="$HOME/.scripts-by-niemand8080"
+    if [[ -d "$scripts_directory" ]] && [[ ! -f "$scripts_directory/.managed-by-bnsdlr" ]]; then
+        scripts_directory="$HOME/.scripts-by-bnsdlr"
         echo "$HOME/.scripts direcotry exists changing path to $scripts_directory"
     fi
     if [[ ! -d "$scripts_directory" ]]; then

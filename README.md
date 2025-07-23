@@ -15,12 +15,12 @@ Just run this script in your terminal.
 ```bash
 #!/bin/bash
 
-repo_url="https://github.com/niemand8080/dotfiles"
+repo_url="https://github.com/bnsdlr/dotfiles"
 
 dotfiles="$HOME/.dotfiles"
 
 if [[ -d "$dotfiles" ]]; then
-    dotfiles="$HOME/.dotfiles-by-niemand8080"
+    dotfiles="$HOME/.dotfiles-by-bnsdlr"
 fi
 
 git clone "$repo_url" "$dotfiles" 
