@@ -79,14 +79,23 @@ vim.keymap.set("n", "<leader>r", function()
     local in_tmux = string.gsub(vim.fn.system("echo $TERM_PROGRAM"), "%s+", "") == "tmux"
 
     local commands = get_from_table(config, filetype)
+    local command
 
-    if commands.standalone_conf ~= nil and commands.is_standalone ~= nil then
-        if commands.is_standalone() then
-            commands = commands.standalone_conf
+    if not commands then
+        if key == "c" then
+            command = "{input}"
+        else
+            vim.notify(string.format("No commands for file type %s found! (use <leader>rc)", filetype),
+                vim.log.levels.ERROR)
+            return
+        end
+    else
+        if commands.standalone_conf ~= nil and commands.is_standalone ~= nil then
+            if commands.is_standalone() then
+                commands = commands.standalone_conf
+            end
         end
     end
-
-    local command
 
     if not commands then
         if key == "c" then
