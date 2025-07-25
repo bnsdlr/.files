@@ -13,9 +13,10 @@ font-feature = -dlig
 
 keybind = cmd+r=reset_font_size
 
+cursor-style = block
 cursor-style-blink = false
-cursor-style = bar
-cursor-color = cyan1
-adjust-cursor-thickness = 20
+shell-integration-features = no-cursor
+cursor-color = #524f67
+cursor-text = #e0def4
 
 macos-titlebar-style = hidden
