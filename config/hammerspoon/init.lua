@@ -24,7 +24,7 @@ end)
 -- Windows
 --
 
-local margin = 8
+local margin = 0
 local almost_maximize_percentage = 0.9
 
 hs.hotkey.bind({ "option" }, "f", function()
