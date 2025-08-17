@@ -31,4 +31,3 @@ alias neovim="nvim"
 
 # script shortcuts
 alias uconf="$DOTFILES/update.sh"
-alias rnix="$HOME/.scripts/darwin-rebuild.sh"

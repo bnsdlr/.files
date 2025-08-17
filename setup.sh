@@ -10,12 +10,24 @@ add_line_to_zshrc_if_not_exists() {
     fi
 }
 
+if [[ "$OSTYPE" != "darwin"* ]]; then
+    echo "only macos (darwin) is supported."
+    exit 1
+fi
+
+# dock
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock mru-spaces -bool true
+# finder
+defaults write com.apple.finder AppleShowAllExtensions -bool true
+defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
+defaults write com.apple.finder FXRemoveOldTrashItems -bool true
+# Change the hammerspoon config path
+defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
+
 arg=$1
 
 dotfiles=$(realpath "$0" | sed 's|\(.*\)/.*|\1|')
-
-# Change the hammerspoon config path
-defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 
 export DOTFILES="$dotfiles"
 
@@ -57,25 +69,6 @@ if [[ "$arg" == "-r" ]]; then
         echo "Exiting"
     fi
 else
-    device="$DOTFILES_DEVICE"
-
-    devices=("air" "imac" "win")
-    devices_string=$(echo "${devices[@]}" | tr ' ' '/')
-
-    device_prompt="Device [$devices_string]: "
-
-    if [[ ! -z "$device" ]]; then
-        device_prompt="Device [$devices_string] (default: $device): "
-    fi
-
-    read -p "$device_prompt" selected_device
-    device=${selected_device:-$device}
-
-    if [[ ! ${devices[@]} =~ $device ]]; then
-        echo "Please enter a valid device name."
-        exit 1
-    fi
-
     if [[ ! -d "$config_bf_dotfiles" ]]; then
         echo "Making copy of $HOME/.config to $config_bf_dotfiles"
         cp -r "$HOME/.config" "$config_bf_dotfiles"
@@ -108,9 +101,6 @@ else
 
     dotfiles_export="export DOTFILES=\"$dotfiles\""
     add_line_to_zshrc_if_not_exists "$dotfiles_export"
-
-    device_export="export DOTFILES_DEVICE=$device"
-    add_line_to_zshrc_if_not_exists "$device_export"
 fi
 
 echo "For the changes to take effect you need to resource your shell."
