@@ -3,7 +3,6 @@
 # Brew
 
 ```shell
-brew install neovim
 brew install tmux
 brew install sk
 brew install bat
@@ -14,6 +13,13 @@ brew install yt-dlp
 brew install btop
 brew install wget
 brew install pkg-config
+```
+
+Install nightly Neovim
+
+```shell
+brew install bob
+bob use nightly
 ```
 
 ## Casks
