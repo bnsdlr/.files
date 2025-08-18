@@ -21,7 +21,6 @@ brew install --cask alacritty
 brew install --cask ghostty
 brew install --cask hammerspoon
 brew install --cask karabiner-elements
-brew install --cask firefox
 brew install --cask discord
 ```
 
