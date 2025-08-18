@@ -1,2 +1,3 @@
 $DOTFILES/scripts/=$HOME/.scripts/
 $DOTFILES/config/=$HOME/.config/
+$DOTFILES/config/zsh/zshrc=$HOME/.zshrc
