@@ -1,5 +1,13 @@
 # Packages
 
+## Colemak DH
+
+Make sure to reastart your PC after downloading [Colemak DH](https://colemakmods.github.io/mod-dh/).
+
+```shell
+brew install --cask colemak-dh
+```
+
 ## Brews
 
 ```shell
