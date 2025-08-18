@@ -33,6 +33,12 @@ brew install --cask firefox
 brew install --cask discord
 ```
 
+## Fonts
+
+```shell
+brew install --cask font-jetbrains-mono-nerd-font
+```
+
 # Other
 
   - [Oh My Zsh](https://ohmyz.sh)
