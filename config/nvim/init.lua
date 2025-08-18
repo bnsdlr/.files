@@ -88,6 +88,8 @@ map({ "n", "v", "x" }, "<leader>D", "\"_d$")
 map({ "n", "v", "x" }, "<leader>c", "\"_c")
 map({ "n", "v", "x" }, "<leader>C", "\"_c$")
 
+map({ "n", "v", "x" }, "<leader>S", "\"_c")
+
 map("n", '<leader>s', ':e #<CR>')
 
 map({ 'n', 'v' }, '<leader>c', '1z=')
@@ -100,6 +102,7 @@ vim.pack.add({
     { src = "https://github.com/mason-org/mason.nvim" },
     { src = "https://github.com/mrcjkb/rustaceanvim" },
     { src = "https://github.com/mbbill/undotree" },
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 })
 
 map("n", "<leader>u", vim.cmd.UndotreeToggle)
@@ -111,6 +114,35 @@ map('n', '<leader>pf', ':Pick files tool=\'rg\'<CR>')
 map('n', '<leader>ph', ':Pick help tool=\'rg\'<CR>')
 map('n', '<leader>pb', ':Pick buffers<CR>')
 map('n', '<leader>pg', ':Pick grep tool=\'rg\'<CR> <CR>')
+
+require('nvim-treesitter.configs').setup({
+    ensure_installed = {
+        "lua", "vim", "javascript", "typescript", "jsdoc", "bash", "rust",
+        "elixir"
+    },
+    auto_install = true,
+    highlight = {
+        enable = true,
+        disable = function(lang, buf)
+            if lang == "html" then
+                print("disabled")
+                return true
+            end
+
+            local max_filesize = 100 * 1024 -- 100 KB
+            local ok, stats =
+                pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then
+                vim.notify(
+                    "File larger than 100KB treesitter disabled for performance",
+                    vim.log.levels.WARN,
+                    { title = "Treesitter" }
+                )
+                return true
+            end
+        end,
+    }
+})
 
 -- colorscheme
 vim.cmd('colorscheme rose-pine')

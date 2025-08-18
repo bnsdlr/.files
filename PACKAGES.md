@@ -42,11 +42,6 @@ brew install --cask font-jetbrains-mono-nerd-font
 ### Rust
 
 Via the [offical website](https://www.rust-lang.org/tools/install).
-Or via Homebrew:
-
-```shell
-brew install rustup
-```
 
 ### Elixir
 
