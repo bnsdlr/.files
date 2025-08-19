@@ -29,6 +29,7 @@ alias nvimdot="cd $HOME/.dotfiles; nvim ."
 alias p="cd $HOME/documents/projects"
 alias edu="cd $HOME/documents/edu"
 alias conf="cd $HOME/.config"
+alias dot="cd $HOME/.dotfiles"
 
 # script shortcuts
 alias uconf="$DOTFILES/update.sh"
