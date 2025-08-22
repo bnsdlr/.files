@@ -89,7 +89,7 @@ else
         mkdir "$scripts_directory"
     fi
     
-    for file in $(find $dotfiles -name 'links.prop'); do
+    for file in $(find $dotfiles -name 'map'); do
         while IFS="" read -r link || [ -n "$p" ]; do
             if [[ ! "$link" == "#"* ]] && [[ "$link" == *"="* ]]; then
                 link=$(eval echo "$link")

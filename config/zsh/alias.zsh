@@ -23,9 +23,6 @@ pf() {
     fi
 }
 
-alias nvimconf="cd $HOME/.config/nvim; nvim ."
-alias nvimdot="cd $HOME/.dotfiles; nvim ."
-
 alias doc="cd $HOME/documents"
 alias p="cd $HOME/documents/projects"
 alias edu="cd $HOME/documents/projects/edu"
