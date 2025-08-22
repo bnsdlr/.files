@@ -20,6 +20,7 @@ brew install yt-dlp
 brew install btop
 brew install wget
 brew install pkg-config
+brew install fd
 ```
 
 ## Casks
