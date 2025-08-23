@@ -19,7 +19,6 @@ brew install fd
 ```shell
 brew install --cask alacritty
 brew install --cask ghostty
-brew install --cask hammerspoon
 brew install --cask karabiner-elements
 brew install --cask discord
 ```
