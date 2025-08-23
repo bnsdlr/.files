@@ -12,7 +12,7 @@ vim.api.nvim_create_autocmd('FileType', {
     callback = function(filetype)
         local ext = filetype.match
 
-        if contains({ 'markdown' }, ext) then
+        if contains({ 'markdown', 'elixir' }, ext) then
             vim.opt.tabstop = 2
             vim.opt.softtabstop = 2
             vim.opt.shiftwidth = 2
@@ -80,17 +80,20 @@ map("n", "N", "Nzzzv")
 map({ "n", "v", "x" }, "<leader>y", "\"+y")
 map({ "n", "v", "x" }, "<leader>Y", "\"+y$")
 
-map({ "n", "v", "x" }, "<leader>d", "\"_d")
-map({ "n", "v", "x" }, "<leader>D", "\"_d$")
+map({ 'n', 'v', 'x' }, '<leader>d', '\'_d')
+map({ 'n', 'v', 'x' }, '<leader>D', '\'_d$')
 
-map({ "n", "v", "x" }, "<leader>c", "\"_c")
-map({ "n", "v", "x" }, "<leader>C", "\"_c$")
+map({ "n", "v", "x" }, "<leader>S", "\"_cc")
 
-map({ "n", "v", "x" }, "<leader>S", "\"_c")
+map('n', '<leader>s', ':e #<CR>')
 
-map("n", '<leader>s', ':e #<CR>')
+map({ 'n', 'v' }, '<leader>cw', '1z=')
 
-map({ 'n', 'v' }, '<leader>c', '1z=')
+map('n', '<leader>cn', ':cnext<CR>')
+map('n', '<leader>cp', ':cprev<CR>')
+map('n', '<leader>cc', ':cclose<CR>')
+map('n', '<leader>co', ':copen<CR>')
+map('n', '<leader>cf', [[:vimgrep /\<<C-r><C-w>\>/ **/*<CR>]])
 
 -- plugins
 vim.pack.add({
@@ -156,7 +159,13 @@ vim.cmd('colorscheme rose-pine')
 vim.cmd('hi statusline guibg=NONE')
 
 -- lsp
-vim.lsp.enable({ "lua_ls" })
+vim.lsp.enable({
+    "lua_ls",
+    "elixirls",
+})
+require('lspconfig').elixirls.setup({
+  cmd = { "elixir-ls" }
+})
 vim.cmd('set completeopt+=noselect')
 
 map('n', 'K', function() vim.lsp.buf.hover { max_height = 25, max_width = 120 } end)
