@@ -173,4 +173,6 @@ map('n', 'gd', vim.lsp.buf.definition)
 map('n', 'gD', vim.lsp.buf.declaration)
 map('n', 'gt', vim.lsp.buf.type_definition)
 map('n', '<leader>ld', vim.diagnostic.open_float)
+
 map('n', '<leader>f', vim.lsp.buf.format)
+map('n', '<leader>lf', "mmGVgo='m")
