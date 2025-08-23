@@ -7,24 +7,42 @@
                         "description": "Swap <> and ^° keys",
                         "manipulators": [
                             {
-                                "from": { "key_code": "grave_accent_and_tilde" },
-                                "to": [{ "key_code": "non_us_backslash" }],
+                                "from": {
+                                    "key_code": "grave_accent_and_tilde"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "non_us_backslash"
+                                    }
+                                ],
                                 "type": "basic"
                             },
                             {
-                                "from": { "key_code": "non_us_backslash" },
-                                "to": [{ "key_code": "grave_accent_and_tilde" }],
+                                "from": {
+                                    "key_code": "non_us_backslash"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "grave_accent_and_tilde"
+                                    }
+                                ],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "grave_accent_and_tilde",
-                                    "modifiers": { "mandatory": ["shift"] }
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "shift"
+                                        ]
+                                    }
                                 },
                                 "to": [
                                     {
                                         "key_code": "non_us_backslash",
-                                        "modifiers": ["shift"]
+                                        "modifiers": [
+                                            "shift"
+                                        ]
                                     }
                                 ],
                                 "type": "basic"
@@ -32,12 +50,18 @@
                             {
                                 "from": {
                                     "key_code": "non_us_backslash",
-                                    "modifiers": { "mandatory": ["shift"] }
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "shift"
+                                        ]
+                                    }
                                 },
                                 "to": [
                                     {
                                         "key_code": "grave_accent_and_tilde",
-                                        "modifiers": ["shift"]
+                                        "modifiers": [
+                                            "shift"
+                                        ]
                                     }
                                 ],
                                 "type": "basic"
@@ -50,10 +74,22 @@
                             {
                                 "from": {
                                     "key_code": "caps_lock",
-                                    "modifiers": { "optional": ["any"] }
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
                                 },
-                                "to": [{ "key_code": "left_control" }],
-                                "to_if_alone": [{ "key_code": "escape" }],
+                                "to": [
+                                    {
+                                        "key_code": "left_control"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "escape"
+                                    }
+                                ],
                                 "type": "basic"
                             }
                         ]
@@ -64,16 +100,50 @@
                             {
                                 "from": {
                                     "key_code": "right_command",
-                                    "modifiers": { "mandatory": ["left_command"] }
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_command"
+                                        ]
+                                    }
                                 },
                                 "to": [
-                                    { "software_function": { "open_application": { "file_path": "/Applications/Ghostty.app" } } },
+                                    {
+                                        "software_function": {
+                                            "open_application": {
+                                                "file_path": "/Applications/Ghostty.app"
+                                            }
+                                        }
+                                    },
                                     {
                                         "key_code": "h",
-                                        "modifiers": ["command", "option"]
+                                        "modifiers": [
+                                            "command",
+                                            "option"
+                                        ]
                                     }
                                 ],
                                 "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Maximize current window: Option + F",
+                        "manipulators": [
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "option"
+                                        ]
+                                    },
+                                    "key_code": "f"
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/.config/scripts/maximize-window.sh"
+                                    }
+                                ]
                             }
                         ]
                     }
@@ -81,7 +151,9 @@
             },
             "name": "Default profile",
             "selected": true,
-            "virtual_hid_keyboard": { "keyboard_type_v2": "iso" }
+            "virtual_hid_keyboard": {
+                "keyboard_type_v2": "iso"
+            }
         }
     ]
 }
