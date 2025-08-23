@@ -1,25 +1,16 @@
 # Packages
 
-## Colemak DH
-
-Make sure to reastart your PC after downloading [Colemak DH](https://colemakmods.github.io/mod-dh/).
-
-```shell
-brew install --cask colemak-dh
-```
-
 ## Brews
 
 ```shell
 brew install tmux
-brew install sk
 brew install bat
 brew install ripgrep
-brew install nodejs
+brew install node
 brew install yt-dlp
 brew install btop
-brew install wget
 brew install pkg-config
+brew install sk
 brew install fd
 ```
 
