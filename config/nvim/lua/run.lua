@@ -9,9 +9,9 @@ local key_config = {
 -- * {input}    - prompts the user for input (doesn't move the cursor to the position of {input})
 --
 -- replace - with
--- * {abspath}  - absolute path
--- * {filepath} - relative path
--- * {basename} - absolute path (with out extentions)
+-- * {abs}  - absolute path
+-- * {rel} - relative path
+-- * {bname} - absolute path (with out extentions)
 -- * {ext}      - extention
 local config = {
     [{ "rust" }] = {
@@ -23,13 +23,13 @@ local config = {
             return vim.fn.findfile("Cargo.toml", ".;") == "" -- search for Cargo.toml in parent dirs
         end,
         standalone_conf = {
-            run = "rustc {filepath} -o {basename} && {basename}",
-            build = "rustc {filepath} -o {basename}",
-            test = "rustc {filepath} -o {basename} --test && {basename}",
+            run = "rustc {rel} -o {bname} && {bname}",
+            build = "rustc {rel} -o {bname}",
+            test = "rustc {rel} -o {bname} --test && {bname}",
         }
     },
     [{ "python" }] = {
-        run = "uv run {filepath}",
+        run = "uv run {rel}",
         build = "{input}",
         test = "{input}",
         install = "uv add {input}",
@@ -51,15 +51,15 @@ local config = {
             return vim.fn.findfile("mix.exs", ".;") == ""
         end,
         standalone_conf = {
-            run = "elixir {filepath}",
+            run = "elixir {rel}",
         }
     },
 }
 
 local replace = {
-    ["{abspath}"] = function() return vim.fn.expand('%:p') end,
-    ["{filepath}"] = function() return vim.fn.expand('%:p:.') end,
-    ["{basename}"] = function() return vim.fn.expand('%:r') end,
+    ["{abs}"] = function() return vim.fn.expand('%:p') end,
+    ["{rel}"] = function() return vim.fn.expand('%:p:.') end,
+    ["{bname}"] = function() return vim.fn.expand('%:r') end,
     ["{ext}"] = function() return vim.fn.expand('%:e') end,
     -- escape
     ["\\\""] = "\\\\\"",
