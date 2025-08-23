@@ -1,5 +1,3 @@
-require "run"
-
 local function contains(t, value)
     for _, v in pairs(t) do
         if v == value then
@@ -104,6 +102,8 @@ vim.pack.add({
     { src = "https://github.com/mbbill/undotree" },
     { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 })
+
+require "run"
 
 map("n", "<leader>u", vim.cmd.UndotreeToggle)
 

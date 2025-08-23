@@ -43,7 +43,17 @@ local config = {
         standalone_conf = {
             run = "gcc -Wall -Werror -o {input}",
         }
-    }
+    },
+    [{ "elixir" }] = {
+        run = "mix run",
+        test = "mix test",
+        is_standalone = function()
+            return vim.fn.findfile("mix.exs", ".;") == ""
+        end,
+        standalone_conf = {
+            run = "elixir {filepath}",
+        }
+    },
 }
 
 local replace = {
