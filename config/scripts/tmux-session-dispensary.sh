@@ -1,18 +1,17 @@
 #!/bin/bash
-# source: https://github.com/SylvanFranklin/.config/blob/df0087d62958add7d78e29192682825adbb98e7c/scripts/tmux-session-dispensary.sh
+# inspired: https://github.com/SylvanFranklin/.config/blob/df0087d62958add7d78e29192682825adbb98e7c/scripts/tmux-session-dispensary.sh
 
 DIRS=(
-    "$HOME/documents"
-    "$HOME"
     "$HOME/documents/notes"
     "$HOME/documents/projects"
+    "$(pwd)"
 )
 
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(fd "${DIRS[@]}" --type=dir --max-depth=1 --full-path \
-        | sed "s|^$HOME/||" \
+    selected=$(fd . "${DIRS[@]}" --type=dir --max-depth=2 --full-path \
+        | sed -E "s|^$HOME/(.*)/$|\1|" \
         | sk --margin 10% --color="bw")
     [[ $selected ]] && selected="$HOME/$selected"
 fi
