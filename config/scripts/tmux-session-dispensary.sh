@@ -23,7 +23,7 @@ if [[ $# -eq 1 ]]; then
 else
     check_if_installed fd "https://github.com/sharkdp/fd"
     check_if_installed sk "https://github.com/skim-rs/skim"
-    selected=$(fd . "${DIRS[@]}" --type=dir --max-depth=2 --full-path \
+    selected=$("$HOME/.config/scripts/list-dirs.sh" ${DIRS[@]} \
         | sed -E "s|^$HOME/(.*)/$|\1|" \
         | sk --margin 10% --color="bw")
     [[ $selected ]] && selected="$HOME/$selected"

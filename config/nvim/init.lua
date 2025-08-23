@@ -154,7 +154,6 @@ end
 -- colorscheme
 vim.cmd('colorscheme rose-pine')
 vim.cmd('hi statusline guibg=NONE')
-vim.cmd('hi normal guibg=NONE')
 
 -- lsp
 vim.lsp.enable({ "lua_ls" })
