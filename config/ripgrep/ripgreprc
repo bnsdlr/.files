@@ -1,2 +1,5 @@
 --glob=!Library
 --glob=!.git
+
+# Elixir (mix) projects
+--glob=!_build
