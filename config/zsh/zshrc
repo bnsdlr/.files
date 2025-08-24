@@ -12,5 +12,9 @@ ZSH_THEME="my"
 
 plugins=(git)
 
+if [[ "$TMUX" == "" ]]; then
+    ~/.config/scripts/tmux-session-dispensary.sh ~
+fi
+
 source $ZSH/oh-my-zsh.sh
 source "$HOME/.config/zsh/init.zsh"
