@@ -5,6 +5,5 @@ if [[ $# -lt 2 ]]; then
     tmux select-window -t $1
 else
     tmux swap-window -s $1 -t $2
-    tmux select-window -t $2
 fi
 
