@@ -146,6 +146,36 @@
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "description": "Option + Space → Cmd + Space then Cmd + 4 (open clipboard history)",
+                        "manipulators": [
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "spacebar",
+                                        "modifiers": [
+                                            "left_command"
+                                        ]
+                                    },
+                                    {
+                                        "key_code": "4",
+                                        "modifiers": [
+                                            "left_command"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             },
