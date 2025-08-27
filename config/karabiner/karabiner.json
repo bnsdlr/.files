@@ -95,38 +95,6 @@
                         ]
                     },
                     {
-                        "description": "Right cmd + left cmd to focus Ghostty and hidding other apps",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "right_command",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_command"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "software_function": {
-                                            "open_application": {
-                                                "file_path": "/Applications/Ghostty.app"
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "key_code": "h",
-                                        "modifiers": [
-                                            "command",
-                                            "option"
-                                        ]
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
                         "description": "Maximize current window: Option + F",
                         "manipulators": [
                             {
