@@ -98,19 +98,21 @@ map('n', '<leader>cf', [[:vimgrep /\<<C-r><C-w>\>/ **/*<CR>]])
 -- plugins
 vim.pack.add({
     { src = "https://github.com/rose-pine/neovim" },
-    { src = "https://github.com/neovim/nvim-lspconfig" },
     { src = "https://github.com/echasnovski/mini.pick" },
-    { src = "https://github.com/mason-org/mason.nvim" },
-    { src = "https://github.com/mrcjkb/rustaceanvim" },
     { src = "https://github.com/mbbill/undotree" },
-    { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
+    -- lsp
+    { src = "https://github.com/neovim/nvim-lspconfig" },
+    { src = "https://github.com/mason-org/mason.nvim" },
+    { src = 'https://github.com/Saghen/blink.cmp' },
+    -- language plugins
+    { src = "https://github.com/mrcjkb/rustaceanvim" },
 })
 
 require "run"
+require "lsp"
 
 map("n", "<leader>u", vim.cmd.UndotreeToggle)
-
-require "mason".setup()
 
 require "mini.pick".setup()
 map('n', '<leader>pf', ':Pick files tool=\'rg\'<CR>')
@@ -118,65 +120,8 @@ map('n', '<leader>ph', ':Pick help tool=\'rg\'<CR>')
 map('n', '<leader>pb', ':Pick buffers<CR>')
 map('n', '<leader>pg', ':Pick grep tool=\'rg\'<CR> <CR>')
 
-local success, treesitter = pcall(require, 'nvim-treesitter.configs')
-
-if success then
-    treesitter.setup({
-        ensure_installed = {
-            "lua", "vim", "javascript", "typescript", "jsdoc", "bash", "rust",
-            "elixir"
-        },
-        auto_install = true,
-        highlight = {
-            enable = true,
-            disable = function(lang, buf)
-                local max_filesize = 100 * 1024 -- 100 KB
-                local ok, stats =
-                    pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-                if ok and stats and stats.size > max_filesize then
-                    vim.notify(
-                        "File larger than 100KB treesitter disabled for performance",
-                        vim.log.levels.WARN,
-                        { title = "Treesitter" }
-                    )
-                    return true
-                end
-            end,
-        }
-    })
-else
-    vim.notify("Failed to load treesitter", vim.log.levels.WARN,
-        { title = "Treesitter" })
-end
+require("nvim-treesitter.configs").setup({ highlight = { enable = true } })
 
 -- colorscheme
 vim.cmd('colorscheme rose-pine')
 vim.cmd('hi statusline guibg=NONE')
-
--- lsp
-vim.lsp.enable({
-    "lua_ls",
-    "elixirls",
-})
-require('lspconfig').elixirls.setup({
-  cmd = { "elixir-ls" }
-})
-vim.cmd('set completeopt+=noselect')
-
-map('n', 'K', function() vim.lsp.buf.hover { max_height = 25, max_width = 120 } end)
-map('n', '<leader>lrn', vim.lsp.buf.rename)
-map('n', '<leader>lrr', vim.lsp.buf.references)
-map('n', '<leader>ps', function() vim.notify("use gO instead", vim.log.levels.WARN) end)
-map('n', 'gO', vim.lsp.buf.document_symbol)
-map('n', '<leader>la', function() vim.notify("use gra instead", vim.log.levels.WARN) end)
--- CTRL-S (n,s) - vim.lsp.buf.signature_help()
--- [d and ]d move between diagnostics in the current buffer ([D jumps to the first diagnostic, ]D jumps to the last)
-
--- global keymaps
-map('n', 'gd', vim.lsp.buf.definition)
-map('n', 'gD', vim.lsp.buf.declaration)
-map('n', 'gt', vim.lsp.buf.type_definition)
-map('n', '<leader>ld', vim.diagnostic.open_float)
-
-map('n', '<leader>f', vim.lsp.buf.format)
-map('n', '<leader>lf', "mmGVgo='m")
