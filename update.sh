@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 dotfiles=$(realpath "$0" | sed 's/\(.*\)\/.*/\1/')
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 add_line_to_zshrc_if_not_exists() {
     line="$1"

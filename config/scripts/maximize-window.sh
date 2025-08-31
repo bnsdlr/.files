@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 osascript -e 'tell application "Finder"
     set screenBounds to bounds of window of desktop
