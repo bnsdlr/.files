@@ -24,8 +24,6 @@ defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
 defaults write com.apple.finder FXRemoveOldTrashItems -bool true
 # disable Ctrl + Space, because of tmux prefix
 defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 60 "{ enabled = 0; value = { parameters = (32, 49, 262144); type = standard; }; }"
-# Change the hammerspoon config path
-defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 
 arg=$1
 
@@ -35,7 +33,6 @@ export DOTFILES="$dotfiles"
 
 config_bf_dotfiles="$HOME/.config-bf-dotfiles"
 zshrc_bf_dotfiles="$HOME/.zshrc-bf-dotfiles"
-scripts_directory="$HOME/.scripts"
 
 if [[ "$arg" == "-r" ]]; then
     read -p "Are you shure you want to remove the dotfiles and get your old config back? [y/N]: " continue
@@ -54,18 +51,6 @@ if [[ "$arg" == "-r" ]]; then
             rm "$zshrc_bf_dotfiles"
         fi
 
-        if [[ -d "$HOME/.scripts-by-bnsdlr" ]]; then
-            scripts_directory="$HOME/.scripts-by-bnsdlr"
-            echo "Deleting $scripts_directory..."
-            rm -rf "$scripts_directory"
-        elif [[ -d "$scripts_directory" ]] && [[ -f "$scripts_directory/.managed-by-bnsdlr" ]]; then
-            echo "Deleting $scripts_directory..."
-            rm -rf "$scripts_directory"
-        else
-            echo "No .scripts directory detected, please remove one your self if you find one..."
-            echo "Paths of the .scripts directory may be: $HOME/.scripts; $HOME/.scripts-by-bnsdlr" 
-        fi
-
         echo "Make sure to delte the $dotfiles direcotry."
     else
         echo "Exiting"
@@ -81,14 +66,6 @@ else
         cp "$HOME/.zshrc" "$zshrc_bf_dotfiles"
     fi
 
-    if [[ -d "$scripts_directory" ]] && [[ ! -f "$scripts_directory/.managed-by-bnsdlr" ]]; then
-        scripts_directory="$HOME/.scripts-by-bnsdlr"
-        echo "$HOME/.scripts direcotry exists changing path to $scripts_directory"
-    fi
-    if [[ ! -d "$scripts_directory" ]]; then
-        mkdir "$scripts_directory"
-    fi
-    
     for file in $(find $dotfiles -name 'map'); do
         while IFS="" read -r link || [ -n "$p" ]; do
             if [[ ! "$link" == "#"* ]] && [[ "$link" == *"="* ]]; then
