@@ -1,36 +1,14 @@
 # Dotfiles
 
-Just some config so I can share it between my devices. 
+## Installation
 
-# Notes
+Just run this in your terminal.
 
-1. [`kanata`](https://github.com/jtroo/kanata) - Keyborad remap, cross platform.
-
-# Installation
-
-## Download and setup dotfiles
-
-Just run this script in your terminal.
-
-```bash
-#!/bin/bash
-
-repo_url="https://github.com/bnsdlr/dotfiles"
-
-dotfiles="$HOME/.dotfiles"
-
-if [[ -d "$dotfiles" ]]; then
-    dotfiles="$HOME/.dotfiles-by-bnsdlr"
-fi
-
-git clone "$repo_url" "$dotfiles" 
-
-echo "Successfully cloned dotfiles, running setup script..."
-
-"$dotfiles/setup.sh"
+```shell
+git clone https://github.com/bnsdlr/dotfiles ~/.dotfiles && ~/.dotfiles/setup.sh
 ```
 
-# Uninstall
+## Uninstall
 
 Run the `setup.sh` script inside the dotfiles direcotry with the `-r` attribute.
 
