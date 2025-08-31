@@ -66,16 +66,16 @@ vim.g.mapleader = " "
 
 local map = vim.keymap.set
 
-map("n", "<leader>pv", function() vim.cmd.Ex() end)
+map("n", "<leader>pv", vim.cmd.Ex)
 
 map("v", "J", ":m '>+1<CR>gv=gv")
 map("v", "K", ":m '<-2<CR>gv=gv")
 
-map("n", "<C-d>", "<C-d>zz") -- down
-map("n", "<C-u>", "<C-u>zz") -- up
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
 
-map("n", "n", "nzzzv")
-map("n", "N", "Nzzzv")
+map("n", "n", "nzz")
+map("n", "N", "Nzz")
 
 map({ "n", "v", "x" }, "<leader>y", "\"+y")
 map({ "n", "v", "x" }, "<leader>Y", "\"+y$")
