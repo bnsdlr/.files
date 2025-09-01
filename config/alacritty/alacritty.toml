@@ -1,6 +1,6 @@
 [general]
 # import theme
-import = ["~/.config/alacritty/themes/rose-pine.toml"]
+import = ["./themes/vague.toml"]
 live_config_reload = true
 
 [window]
@@ -12,9 +12,6 @@ blur = true
 [font]
 normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
 size = 18
-
-[colors]
-# cursor = { text = "#ffffff", cursor = "#00ffff" }
 
 [selection]
 save_to_clipboard = true
