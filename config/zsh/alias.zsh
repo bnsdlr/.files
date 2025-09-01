@@ -33,3 +33,4 @@ alias vi="nvim"
 
 # script shortcuts
 alias uconf="$DOTFILES/update.sh"
+alias tf="$HOME/.config/scripts/tmux-session-dispensary.sh"
