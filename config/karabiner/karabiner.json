@@ -115,107 +115,48 @@
                             }
                         ]
                     },
-                    {
-                        "description": "Control + W -> Option + delete_or_backspace (except in Terminal)",
-                        "manipulators": [
-                            {
-                                "type": "basic",
-                                "from": {
-                                    "key_code": "w",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "control"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "delete_or_backspace",
-                                        "modifiers": [
-                                            "option"
-                                        ]
-                                    }
-                                ],
-                                "conditions": [
-                                    {
-                                        "type": "frontmost_application_unless",
-                                        "bundle_identifiers": [
-                                            "^com\\.apple\\.Terminal$",
-                                            "^org\\.alacritty$",
-                                            "^com\\.mitchellh\\.ghostty$"
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Control + H -> delete_or_backspace (except in Terminal)",
-                        "manipulators": [
-                            {
-                                "type": "basic",
-                                "from": {
-                                    "key_code": "h",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "control"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "delete_or_backspace"
-                                    }
-                                ],
-                                "conditions": [
-                                    {
-                                        "type": "frontmost_application_unless",
-                                        "bundle_identifiers": [
-                                            "^com\\.apple\\.Terminal$",
-                                            "^org\\.alacritty$",
-                                            "^com\\.mitchellh\\.ghostty$"
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Option + Space → Cmd + Space then Cmd + 4 (open clipboard history)",
-                        "manipulators": [
-                            {
-                                "type": "basic",
-                                "from": {
-                                    "key_code": "spacebar",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "option"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "spacebar",
-                                        "modifiers": [
-                                            "left_command"
-                                        ]
-                                    },
-                                    {
-                                        "key_code": "4",
-                                        "modifiers": [
-                                            "left_command"
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
+					{
+						"description": "Command + Control + H -> Control + ArrowLeft",
+						"manipulators": [
+							{
+								"type": "basic",
+								"from": {
+									"key_code": "h",
+									"modifiers": {
+										"mandatory": [
+											"left_control",
+											"left_command"
+										]
+									}
+								},
+								"to": {
+									"key_code": "left_arrow",
+									"modifiers": ["left_control"]
+								}
+							}
+						]
+					},
+					{
+						"description": "Command + Control + L -> Control + ArrowRight",
+						"manipulators": [
+							{
+								"type": "basic",
+								"from": {
+									"key_code": "l",
+									"modifiers": {
+										"mandatory": [
+											"left_control",
+											"left_command"
+										]
+									}
+								},
+								"to": {
+									"key_code": "right_arrow",
+									"modifiers": ["left_control"]
+								}
+							}
+						]
+					}
                 ]
             },
             "name": "Default profile",
