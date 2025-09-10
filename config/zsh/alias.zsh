@@ -1,5 +1,5 @@
 pg() {
-    p=$(sk --regex --ansi -i -c 'rg --color=always --line-number "{}"')
+    p=$(sk --margin 10% --regex --ansi -i -c 'rg --color=always --line-number "{}"')
 
     if (( $? == 0 )); then
         num="${p#*:}"
@@ -7,15 +7,12 @@ pg() {
 
         p="${p%%:*}"
 
-        dir="${p%/*}"
-        file="${p##*/}"
-
-        cd "$dir" && nvim "$file" +$num
+        nvim "$file" +$num
     fi
 }
 
 pf() {
-    p=$(sk --regex --ansi)
+    p=$(sk --regex --ansi --margin 10%)
 
     if (( $? == 0 )); then
         p="${p%%:*}"

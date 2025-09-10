@@ -12,7 +12,6 @@ brew install btop
 brew install pkg-config
 brew install sk
 brew install fd
-brew install timewarrior
 ```
 
 ## Casks
