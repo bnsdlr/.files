@@ -25,7 +25,10 @@ alias p="cd $HOME/documents/projects"
 alias edu="cd $HOME/documents/projects/edu"
 alias conf="cd $HOME/.config"
 alias dot="cd $HOME/.dotfiles"
-alias exer="cd $(exercism workspace)"
+
+if ! which exercism; then
+	alias exer="cd $(exercism workspace)"
+fi
 
 alias vi="nvim"
 
