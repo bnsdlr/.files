@@ -34,5 +34,6 @@ require('blink.cmp').setup({
 
 vim.keymap.set('n', 'K', function() vim.lsp.buf.hover { max_height = 25, max_width = 120 } end)
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
+vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition)
 vim.keymap.set('n', '<leader>ld', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
