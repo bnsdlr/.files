@@ -26,7 +26,7 @@ alias edu="cd $HOME/documents/projects/edu"
 alias conf="cd $HOME/.config"
 alias dot="cd $HOME/.dotfiles"
 
-if ! which exercism; then
+if command -v exercism &>/dev/null; then
 	alias exer="cd $(exercism workspace)"
 fi
 
