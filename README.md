@@ -3,11 +3,11 @@
 ## Installation
 
 ```shell
-git clone https://github.com/bnsdlr/dotfiles ~/.dotfiles && ~/.dotfiles/setup.sh
+git clone https://github.com/bnsdlr/dotfiles ~/.files && ~/.files/setup.sh
 ```
 
 ## Uninstall
 
 ```shell
-$HOME/.dotfiles/setup.sh -r
+$HOME/.files/setup.sh -r
 ```
