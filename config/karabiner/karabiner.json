@@ -5,7 +5,7 @@
                 "rules": [
                     {
                         "description": "Swap <> and ^° keys",
-                        "enabled": false,
+                        "enabled": true,
                         "manipulators": [
                             {
                                 "from": { "key_code": "grave_accent_and_tilde" },
@@ -47,7 +47,7 @@
                     },
                     {
                         "description": "Caps Lock to Escape (alone) / Control (held with other key)",
-                        "enabled": false,
+                        "enabled": true,
                         "manipulators": [
                             {
                                 "from": {
