@@ -2,7 +2,7 @@ require "mason".setup()
 
 vim.lsp.enable({
 	"lua_ls",
-	"elixirls",
+	"jsonls",
 })
 
 -- vim.api.nvim_create_autocmd('LspAttach', {

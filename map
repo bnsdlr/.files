@@ -1,2 +1,2 @@
-$DOTFILES/config/=$HOME/.config/
-$DOTFILES/config/zsh/zshrc=$HOME/.zshrc
+$DOTFILES/config=$HOME/.config
+cp $DOTFILES/config/zsh/zshrc $HOME/.zshrc
