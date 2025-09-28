@@ -1,3 +1,6 @@
+unalias g 2>/dev/null
+unalias f 2>/dev/null
+
 g() {
     p=$(sk --margin 10% --regex --ansi -i -c 'rg --color=always --line-number "{}"')
 
@@ -11,7 +14,7 @@ g() {
     fi
 }
 
-pf() {
+f() {
     p=$(sk --regex --ansi --margin 10%)
 
     if (( $? == 0 )); then

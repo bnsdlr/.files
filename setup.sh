@@ -19,7 +19,7 @@ update_directory() {
 
 	only_if_not_exists=$3
 
-	for dir in $(find -d "$from" -maxdepth 1 -mindepth 1); do
+	for dir in $(find "$from" -depth -maxdepth 1 -mindepth 1); do
 		to_dir="$to"
 
 		if [[ $only_if_not_exists -eq 1 ]]; then
