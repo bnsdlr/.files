@@ -35,10 +35,14 @@ map('n', '<leader>s', ':e #<CR>')
 
 map({ 'n', 'v' }, '<leader>cw', '1z=')
 map("n", "<leader>e", vim.cmd.Ex)
+
 map('n', '<leader>cn', ':cnext<CR>')
 map('n', '<leader>cp', ':cprev<CR>')
 map('n', '<leader>cc', ':cclose<CR>')
 map('n', '<leader>co', ':copen<CR>')
+
+map('n', '<leader>n', ':next<CR>')
+map('n', '<leader>p', ':prev<CR>')
 
 -- plugins
 vim.pack.add({
