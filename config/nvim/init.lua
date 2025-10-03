@@ -66,7 +66,8 @@ map("n", "<leader>u", vim.cmd.UndotreeToggle)
 require "mini.pick".setup()
 map('n', '<leader>f', ':Pick files tool=\'rg\'<CR>')
 map('n', '<leader>h', ':Pick help tool=\'rg\'<CR>')
-map('n', '<leader>g', ':Pick grep_live tool=\'rg\'<CR>')
+map('n', '<leader>g', ':Pick grep tool=\'rg\'<CR><CR>')
+map('n', '<leader>lg', ':Pick grep_live tool=\'rg\'<CR>')
 
 require("nvim-treesitter.configs").setup({ highlight = { enable = true } })
 
