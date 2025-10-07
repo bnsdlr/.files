@@ -55,7 +55,6 @@ require "telescope".setup({
 })
 require("actions-preview").setup {
 	backend = { "telescope" },
-	extensions = { "env" },
 	telescope = vim.tbl_extend(
 		"force",
 		require("telescope.themes").get_dropdown(), {}
@@ -77,24 +76,7 @@ require("oil").setup({
 	float = {
 		max_width = 0.7,
 		max_height = 0.6,
-		border = "rounded",
-	},
-})
-
-require("oil").setup({
-	lsp_file_methods = {
-		enabled = true,
-		timeout_ms = 1000,
-		autosave_changes = true,
-	},
-	columns = {
-		"permissions",
-		"icon",
-	},
-	float = {
-		max_width = 0.7,
-		max_height = 0.6,
-		border = "rounded",
+		border = "single",
 	},
 })
 
@@ -157,9 +139,6 @@ map({ "n", "v", "x" }, "<leader>y", "\"+y")
 map({ 'n', 'v', 'x' }, '<leader>d', '\"_d')
 map({ "n", "v", "x" }, "<leader>c", "\"_c")
 
-map('n', '<leader>s', ':e #<CR>')
-
-map({ 'n', 'v' }, '<leader>cw', '1z=')
 map("n", "<leader>e", ':Oil<CR>')
 
 map('n', '<leader>cn', ':cnext<CR>')
@@ -167,8 +146,8 @@ map('n', '<leader>cp', ':cprev<CR>')
 map('n', '<leader>cc', ':cclose<CR>')
 map('n', '<leader>co', ':copen<CR>')
 
-map('n', '<leader>n', ':next<CR>')
-map('n', '<leader>p', ':prev<CR>')
+map('n', '<leader>nn', ':next<CR>')
+map('n', '<leader>pp', ':prev<CR>')
 
 -- lsp
 require "mason".setup()
