@@ -124,9 +124,9 @@ map({ "n" }, "<leader>sd", builtin.registers, { desc = "Telescope tags" })
 map({ "n" }, "<leader>sc", builtin.colorscheme, { desc = "Telescope tags" })
 map({ "n" }, "<leader>sa", require("actions-preview").code_actions)
 
-map({ "n" }, "<C-n>", "<cmd>resize +2<CR>")
-map({ "n" }, "<C-e>", "<cmd>resize -2<CR>")
-map({ "n" }, "<C-i>", "<cmd>vertical resize +5<CR>")
+map({ "n" }, "<C-j>", "<cmd>resize +2<CR>")
+map({ "n" }, "<C-k>", "<cmd>resize -2<CR>")
+map({ "n" }, "<C-e>", "<cmd>vertical resize +5<CR>")
 map({ "n" }, "<C-m>", "<cmd>vertical resize -5<CR>")
 
 map({ "n" }, "<leader>v", "<cmd>e $MYVIMRC<CR>'\"")
@@ -153,8 +153,8 @@ map({ "n" }, "<leader>cp", "<cmd>cprev<CR>")
 map({ "n" }, "<leader>cc", "<cmd>cclose<CR>")
 map({ "n" }, "<leader>co", "<cmd>copen<CR>")
 
-map({ "n" }, "<leader>n", "<cmd>next<CR>")
-map({ "n" }, "<leader>p", "<cmd>prev<CR>")
+map({ "n" }, "<C-n>", "<cmd>next<CR>")
+map({ "n" }, "<C-p>", "<cmd>prev<CR>")
 
 -- lsp
 require "mason".setup()
