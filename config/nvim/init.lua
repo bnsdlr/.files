@@ -24,15 +24,15 @@ vim.pack.add({
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 	{ src = "https://github.com/aznhe21/actions-preview.nvim" },
-	{ src = "https://github.com/nvim-telescope/telescope.nvim",         version = "0.1.8" },
+	{ src = "https://github.com/nvim-telescope/telescope.nvim",          version = "0.1.8" },
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 	{ src = "https://github.com/nvim-telescope/telescope-ui-select.nvim" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", 		version = "main" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter",        version = "main" },
 	{ src = "https://github.com/mbbill/undotree" },
 	-- lsp
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/mason-org/mason.nvim" },
-	{ src = 'https://github.com/Saghen/blink.cmp' },
+	{ src = "https://github.com/Saghen/blink.cmp" },
 	-- language plugins
 	{ src = "https://github.com/mrcjkb/rustaceanvim" },
 })
@@ -105,7 +105,7 @@ local function pack_clean()
 	end
 end
 
-vim.keymap.set("n", "<leader>pc", pack_clean)
+vim.api.nvim_create_user_command("PackClean", pack_clean, {})
 
 local builtin = require("telescope.builtin")
 local map = vim.keymap.set
@@ -124,30 +124,37 @@ map({ "n" }, "<leader>sd", builtin.registers, { desc = "Telescope tags" })
 map({ "n" }, "<leader>sc", builtin.colorscheme, { desc = "Telescope tags" })
 map({ "n" }, "<leader>sa", require("actions-preview").code_actions)
 
-map("n", "<leader>u", vim.cmd.UndotreeToggle)
+map({ "n" }, "<C-n>", "<cmd>resize +2<CR>")
+map({ "n" }, "<C-e>", "<cmd>resize -2<CR>")
+map({ "n" }, "<C-i>", "<cmd>vertical resize +5<CR>")
+map({ "n" }, "<C-m>", "<cmd>vertical resize -5<CR>")
 
-map("i", "<C-L>", "<C-O><C-L>")
+map({ "n" }, "<leader>v", "<cmd>e $MYVIMRC<CR>'\"")
 
-map("v", "J", "@=:m '>+1<CR>gv=gv")
-map("v", "K", "@=:m '<-2<CR>gv=gv")
-map("n", "<C-d>", "<C-d>zz")
-map("n", "<C-u>", "<C-u>zz")
-map("n", "n", "nzz")
-map("n", "N", "Nzz")
+map({ "n" }, "<leader>u", vim.cmd.UndotreeToggle)
+
+map({ "i" }, "<C-L>", "<C-O><C-L>")
+
+map({ "v" }, "J", "<cmd>m '>+1<CR>gv=gv")
+map({ "v" }, "K", "<cmd>m '<-2<CR>gv=gv")
+map({ "n" }, "<C-d>", "<C-d>zz")
+map({ "n" }, "<C-u>", "<C-u>zz")
+map({ "n" }, "n", "nzz")
+map({ "n" }, "N", "Nzz")
 
 map({ "n", "v", "x" }, "<leader>y", "\"+y")
-map({ 'n', 'v', 'x' }, '<leader>d', '\"_d')
+map({ "n", "v", "x" }, "<leader>d", "\"_d")
 map({ "n", "v", "x" }, "<leader>c", "\"_c")
 
-map("n", "<leader>e", ':Oil<CR>')
+map({ "n" }, "<leader>e", "<cmd>Oil<CR>")
 
-map('n', '<leader>cn', ':cnext<CR>')
-map('n', '<leader>cp', ':cprev<CR>')
-map('n', '<leader>cc', ':cclose<CR>')
-map('n', '<leader>co', ':copen<CR>')
+map({ "n" }, "<leader>cn", "<cmd>cnext<CR>")
+map({ "n" }, "<leader>cp", "<cmd>cprev<CR>")
+map({ "n" }, "<leader>cc", "<cmd>cclose<CR>")
+map({ "n" }, "<leader>co", "<cmd>copen<CR>")
 
-map('n', '<leader>nn', ':next<CR>')
-map('n', '<leader>pp', ':prev<CR>')
+map({ "n" }, "<leader>n", "<cmd>next<CR>")
+map({ "n" }, "<leader>p", "<cmd>prev<CR>")
 
 -- lsp
 require "mason".setup()
@@ -185,11 +192,11 @@ require('blink.cmp').setup({
 	}
 })
 
-map('n', 'K', function() vim.lsp.buf.hover { max_height = 25, max_width = 120 } end)
-map('n', 'gd', vim.lsp.buf.definition)
-map('n', 'gt', vim.lsp.buf.type_definition)
-map('n', '<leader>ld', vim.diagnostic.open_float)
-map('n', '<leader>lf', vim.lsp.buf.format)
+map({ "n" }, "K", function() vim.lsp.buf.hover { max_height = 25, max_width = 120 } end)
+map({ "n" }, "gd", vim.lsp.buf.definition)
+map({ "n" }, "gt", vim.lsp.buf.type_definition)
+map({ "n" }, "<leader>ld", vim.diagnostic.open_float)
+map({ "n" }, "<leader>lf", vim.lsp.buf.format)
 
 -- colorscheme
 vim.cmd('colorscheme vague')
