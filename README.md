@@ -11,3 +11,7 @@ git clone https://github.com/bnsdlr/dotfiles ~/.files && ~/.files/setup.sh
 ```shell
 $HOME/.files/setup.sh -r
 ```
+
+## Troubleshooting
+
+Delete all `nvim` related folders under `~/.local` and then reinstall it.

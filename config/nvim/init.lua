@@ -1,6 +1,7 @@
 vim.cmd([[set mouse=]])
 
 vim.opt.winborder = "single"
+vim.opt.pumborder = "single"
 
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
@@ -37,6 +38,8 @@ vim.pack.add({
 	{ src = "https://github.com/mrcjkb/rustaceanvim" },
 })
 
+-- require("nvim-treesitter.config").setup({ highlight = { enable = true } })
+
 require "telescope".setup({
 	defaults = {
 		preview = false,
@@ -61,8 +64,6 @@ require("actions-preview").setup {
 	)
 }
 
-require("nvim-treesitter.configs").setup({ highlight = { enable = true } })
-
 require("oil").setup({
 	lsp_file_methods = {
 		enabled = true,
@@ -80,19 +81,40 @@ require("oil").setup({
 	},
 })
 
-local function pack_clean()
+local function get_plugins()
 	local active_plugins = {}
 	local unused_plugins = {}
 
 	for _, plugin in ipairs(vim.pack.get()) do
-		active_plugins[plugin.spec.name] = plugin.active
-	end
-
-	for _, plugin in ipairs(vim.pack.get()) do
-		if not active_plugins[plugin.spec.name] then
-			table.insert(unused_plugins, plugin.spec.name)
+		if plugin.active then
+			table.insert(active_plugins, plugin.spec.name)
+		else
+			table.insert(unused_plugins, plugin.spec.src)
 		end
 	end
+
+	-- vim.print(active_plugins)
+	-- vim.print(unused_plugins)
+
+	return active_plugins, unused_plugins
+end
+
+local function pack_update()
+	local active_plugins, _ = get_plugins()
+
+	if #active_plugins == 0 then
+		print("No active plugins.")
+		return
+	end
+
+	local choice = vim.fn.confirm("Update active plugins?", "&Yes\n&No", 2)
+	if choice == 1 then
+		vim.pack.update(active_plugins)
+	end
+end
+
+local function pack_clean()
+	local _, unused_plugins = get_plugins()
 
 	if #unused_plugins == 0 then
 		print("No unused plugins.")
@@ -106,6 +128,7 @@ local function pack_clean()
 end
 
 vim.api.nvim_create_user_command("PackClean", pack_clean, {})
+vim.api.nvim_create_user_command("PackUpdate", pack_update, {})
 
 local builtin = require("telescope.builtin")
 local map = vim.keymap.set
@@ -162,6 +185,7 @@ require "mason".setup()
 vim.lsp.enable({
 	"lua_ls",
 	"jsonls",
+	"pyright",
 })
 
 -- vim.api.nvim_create_autocmd('LspAttach', {
@@ -201,3 +225,4 @@ map({ "n" }, "<leader>lf", vim.lsp.buf.format)
 -- colorscheme
 vim.cmd('colorscheme vague')
 vim.cmd('hi statusline guibg=NONE')
+

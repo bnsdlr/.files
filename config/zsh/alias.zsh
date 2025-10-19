@@ -35,7 +35,7 @@ fi
 
 alias vi="nvim"
 
-alias ls="ls -CA"
+alias ls="ls -CGA"
 
 # script shortcuts
 alias uconf="$DOTFILES/update.sh"
