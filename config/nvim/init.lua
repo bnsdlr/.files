@@ -25,8 +25,8 @@ vim.pack.add({
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 	{ src = "https://github.com/aznhe21/actions-preview.nvim" },
-	{ src = "https://github.com/nvim-telescope/telescope.nvim",          version = "0.1.8" },
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
+	{ src = "https://github.com/nvim-telescope/telescope.nvim",          version = "0.1.8" },
 	{ src = "https://github.com/nvim-telescope/telescope-ui-select.nvim" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter",        version = "main" },
 	{ src = "https://github.com/mbbill/undotree" },
@@ -40,9 +40,10 @@ vim.pack.add({
 
 -- require("nvim-treesitter.config").setup({ highlight = { enable = true } })
 
-require "telescope".setup({
+local telescope = require "telescope"
+telescope.setup({
 	defaults = {
-		preview = false,
+		preview = { treesitter = false },
 		color_devicons = true,
 		sorting_strategy = "ascending",
 		borderchars = { "", "", "", "", "", "", "", "" },
@@ -52,10 +53,12 @@ require "telescope".setup({
 			height = 100,
 			width = 400,
 			prompt_position = "top",
-			preview_cutoff = 0,
+			preview_cutoff = 40,
 		}
 	}
 })
+telescope.load_extension("ui-select")
+
 require("actions-preview").setup {
 	backend = { "telescope" },
 	telescope = vim.tbl_extend(
@@ -156,10 +159,6 @@ map({ "n" }, "<leader>v", "<cmd>e $MYVIMRC<CR>'\"")
 
 map({ "n" }, "<leader>u", vim.cmd.UndotreeToggle)
 
-map({ "i" }, "<C-L>", "<C-O><C-L>")
-
-map({ "v" }, "J", "<cmd>m '>+1<CR>gv=gv")
-map({ "v" }, "K", "<cmd>m '<-2<CR>gv=gv")
 map({ "n" }, "<C-d>", "<C-d>zz")
 map({ "n" }, "<C-u>", "<C-u>zz")
 map({ "n" }, "n", "nzz")
@@ -225,4 +224,3 @@ map({ "n" }, "<leader>lf", vim.lsp.buf.format)
 -- colorscheme
 vim.cmd('colorscheme vague')
 vim.cmd('hi statusline guibg=NONE')
-
