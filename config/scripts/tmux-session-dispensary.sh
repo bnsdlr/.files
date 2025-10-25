@@ -10,7 +10,7 @@ DIRS=(
 check_if_installed() {
     cli_tool=$1
     git_url=$2
-    if ! which $cli_tool; then
+    if ! command -v $cli_tool &>/dev/null; then
         printf "Make sure $cli_tool is installed ($git_url)\n"
         echo "Press enter to exit"
         read
@@ -44,4 +44,3 @@ if [[ "$TMUX" == "" ]]; then
 else
     tmux switch-client -t "$selected_name"
 fi
-
