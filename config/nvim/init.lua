@@ -179,6 +179,8 @@ map({ "n" }, "<leader>co", "<cmd>copen<CR>")
 map({ "n" }, "<C-n>", "<cmd>next<CR>")
 map({ "n" }, "<C-p>", "<cmd>prev<CR>")
 
+map({ "v" }, "<leader>n", ":norm ")
+
 -- lsp
 require "mason".setup()
 
