@@ -82,6 +82,9 @@ require("oil").setup({
 		max_height = 0.6,
 		border = "single",
 	},
+	view_options = {
+		show_hidden = true,
+	},
 })
 
 local function get_plugins()
