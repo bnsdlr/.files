@@ -1,26 +1,9 @@
 # Packages
 
-## Brews
+## Brews / Casks
 
 ```shell
-brew install tmux
-brew install bat
-brew install ripgrep
-brew install node
-brew install yt-dlp
-brew install btop
-brew install pkg-config
-brew install sk
-brew install fd
-```
-
-## Casks
-
-```shell
-brew install --cask alacritty
-brew install --cask ghostty
-brew install --cask karabiner-elements
-brew install --cask discord
+brew bundle
 ```
 
 ## Nightly Neovim
@@ -41,14 +24,6 @@ brew install --cask font-jetbrains-mono-nerd-font
 ### Rust
 
 Via the [offical website](https://www.rust-lang.org/tools/install).
-
-### Elixir
-
-Via brew:
-
-```shell
-brew install elixir
-```
 
 ## Other
 

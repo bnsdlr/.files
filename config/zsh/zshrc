@@ -1,5 +1,7 @@
 export DISABLE_AUTO_UPDATE=true
 
+export PATH="$HOME/.emacs.d/bin:$PATH"
+
 export EDITOR="nvim"
 export MANPAGER="nvim +Man!"
 export VISUAL="nvim"
