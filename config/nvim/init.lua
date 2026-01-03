@@ -84,6 +84,9 @@ require("oil").setup({
 	},
 	view_options = {
 		show_hidden = true,
+		is_always_hidden = function(name, _)
+          return name:match("%.%.") ~= nil
+        end,
 	},
 })
 
@@ -140,9 +143,12 @@ local builtin = require("telescope.builtin")
 local map = vim.keymap.set
 vim.g.mapleader = " "
 
+map({ "n" }, "<leader>w", "<cmd>update<CR>", { desc = "update current buffer (write if changed)" })
+map({ "n" }, "<leader>x", "<cmd>xit<CR>", { desc = "like: :update|quit" })
+
 map({ "n" }, "<leader>f", builtin.find_files, { desc = "Telescope live grep" })
 map({ "n" }, "<leader>g", builtin.live_grep, { desc = "Telescope live grep" })
-map({ "n" }, "<leader>b", builtin.buffers, { desc = "Telescope buffers" })
+map({ "n" }, "<leader>sb", builtin.buffers, { desc = "Telescope buffers" })
 map({ "n" }, "<leader>si", builtin.grep_string, { desc = "Telescope live string" })
 map({ "n" }, "<leader>so", builtin.oldfiles, { desc = "Telescope buffers" })
 map({ "n" }, "<leader>sh", builtin.help_tags, { desc = "Telescope help tags" })
