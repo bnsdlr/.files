@@ -85,8 +85,8 @@ require("oil").setup({
 	view_options = {
 		show_hidden = true,
 		is_always_hidden = function(name, _)
-          return name:match("%.%.") ~= nil
-        end,
+			return name:match("%.%.") ~= nil
+		end,
 	},
 })
 
@@ -143,8 +143,13 @@ local builtin = require("telescope.builtin")
 local map = vim.keymap.set
 vim.g.mapleader = " "
 
-map({ "n" }, "<leader>w", "<cmd>update<CR>", { desc = "update current buffer (write if changed)" })
+map({ "n" }, "<leader>bs", "<cmd>update<CR>", { desc = "update current buffer (write if changed)" })
 map({ "n" }, "<leader>x", "<cmd>xit<CR>", { desc = "like: :update|quit" })
+
+map({ "n" }, "<leader>w", "<C-w>")
+
+map({ "n" }, "<", "<<");
+map({ "n" }, ">", ">>");
 
 map({ "n" }, "<leader>f", builtin.find_files, { desc = "Telescope live grep" })
 map({ "n" }, "<leader>g", builtin.live_grep, { desc = "Telescope live grep" })
@@ -159,11 +164,6 @@ map({ "n" }, "<leader>sd", builtin.registers, { desc = "Telescope tags" })
 map({ "n" }, "<leader>sc", builtin.colorscheme, { desc = "Telescope tags" })
 map({ "n" }, "<leader>sj", builtin.jumplist, { desc = "Telescope tags" })
 map({ "n" }, "<leader>sa", require("actions-preview").code_actions)
-
-map({ "n" }, "<C-j>", "<cmd>resize +2<CR>")
-map({ "n" }, "<C-k>", "<cmd>resize -2<CR>")
-map({ "n" }, "<C-e>", "<cmd>vertical resize +5<CR>")
-map({ "n" }, "<C-m>", "<cmd>vertical resize -5<CR>")
 
 map({ "n" }, "<leader>v", "<cmd>e $MYVIMRC<CR>'\"")
 
@@ -185,11 +185,6 @@ map({ "n" }, "<leader>cp", "<cmd>cprev<CR>")
 map({ "n" }, "<leader>cc", "<cmd>cclose<CR>")
 map({ "n" }, "<leader>co", "<cmd>copen<CR>")
 
-map({ "n" }, "<C-n>", "<cmd>next<CR>")
-map({ "n" }, "<C-p>", "<cmd>prev<CR>")
-
-map({ "v" }, "<leader>n", ":norm ")
-
 -- lsp
 require "mason".setup()
 
@@ -197,6 +192,9 @@ vim.lsp.enable({
 	"lua_ls",
 	"jsonls",
 	"pyright",
+	"html",
+	"tsgo",
+	"cssls",
 })
 
 -- vim.api.nvim_create_autocmd('LspAttach', {
