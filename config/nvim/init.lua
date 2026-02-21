@@ -18,6 +18,7 @@ vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 vim.opt.ignorecase = true
 vim.opt.signcolumn = "yes"
+vim.opt.colorcolumn = "100"
 
 -- plugins
 vim.pack.add({
@@ -36,6 +37,7 @@ vim.pack.add({
 	{ src = "https://github.com/Saghen/blink.cmp" },
 	-- language plugins
 	{ src = "https://github.com/mrcjkb/rustaceanvim" },
+	{ src = "https://github.com/ziglang/zig.vim" },
 })
 
 -- require("nvim-treesitter.config").setup({ highlight = { enable = true } })
@@ -191,10 +193,12 @@ require "mason".setup()
 vim.lsp.enable({
 	"lua_ls",
 	"jsonls",
+	"svelte",
 	"pyright",
 	"html",
 	"tsgo",
 	"cssls",
+	"zls",
 })
 
 -- vim.api.nvim_create_autocmd('LspAttach', {
