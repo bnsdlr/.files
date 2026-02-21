@@ -19,6 +19,15 @@ bob use nightly
 brew install --cask font-jetbrains-mono-nerd-font
 ```
 
+<!--
+## Emacs
+
+```shell
+brew tap "d12frosted/emacs-plus"
+brew install "d12frosted/emacs-plus/emacs-plus@30"
+```
+-->
+
 ## Programing Languages
 
 ### Rust

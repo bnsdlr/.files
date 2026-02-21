@@ -34,7 +34,6 @@ if command -v exercism &>/dev/null; then
 	alias exer="cd $(exercism workspace)"
 fi
 
-alias vi="nvim"
 alias emacs="emacsclient -c -a 'emacs'"
 
 alias ls="ls -CGA"
