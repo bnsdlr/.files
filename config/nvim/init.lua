@@ -31,6 +31,8 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-telescope/telescope-ui-select.nvim" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter",        version = "main" },
 	{ src = "https://github.com/mbbill/undotree" },
+	-- image
+	{ src = "https://github.com/3rd/image.nvim" },
 	-- lsp
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/mason-org/mason.nvim" },
@@ -187,6 +189,14 @@ map({ "n" }, "<leader>cp", "<cmd>cprev<CR>")
 map({ "n" }, "<leader>cc", "<cmd>cclose<CR>")
 map({ "n" }, "<leader>co", "<cmd>copen<CR>")
 
+-- image
+
+require("image").setup({
+  max_width_window_percentage = 100,
+  max_height_window_percentage = 80,
+  scale_factor = 1.0,
+})
+
 -- lsp
 require "mason".setup()
 
@@ -238,3 +248,4 @@ map({ "n" }, "<leader>lf", vim.lsp.buf.format)
 -- colorscheme
 vim.cmd('colorscheme vague')
 vim.cmd('hi statusline guibg=NONE')
+
