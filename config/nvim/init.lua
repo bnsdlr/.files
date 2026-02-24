@@ -20,6 +20,8 @@ vim.opt.ignorecase = true
 vim.opt.signcolumn = "yes"
 vim.opt.colorcolumn = "100"
 
+vim.g.zig_fmt_autosave = 0
+
 -- plugins
 vim.pack.add({
 	{ src = "https://github.com/vague2k/vague.nvim" },
