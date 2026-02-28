@@ -1,5 +1,3 @@
-vim.cmd([[set mouse=]])
-
 vim.opt.winborder = "single"
 vim.opt.pumborder = "single"
 
@@ -187,10 +185,26 @@ map({ "n", "v", "x" }, "<leader>c", "\"_c")
 
 map({ "n" }, "<leader>e", "<cmd>Oil<CR>")
 
-map({ "n" }, "<leader>cn", "<cmd>cnext<CR>")
-map({ "n" }, "<leader>cp", "<cmd>cprev<CR>")
-map({ "n" }, "<leader>cc", "<cmd>cclose<CR>")
-map({ "n" }, "<leader>co", "<cmd>copen<CR>")
+map({ "n" }, "<C-c>", "")
+map({ "n" }, "<C-c><C-n>", "<cmd>cnext<CR>")
+map({ "n" }, "<C-c><C-p>", "<cmd>cprev<CR>")
+map({ "n" }, "<C-c><C-c>", "<cmd>cclose<CR>")
+map({ "n" }, "<C-c><C-o>", "<cmd>copen<CR>")
+
+map({ "n" }, "<C-t>n", "<cmd>tabnext<CR>")
+map({ "n" }, "<C-t><C-n>", "<cmd>tabnext<CR>")
+map({ "n" }, "<C-t>p", "<cmd>tabprevious<CR>")
+map({ "n" }, "<C-t><C-p>", "<cmd>tabprevious<CR>")
+map({ "n" }, "<C-t>c", "<cmd>tabnew<CR>")
+map({ "n" }, "<C-t><C-c>", "<cmd>tabnew<CR>") -- not working
+map({ "n" }, "<C-t>x", "<cmd>tabclose<CR>")
+map({ "n" }, "<C-t><C-x>", "<cmd>tabclose<CR>")
+
+map({ "n" }, "<leader>tn", "<cmd>tabnext<CR>")
+map({ "n" }, "<leader>tp", "<cmd>tabprevious<CR>")
+map({ "n" }, "<leader>tc", "<cmd>tabnew<CR>")
+map({ "n" }, "<leader>tx", "<cmd>tabclose<CR>")
+map({ "n" }, "<leader>tm", ":tabmove ")
 
 -- image
 
