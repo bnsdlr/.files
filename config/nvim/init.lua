@@ -159,13 +159,14 @@ map({ "n" }, ">", ">>");
 
 map({ "n" }, "<leader>f", builtin.find_files, { desc = "Telescope live grep" })
 map({ "n" }, "<leader>g", builtin.live_grep, { desc = "Telescope live grep" })
+map({ "n" }, "<leader>sm", builtin.man_pages, { desc = "Telescope man pages" })
+map({ "n" }, "<leader>sh", builtin.help_tags, { desc = "Telescope help tags" })
+map({ "n" }, "<leader>sr", builtin.lsp_references, { desc = "Telescope tags" })
+
 map({ "n" }, "<leader>sb", builtin.buffers, { desc = "Telescope buffers" })
 map({ "n" }, "<leader>si", builtin.grep_string, { desc = "Telescope live string" })
 map({ "n" }, "<leader>so", builtin.oldfiles, { desc = "Telescope buffers" })
-map({ "n" }, "<leader>sh", builtin.help_tags, { desc = "Telescope help tags" })
-map({ "n" }, "<leader>sm", builtin.man_pages, { desc = "Telescope man pages" })
-map({ "n" }, "<leader>sr", builtin.lsp_references, { desc = "Telescope tags" })
-map({ "n" }, "<leader>sb", builtin.builtin, { desc = "Telescope tags" })
+map({ "n" }, "<leader>st", builtin.builtin, { desc = "Telescope tags" })
 map({ "n" }, "<leader>sd", builtin.registers, { desc = "Telescope tags" })
 map({ "n" }, "<leader>sc", builtin.colorscheme, { desc = "Telescope tags" })
 map({ "n" }, "<leader>sj", builtin.jumplist, { desc = "Telescope tags" })
@@ -246,6 +247,7 @@ map({ "n" }, "gd", vim.lsp.buf.definition)
 map({ "n" }, "gt", vim.lsp.buf.type_definition)
 map({ "n" }, "<leader>ld", vim.diagnostic.open_float)
 map({ "n" }, "<leader>lf", vim.lsp.buf.format)
+map({ "n" }, "<leader>lr", builtin.lsp_references)
 
 -- colorscheme
 vim.cmd('colorscheme vague')
