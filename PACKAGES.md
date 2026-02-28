@@ -6,6 +6,14 @@
 brew bundle
 ```
 
+## Other
+
+```shell
+brew "exercism"
+cask "brave-browser"
+cask "discord"
+```
+
 ## Nightly Neovim
 
 ```shell
@@ -33,6 +41,14 @@ brew install "d12frosted/emacs-plus/emacs-plus@30"
 ### Rust
 
 Via the [offical website](https://www.rust-lang.org/tools/install).
+
+```shel
+brew "rustup"
+```
+
+```shel
+brew "elixir"
+```
 
 ## Other
 
