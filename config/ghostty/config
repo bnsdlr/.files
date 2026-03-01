@@ -1,6 +1,7 @@
 window-save-state = always
 window-padding-color = background
 window-colorspace = "display-p3"
+window-decoration = false
 
 background-opacity = 1
 
