@@ -1,0 +1,147 @@
+# The name of the device to remap.
+# Run `sudo evremap list-devices` to see the devices available
+# on your system.
+device_name = "Shenzhen Yizhita Technology Co., Ltd MAD68"
+
+# Configure CAPSLOCK as a Dual Role key.
+# Holding it produces LEFTCTRL, but tapping it
+# will produce ESC.
+# Both `tap` and `hold` can expand to multiple output keys.
+[[dual_role]]
+input = "KEY_CAPSLOCK"
+hold = ["KEY_LEFTCTRL"]
+tap = ["KEY_ESC"]
+
+# swap y and z
+[[remap]]
+input = ["KEY_Z"]
+output = ["KEY_Y"]
+[[remap]]
+input = ["KEY_Y"]
+output = ["KEY_Z"]
+
+# > to :
+[[remap]]
+input = ["KEY_LEFTSHIFT", "KEY_DOT"]
+output = ["KEY_RIGHTSHIFT", "KEY_SEMICOLON"]
+[[remap]]
+input = ["KEY_RIGHTSHIFT", "KEY_DOT"]
+output = ["KEY_RIGHTSHIFT", "KEY_SEMICOLON"]
+
+# : to >
+[[remap]]
+input = ["KEY_LEFTSHIFT", "KEY_SEMICOLON"]
+output = ["KEY_RIGHTSHIFT", "KEY_DOT"]
+[[remap]]
+input = ["KEY_RIGHTSHIFT", "KEY_SEMICOLON"]
+output = ["KEY_RIGHTSHIFT", "KEY_DOT"]
+
+# < to ;
+[[remap]]
+input = ["KEY_LEFTSHIFT", "KEY_COMMA"]
+output = ["KEY_SEMICOLON"]
+[[remap]]
+input = ["KEY_RIGHTSHIFT", "KEY_COMMA"]
+output = ["KEY_SEMICOLON"]
+
+# ; to <
+[[remap]]
+input = ["KEY_SEMICOLON"]
+output = ["KEY_RIGHTSHIFT", "KEY_COMMA"]
+
+# | `<`       | `KEY_LESS`         |
+# | `>`       | `KEY_GREATER`      |
+
+# / to -
+[[remap]]
+input = ["KEY_SLASH"]
+output = ["KEY_MINUS"]
+
+# ? to _
+[[remap]]
+input = ["KEY_LEFTSHIFT", "KEY_SLASH"]
+output = ["KEY_RIGHTSHIFT", "KEY_MINUS"]
+[[remap]]
+input = ["KEY_RIGHTSHIFT", "KEY_SLASH"]
+output = ["KEY_RIGHTSHIFT", "KEY_MINUS"]
+
+# _ to ?
+[[remap]]
+input = ["KEY_LEFTSHIFT", "KEY_MINUS"]
+output = ["KEY_RIGHTSHIFT", "KEY_SLASH"]
+[[remap]]
+input = ["KEY_RIGHTSHIFT", "KEY_MINUS"]
+output = ["KEY_RIGHTSHIFT", "KEY_SLASH"]
+
+# - to *
+[[remap]]
+input = ["KEY_MINUS"]
+output = ["KEY_RIGHTSHIFT", "KEY_8"]
+
+# + to ^
+[[remap]]
+input = ["KEY_LEFTSHIFT", "KEY_EQUAL"]
+output = ["KEY_RIGHTSHIFT", "KEY_6"]
+[[remap]]
+input = ["KEY_RIGHTSHIFT", "KEY_EQUAL"]
+output = ["KEY_RIGHTSHIFT", "KEY_6"]
+
+# = to +
+[[remap]]
+input = ["KEY_EQUAL"]
+output = ["KEY_RIGHTSHIFT", "KEY_EQUAL"]
+
+# & to /
+[[remap]]
+input = ["KEY_LEFTSHIFT", "KEY_7"]
+output = ["KEY_SLASH"]
+[[remap]]
+input = ["KEY_RIGHTSHIFT", "KEY_7"]
+output = ["KEY_SLASH"]
+
+# ^ to &
+[[remap]]
+input = ["KEY_LEFTSHIFT", "KEY_6"]
+output = ["KEY_RIGHTSHIFT", "KEY_7"]
+[[remap]]
+input = ["KEY_RIGHTSHIFT", "KEY_6"]
+output = ["KEY_RIGHTSHIFT", "KEY_7"]
+
+# * to (
+[[remap]]
+input = ["KEY_LEFTSHIFT", "KEY_8"]
+output = ["KEY_RIGHTSHIFT", "KEY_9"]
+[[remap]]
+input = ["KEY_RIGHTSHIFT", "KEY_8"]
+output = ["KEY_RIGHTSHIFT", "KEY_9"]
+
+# ( to )
+[[remap]]
+input = ["KEY_LEFTSHIFT", "KEY_9"]
+output = ["KEY_RIGHTSHIFT", "KEY_0"]
+[[remap]]
+input = ["KEY_RIGHTSHIFT", "KEY_9"]
+output = ["KEY_RIGHTSHIFT", "KEY_0"]
+
+# ) to =
+[[remap]]
+input = ["KEY_LEFTSHIFT", "KEY_0"]
+output = ["KEY_EQUAL"]
+[[remap]]
+input = ["KEY_RIGHTSHIFT", "KEY_0"]
+output = ["KEY_EQUAL"]
+
+# @ to "
+[[remap]]
+input = ["KEY_LEFTSHIFT", "KEY_2"]
+output = ["KEY_LEFTSHIFT", "KEY_APOSTROPHE"]
+[[remap]]
+input = ["KEY_RIGHTSHIFT", "KEY_2"]
+output = ["KEY_LEFTSHIFT", "KEY_APOSTROPHE"]
+
+# = to @
+[[remap]]
+input = ["KEY_EQUAL"]
+output = ["KEY_LEFTSHIFT", "KEY_2"]
+
+

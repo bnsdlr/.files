@@ -21,6 +21,16 @@ brew install bob
 bob use nightly
 ```
 
+## Evremap
+
+```shell
+sudo cp $HOME/.files/config/evremap/config.toml /etc/evremap.toml
+sudo cp $HOME/.files/config/evremap/evremap.service /usr/lib/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable evremap.service
+sudo systemctl start evremap.service
+```
+
 ## Fonts
 
 ```shell
