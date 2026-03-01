@@ -12,6 +12,16 @@ input = "KEY_CAPSLOCK"
 hold = ["KEY_LEFTCTRL"]
 tap = ["KEY_ESC"]
 
+# alt to ctrl
+[[remap]]
+input = ["KEY_LEFTALT"]
+output = ["KEY_LEFTCTRL"]
+
+# ctrl to alt
+# [[remap]]
+# input = ["KEY_LEFTCTRL"] 
+# output = ["KEY_LEFTALT"]
+
 # swap y and z
 [[remap]]
 input = ["KEY_Z"]
