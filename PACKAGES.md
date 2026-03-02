@@ -31,6 +31,12 @@ sudo systemctl enable evremap.service
 sudo systemctl start evremap.service
 ```
 
+## Qutebrowser
+
+```shell
+brew install qutebrowser
+```
+
 ## Fonts
 
 ```shell
