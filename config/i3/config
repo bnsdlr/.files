@@ -53,7 +53,6 @@ bindsym $super+SHIFT+i exec ~/.local/bin/shcts  # open cheatsheet
 floating_modifier $super
 
 #autostart
-exec --no-startup-id autokey-gtk
 exec --no-startup-id ~/.fehbg
 exec --no-startup-id copyq
 exec --no-startup-id dunst
@@ -69,6 +68,12 @@ exec_always --no-startup-id numlockx on
 exec blueberry-tray
 exec --no-startup-id java -Xmx1024m -jar "/opt/xdman/xdman.jar" -m
 exec --no-startup-id ~/.local/bin/fastfetch-garuda
+
+exec --no-startup-id ghostty
+exec --no-startup-id qutebrowser
+
+assign [class="com.mitchellh.ghostty"] 2
+assign [class="qutebrowser"] 3
 
 # hide/unhide i3status bar
 bindsym $super+m bar mode toggle
