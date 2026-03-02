@@ -18,14 +18,14 @@ if [[ "$arg1" == "--all" ]] || [[ "$arg1" == "-a" ]]; then
 
 	for entry in $configdir/*; do
 		bname=$(basename "$entry")
-		dst="$dotfiles/config/$bname"
+		dst="$dotfiles/config"
 
 		if [[ -d "$entry" ]] && [[ -d "$dst" ]]; then
 			printf "${GREEN}rsync -ia --delete \"$entry\" \"$dst\"$NC\n"
 			rsync -ia --delete "$entry" "$dst"
 		elif [[ -f "$entry" ]] && [[ -f "$dst" ]]; then
 			printf "${GREEN}cp $entry $dst $NC\n"
-			cp "$entry" "$dst"
+			cp "$entry" "$dst/$bname"
 		else
 			printf "${GREEN}rsync -ia --delete \"$entry\" \"$dst\"$NC\n"
 			rsync -ia --delete "$entry" "$dst"
@@ -36,14 +36,14 @@ else
 
 	for entry in $dotfiles/config/*; do
 		bname=$(basename "$entry")
-		src="$configdir/$bname"
+		src="$configdir"
 
 		if [[ -d "$entry" ]] && [[ -d "$src" ]]; then
 			printf "${GREEN}rsync -ia --delete \"$src\" \"$entry\"$NC\n"
 			rsync -ia --delete "$src" "$entry"
 		elif [[ -f "$entry" ]] && [[ -f "$src" ]]; then
 			printf "${GREEN}cp $src $entry $NC\n"
-			cp "$src" "$entry"
+			cp "$src" "$entry/$bname"
 		fi
 	done
 
