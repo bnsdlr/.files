@@ -20,7 +20,7 @@ output = ["KEY_LEFTCTRL"]
 # ctrl to alt
 # [[remap]]
 # input = ["KEY_LEFTCTRL"] 
-# output = ["KEY_LEFTALT"]
+# output = ["KEY_RIGHTALT"]
 
 # swap y and z
 [[remap]]
@@ -58,9 +58,6 @@ output = ["KEY_SEMICOLON"]
 [[remap]]
 input = ["KEY_SEMICOLON"]
 output = ["KEY_RIGHTSHIFT", "KEY_COMMA"]
-
-# | `<`       | `KEY_LESS`         |
-# | `>`       | `KEY_GREATER`      |
 
 # / to -
 [[remap]]
@@ -149,9 +146,26 @@ output = ["KEY_LEFTSHIFT", "KEY_APOSTROPHE"]
 input = ["KEY_RIGHTSHIFT", "KEY_2"]
 output = ["KEY_LEFTSHIFT", "KEY_APOSTROPHE"]
 
-# = to @
+# alt + l to @
 [[remap]]
-input = ["KEY_EQUAL"]
+input = ["KEY_RIGHTALT", "KEY_L"]
+output = ["KEY_LEFTSHIFT", "KEY_2"]
+[[remap]]
+input = ["KEY_LEFTALT", "KEY_L"]
 output = ["KEY_LEFTSHIFT", "KEY_2"]
 
+# alt + n to ~
+[[remap]]
+input = ["KEY_RIGHTALT", "KEY_N"]
+output = ["KEY_LEFTSHIFT", "KEY_GRAVE"]
+[[remap]]
+input = ["KEY_LEFTALT", "KEY_N"]
+output = ["KEY_LEFTSHIFT", "KEY_GRAVE"]
 
+# alt + g to ~
+[[remap]]
+input = ["KEY_RIGHTALT", "KEY_G"]
+output = ["KEY_GRAVE"]
+[[remap]]
+input = ["KEY_LEFTALT", "KEY_G"]
+output = ["KEY_GRAVE"]
