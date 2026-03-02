@@ -36,14 +36,15 @@ else
 
 	for entry in $dotfiles/config/*; do
 		bname=$(basename "$entry")
-		src="$configdir"
+		dname=$(dirname "$entry")
+		src="$configdir/$bname"
 
 		if [[ -d "$entry" ]] && [[ -d "$src" ]]; then
-			printf "${GREEN}rsync -ia --delete \"$src\" \"$entry\"$NC\n"
-			rsync -ia --delete "$src" "$entry"
+			printf "${GREEN}rsync -ia --delete \"$src\" \"$dname\"$NC\n"
+			rsync -ia --delete "$src" "$dname"
 		elif [[ -f "$entry" ]] && [[ -f "$src" ]]; then
 			printf "${GREEN}cp $src $entry $NC\n"
-			cp "$src" "$entry/$bname"
+			cp "$src" "$entry"
 		fi
 	done
 
