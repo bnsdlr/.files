@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 GREEN="\x1b[32m"
 NC="\x1b[0m"
 
