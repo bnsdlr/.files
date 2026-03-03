@@ -3,24 +3,29 @@
 # on your system.
 device_name = "Shenzhen Yizhita Technology Co., Ltd MAD68"
 
+# alt to ctrl
+[[remap]]
+input = ["KEY_LEFTALT"]
+output = ["KEY_RIGHTCTRL"]
+
+# super to alt
+[[remap]]
+input = ["KEY_LEFTMETA"] 
+output = ["KEY_LEFTALT"]
+
+# ctrl to super
+[[remap]]
+input = ["KEY_LEFTCTRL"]
+output = ["KEY_RIGHTMETA"]
+
 # Configure CAPSLOCK as a Dual Role key.
 # Holding it produces LEFTCTRL, but tapping it
 # will produce ESC.
 # Both `tap` and `hold` can expand to multiple output keys.
 [[dual_role]]
 input = "KEY_CAPSLOCK"
-hold = ["KEY_LEFTCTRL"]
+hold = ["KEY_RIGHTCTRL"]
 tap = ["KEY_ESC"]
-
-# alt to ctrl
-[[remap]]
-input = ["KEY_LEFTALT"]
-output = ["KEY_LEFTCTRL"]
-
-# ctrl to alt
-# [[remap]]
-# input = ["KEY_LEFTCTRL"] 
-# output = ["KEY_RIGHTALT"]
 
 # swap y and z
 [[remap]]
@@ -146,26 +151,26 @@ output = ["KEY_LEFTSHIFT", "KEY_APOSTROPHE"]
 input = ["KEY_RIGHTSHIFT", "KEY_2"]
 output = ["KEY_LEFTSHIFT", "KEY_APOSTROPHE"]
 
-# alt + l to @
+# (physical) ctrl/right alt + l to @
 [[remap]]
 input = ["KEY_RIGHTALT", "KEY_L"]
 output = ["KEY_LEFTSHIFT", "KEY_2"]
 [[remap]]
-input = ["KEY_LEFTALT", "KEY_L"]
+input = ["KEY_LEFTCTRL", "KEY_L"]
 output = ["KEY_LEFTSHIFT", "KEY_2"]
 
-# alt + n to ~
+# (physical) ctrl/right alt + n to ~
 [[remap]]
 input = ["KEY_RIGHTALT", "KEY_N"]
 output = ["KEY_LEFTSHIFT", "KEY_GRAVE"]
 [[remap]]
-input = ["KEY_LEFTALT", "KEY_N"]
+input = ["KEY_LEFTCTRL", "KEY_N"]
 output = ["KEY_LEFTSHIFT", "KEY_GRAVE"]
 
-# alt + g to ~
+# (physical) ctrl/right alt + g to ~
 [[remap]]
 input = ["KEY_RIGHTALT", "KEY_G"]
 output = ["KEY_GRAVE"]
 [[remap]]
-input = ["KEY_LEFTALT", "KEY_G"]
+input = ["KEY_LEFTCTRL", "KEY_G"]
 output = ["KEY_GRAVE"]
