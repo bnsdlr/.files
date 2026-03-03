@@ -16,7 +16,7 @@ set $alt Mod1
 ### Wallpaper: ###
 # - You need to specify homescreen wallpaper using azote
 
-set $lockScreenWallpaper /home/ben/Desktop/wallpapers/Mühle_SGS.png
+set $lockScreenWallpaper /home/ben/.files/wallpapers/Muehle_SGS.png
 
 ### Applications: ###
 
@@ -62,7 +62,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id xfce4-power-manager
 exec_always --no-startup-id setcursor
-exec --no-startup-id ~/.local/bin/shcts    # comment stop autostart cheatsheet
+# exec --no-startup-id ~/.local/bin/shcts    # comment stop autostart cheatsheet
 #exec_always --no-startup-id ${HOME}/.config/polybar/launch.sh
 exec_always --no-startup-id numlockx on
 exec blueberry-tray
@@ -72,8 +72,8 @@ exec --no-startup-id ~/.local/bin/fastfetch-garuda
 exec --no-startup-id ghostty
 exec --no-startup-id qutebrowser
 
-assign [class="com.mitchellh.ghostty"] 2
-assign [class="qutebrowser"] 3
+assign [class="com.mitchellh.ghostty"] 1
+assign [class="qutebrowser"] 2
 
 # hide/unhide i3status bar
 bindsym $super+m bar mode toggle
