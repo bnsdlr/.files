@@ -14,3 +14,6 @@ css = "~/.config/qutebrowser/my.css"
 config.set("content.user_stylesheets", [css])
 config.bind(",n", f'config-cycle content.user_stylesheets ["{css}"] []')
 
+c.url.default_page = "about:blank"
+c.url.start_pages = ["about:blank"]
+
