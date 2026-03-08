@@ -22,6 +22,14 @@ input = "KEY_CAPSLOCK"
 hold = ["KEY_RIGHTCTRL"]
 tap = ["KEY_ESC"]
 
+# " to '
+[[remap]]
+input = ["KEY_LEFTSHIFT", "KEY_APOSTROPHE"]
+output = ["KEY_APOSTROPHE"]
+[[remap]]
+input = ["KEY_RIGHTSHIFT", "KEY_APOSTROPHE"]
+output = ["KEY_APOSTROPHE"]
+
 # swap y and z
 [[remap]]
 input = ["KEY_Z"]
@@ -80,10 +88,10 @@ output = ["KEY_RIGHTSHIFT", "KEY_SLASH"]
 input = ["KEY_RIGHTSHIFT", "KEY_MINUS"]
 output = ["KEY_RIGHTSHIFT", "KEY_SLASH"]
 
-# - to *
+# - to +
 [[remap]]
 input = ["KEY_MINUS"]
-output = ["KEY_RIGHTSHIFT", "KEY_8"]
+output = ["KEY_RIGHTSHIFT", "KEY_EQUAL"]
 
 # + to ^
 [[remap]]
@@ -93,10 +101,23 @@ output = ["KEY_RIGHTSHIFT", "KEY_6"]
 input = ["KEY_RIGHTSHIFT", "KEY_EQUAL"]
 output = ["KEY_RIGHTSHIFT", "KEY_6"]
 
-# = to +
+# # to *
+[[remap]]
+input = ["KEY_LEFTSHIFT", "KEY_3"]
+output = ["KEY_RIGHTSHIFT", "KEY_8"]
+[[remap]]
+input = ["KEY_RIGHTSHIFT", "KEY_3"]
+output = ["KEY_RIGHTSHIFT", "KEY_8"]
+
+# ' to #
+[[remap]]
+input = ["KEY_APOSTROPHE"]
+output = ["KEY_LEFTSHIFT", "KEY_3"]
+
+# = to `
 [[remap]]
 input = ["KEY_EQUAL"]
-output = ["KEY_RIGHTSHIFT", "KEY_EQUAL"]
+output = ["KEY_GRAVE"]
 
 # & to /
 [[remap]]
