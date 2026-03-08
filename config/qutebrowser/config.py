@@ -1,7 +1,9 @@
 config.load_autoconfig(False)
 
+c.window.hide_decoration = True
+c.completion.shrink = True
+
 config.bind('go', ':scroll-to-perc 0')
-c.search.incremental = False
 config.source('vague.py')
 
 c.colors.webpage.darkmode.enabled = True
