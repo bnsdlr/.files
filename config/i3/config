@@ -14,7 +14,7 @@ set $preferredTextEditor /usr/bin/idea
 set $preferredScreenCaptureTool /usr/bin/flameshot gui
 
 ### Screen Capturing & Print Screen: ###
-bindsym $mod+Shift+s exec $preferredScreenCaptureTool
+bindsym $mod+s exec $preferredScreenCaptureTool
 bindsym $mod+Return exec $preferredTerminalEmulator
 bindsym $mod+Shift+i exec ~/.local/bin/shcts  # open cheatsheet
 
