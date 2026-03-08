@@ -1,2 +1,3 @@
 $DOTFILES/config=$HOME/.config
+macos $DOTFILES/config/qutebrowser=$HOME/.qutebrowser
 cp $DOTFILES/config/zsh/zshrc $HOME/.zshrc

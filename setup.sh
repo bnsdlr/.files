@@ -88,6 +88,12 @@ else
 
     for file in $(find $dotfiles -name 'map'); do
         while IFS="" read -r link || [ -n "$p" ]; do
+			if [[ "$link" == "macos "* ]]; then
+				link=${link:6}
+				if [[ "$OSTYPE" != "darwin"* ]]; then
+					continue;
+				fi
+			fi
             if [[ ! "$link" == "#"* ]] && [[ "$link" == *"="* ]]; then
                 link=$(eval echo "$link")
 				from=$(echo "$link" | cut -d "=" -f 1)
