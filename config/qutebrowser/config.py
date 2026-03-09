@@ -1,7 +1,5 @@
 config.load_autoconfig(False)
 
-c.confirm_quit = ['always']
-
 c.window.hide_decoration = True
 c.completion.shrink = True
 
