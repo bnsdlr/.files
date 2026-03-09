@@ -1,5 +1,7 @@
 config.load_autoconfig(False)
 
+c.confirm_quit = ['always']
+
 c.window.hide_decoration = True
 c.completion.shrink = True
 
@@ -14,6 +16,7 @@ c.editor.command = [
 ]
 
 config.bind('go', ':scroll-to-perc 0')
+config.bind('go', ':scroll-to-perc 0', mode='caret')
 config.bind('<space>h', ':home')
 config.bind('<space>p', ':tab-pin')
 config.bind('<space>s', ':config-source')
@@ -31,6 +34,10 @@ config.bind('<Ctrl-5>', ':tab-focus 5')
 config.bind('<Ctrl-6>', ':tab-focus 6')
 config.bind('<Ctrl-7>', ':tab-focus 7')
 
+config.bind("sl", "cmd-set-text :session-load ")
+config.bind("sd", "cmd-set-text :session-delete ")
+config.bind("ss", "cmd-set-text :session-save ")
+
 c.colors.webpage.darkmode.enabled = True
 c.colors.webpage.darkmode.policy.page = 'always'
 c.colors.webpage.preferred_color_scheme = 'dark'
@@ -43,3 +50,4 @@ c.url.default_page = "about:blank"
 c.url.start_pages = ["about:blank"]
 
 config.source('vague.py')
+

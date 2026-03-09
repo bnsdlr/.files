@@ -1,5 +1,7 @@
 # Vague theme for qutebrowser
 
+c.fonts.default_size = "18px"
+
 # --- Base backgrounds ---
 
 bg0_hard = "#141415"
