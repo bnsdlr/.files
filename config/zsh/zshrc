@@ -1,6 +1,8 @@
 export DISABLE_AUTO_UPDATE=true
 
 export PATH="$HOME/.emacs.d/bin:$PATH"
+export PATH="/opt/homebrew/opt/ffmpeg-full/bin:$PATH"
+export PATH="/opt/homebrew/opt/imagemagick-full/bin:$PATH"
 
 export EDITOR="nvim"
 export MANPAGER="nvim +Man!"
