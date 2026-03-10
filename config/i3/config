@@ -40,8 +40,6 @@ exec --no-startup-id qutebrowser
 
 assign [class="com.mitchellh.ghostty"] 1
 assign [class="qutebrowser"] 2
-assign [class="jetbrains-idea"] 3
-assign [class=".*"] 4
 
 # hide/unhide i3status bar
 bindsym $mod+m bar mode toggle
