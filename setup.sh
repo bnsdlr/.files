@@ -43,6 +43,9 @@ update_directory() {
 
 		printf "${GREEN}rsync -ia --delete \"$dir\" \"$to_dir\"$NC\n"
 		if ! $is_test; then
+			if [[ ! -d "$to_dir" ]]; then
+				mkdir "$to_dir"
+			fi
 			rsync -ia --delete "$dir" "$to_dir"
 		fi
 	done
