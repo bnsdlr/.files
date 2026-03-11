@@ -71,7 +71,7 @@ zshrc_bf_dotfiles="$HOME/.zshrc-bf-dotfiles"
 doomd_bf_dotfiles="$HOME/.doom.d"
 
 if $remove; then
-    read -p "Are you shure you want to remove the dotfiles and hopefully get your old config back? [y/N]: " continue
+    read -p "Are you sure you want to remove the dotfiles and hopefully get your old config back? [y/N]: " continue
     continue=${continue:-n}
 
     if [[ "$continue" == "y" ]]; then
@@ -99,7 +99,7 @@ if $remove; then
 			fi
         fi
 
-        echo "Make sure to delte the $dotfiles direcotry."
+        echo "Make sure to delete the $dotfiles directory."
     else
         echo "Exiting"
     fi
@@ -151,4 +151,4 @@ else
     add_line_to_zshrc_if_not_exists "$dotfiles_export"
 fi
 
-echo "For the changes to take effect you need to resource your shell."
+echo "For the changes to take effect you need to source your shell."
