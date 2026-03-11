@@ -38,6 +38,9 @@ alias vim="nvim"
 alias emacs="emacsclient -c -a 'emacs'"
 
 alias ls="ls -CGA"
+alias l="ls"
+
+alias mountwin="sudo mount -t ntfs-3g /dev/nvme0n1p3 /mnt/windows"
 
 # script shortcuts
 alias uconf="$DOTFILES/update.sh"
