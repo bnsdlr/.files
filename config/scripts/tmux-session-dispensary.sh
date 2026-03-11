@@ -2,8 +2,9 @@
 # inspired: https://github.com/SylvanFranklin/.config/blob/df0087d62958add7d78e29192682825adbb98e7c/scripts/tmux-session-dispensary.sh
 
 DIRS=(
-    "$HOME/documents/notes"
-    "$HOME/documents/projects"
+    "$HOME/documents/notes/"*
+    "$HOME/documents/projects/"*
+    "$HOME/documents/reading"
     "$(pwd)"
 )
 
@@ -23,7 +24,7 @@ if [[ $# -eq 1 ]]; then
 else
     check_if_installed fd "https://github.com/sharkdp/fd"
     check_if_installed sk "https://github.com/skim-rs/skim"
-    selected=$(fd . ${DIRS[@]} --type=dir --max-depth=2 --full-path --exclude Library \
+    selected=$(fd . ${DIRS[@]} --type=dir --max-depth=1 --full-path --exclude Library \
         --exclude target --exclude src --exclude lib --exclude test \
         | sed -E "s|^$HOME/(.*)/$|\1|" \
         | sk --margin 10% --color="bw")

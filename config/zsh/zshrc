@@ -1,3 +1,5 @@
+export DOTFILES="/Users/ben/.files"
+
 export DISABLE_AUTO_UPDATE=true
 
 export PATH="$HOME/.emacs.d/bin:$PATH"

@@ -9,15 +9,23 @@ non_existent=false
 load_config=false
 load_doom_d=false
 load_zshrc=false
+verbose=false
 
 for arg in "$@"; do
 	case "$arg" in
-		-*t*|-test|--test) is_test=true ;;&
-		-*ne*|--non-existent) non_existent=true ;;&
-		-*a*|-all|--all) load_all=true ;;&
-		-*c*) load_config=true ;;&
-		-*d*) load_doom_d=true ;;&
-		-*z*) load_zshrc=true ;;&
+		-*) 
+			for ((i=1;i<${#arg};i++)); do
+				case "${arg:i:1}" in
+					t) is_test=true ;;
+					a) load_all=true ;;
+					n) non_existent=true ;;
+					c) load_config=true ;;
+					d) load_doom_d=true ;;
+					z) load_zshrc=true ;;
+					v) verbose=true ;;
+				esac
+			done
+			;;
 	esac
 done
 
@@ -47,16 +55,19 @@ if $non_existent && ($load_all || $load_config); then
 
 	for entry in "$src_config_dir"/*; do
 		bname=$(basename "$entry")
+		dst="$dst_config_dir/$bname"
 
-		if [[ -f "$entry" ]] && [[ -f "$dst_config_dir" ]]; then
-			printf "${GREEN}cp $entry $dst_config_dir $NC\n"
+		if [[ -f "$entry" ]] && [[ -f "$dst" ]]; then
+			printf "${GREEN}cp $entry $dst $NC\n"
 			if ! $is_test; then
-				cp "$entry" "$dst_config_dir/$bname"
+				cp "$entry" "$dst"
 			fi
 		else
-			printf "${GREEN}rsync -ia --delete \"$entry\" \"$dst_config_dir\"$NC\n"
+			printf "${GREEN}rsync -ria --delete \"$entry/\" \"$dst/\"$NC\n"
 			if ! $is_test; then
-				rsync -ia --delete "$entry" "$dst_config_dir"
+				rsync -ria --delete "$entry/" "$dst/"
+			elif $verbose; then
+				rsync -ria --dry-run --delete "$entry/" "$dst/"
 			fi
 		fi
 	done
@@ -69,13 +80,14 @@ if ! $non_existent && ($load_all || $load_config); then
 
 	for entry in "$dst_config_dir"/*; do
 		bname=$(basename "$entry")
-		dname=$(dirname "$entry")
 		src="$src_config_dir/$bname"
 
 		if [[ -d "$entry" ]] && [[ -d "$src" ]]; then
-			printf "${GREEN}rsync -ia --delete \"$src\" \"$dname\"$NC\n"
+				printf "${GREEN}rsync -ria --delete \"$src/\" \"$entry/\"$NC\n"
 			if ! $is_test; then
-				rsync -ia --delete "$src" "$dname"
+				rsync -ria --delete "$src/" "$entry/"
+			elif $verbose; then
+				rsync -ria --dry-run --delete "$src/" "$entry/"
 			fi
 		elif [[ -f "$entry" ]] && [[ -f "$src" ]]; then
 			printf "${GREEN}cp $src $entry $NC\n"
@@ -103,9 +115,11 @@ if $load_all || $load_doom_d; then
 		echo "would update $dst_doom_d_dir with $src_doom_d_dir:"
 	fi
 
-	printf "${GREEN}rsync -ia --delete \"$src_doom_d_dir\" \"$dst_doom_d_dir\"$NC\n"
+	printf "${GREEN}rsync -ria --delete \"$src_doom_d_dir/\" \"$dst_doom_d_dir\"$NC\n"
 
 	if ! $is_test; then
-		rsync -ia --delete "$src_doom_d_dir" "$dst_doom_d_dir"
+		rsync -ria --delete "$src_doom_d_dir/" "$dst_doom_d_dir/"
+	elif $verbose; then
+		rsync -ria --dry-run --delete "$src_doom_d_dir/" "$dst_doom_d_dir/"
 	fi
 fi
