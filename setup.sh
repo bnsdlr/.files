@@ -68,7 +68,7 @@ export DOTFILES="$dotfiles"
 
 config_bf_dotfiles="$HOME/.config-bf-dotfiles"
 zshrc_bf_dotfiles="$HOME/.zshrc-bf-dotfiles"
-doomd_bf_dotfiles="$HOME/.doom.d"
+doomd_bf_dotfiles="$HOME/.doom.d-bf-dotfiles"
 
 if $remove; then
     read -p "Are you sure you want to remove the dotfiles and hopefully get your old config back? [y/N]: " continue
