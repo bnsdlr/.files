@@ -43,14 +43,22 @@ brew install qutebrowser
 brew install --cask font-jetbrains-mono-nerd-font
 ```
 
-<!--
-## Emacs
+## (Doom) Emacs
+
+[getting started guide](https://github.com/doomemacs/doomemacs/blob/master/docs/getting_started.org#getting-started-guide)
+
+### MacOS
+
+[isntall](https://github.com/doomemacs/doomemacs/blob/master/docs/getting_started.org#on-macos)
 
 ```shell
 brew tap "d12frosted/emacs-plus"
 brew install "d12frosted/emacs-plus/emacs-plus@30"
 ```
--->
+
+### Arch
+
+[install](https://github.com/doomemacs/doomemacs/blob/master/docs/getting_started.org#arch-linux)
 
 ## Programing Languages
 
