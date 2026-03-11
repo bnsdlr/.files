@@ -1,0 +1,57 @@
+let mapleader = " "
+
+set scrolloff=8
+set incsearch
+set ignorecase
+set wrap!
+set number
+set relativenumber
+set tabstop=4
+set shiftwidth=4
+set smartindent
+set noswapfile
+
+" Highlight yanks (requires plugin)
+Plug 'machakann/vim-highlightedyank'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+
+map <leader>y "+y
+map <leader>d "_d
+map <leader>c "_c
+
+map <leader>w :update<CR>
+
+map <leader>lf <Action>(ReformatCode)
+map <leader>lg <Action>(GenerateGetter)
+" map <leader>d <Action>(Debug)
+map <leader>b <Action>(ToggleLineBreakpoint)
+
+nmap < <
+nmap > >>
+
+nmap <leader>f <action>(GotoFile)
+nmap <leader>g <action>(FindInPath)
+nmap <leader>ss <action>(GotoSymbol)
+
+nmap <leader>i :action GotoNextError<CR>:action ShowIntentionActions<CR>
+nmap <leader>o :action OptimizeImports<CR>
+
+nmap grn <action>(RenameElement)
+
+nmap <C-d> <C-d>zz
+nmap <C-u> <C-u>zz
+nmap n nzz
+nmap N Nzz
+
+imap <C-v> <C-o>h<C-o>"+p
+vmap <C-v> <C-o>h"+p
+" nmap <C-v> <C-o>h"+p
+
+imap <C-c> <C-o>"+y
+vmap <C-c> "+y
+nmap <C-c> "+y
+
+imap <C-x> <C-o>"+c
+vmap <C-x> "+c
+nmap <C-x> "+c
