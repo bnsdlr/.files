@@ -37,7 +37,7 @@ fi
 alias vim="nvim"
 alias emacs="emacsclient -c -a 'emacs'"
 
-alias ls="ls -CGA"
+alias ls="ls -CGA --color=auto"
 alias l="ls"
 
 alias mountwin="sudo mount -t ntfs-3g /dev/nvme0n1p3 /mnt/windows"
