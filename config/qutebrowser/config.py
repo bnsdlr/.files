@@ -21,7 +21,7 @@ config.bind(',s', ':config-source')
 config.bind(',o', ':open -t about:blank')
 config.bind('<Ctrl-n>', ':tab-next')
 config.bind('<Ctrl-p>', ':tab-prev')
-config.bind('<Ctrl-u>', ':edit-url')
+config.bind('<Ctrl-l>', ':edit-url')
 config.bind('<Ctrl-e>', ':edit-text', mode='insert')
 config.bind('<Ctrl-e>', ':cmd-edit')
 config.bind('<Ctrl-1>', ':tab-focus 1')
@@ -35,6 +35,10 @@ config.bind('<Ctrl-7>', ':tab-focus 7')
 config.bind("sl", "cmd-set-text :session-load ")
 config.bind("sd", "cmd-set-text :session-delete ")
 config.bind("ss", "cmd-set-text :session-save ")
+
+# because yt
+config.bind("j", ":scroll-px 0 150")
+config.bind("k", ":scroll-px 0 -150")
 
 c.colors.webpage.darkmode.enabled = True
 c.colors.webpage.darkmode.policy.page = 'always'
