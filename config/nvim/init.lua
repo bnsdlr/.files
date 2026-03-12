@@ -1,3 +1,5 @@
+vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:block,r-cr-o:block"
+
 vim.opt.winborder = "single"
 vim.opt.pumborder = "single"
 
@@ -205,6 +207,9 @@ map({ "n" }, "<leader>tp", "<cmd>tabprevious<CR>")
 map({ "n" }, "<leader>tc", "<cmd>tabnew<CR>")
 map({ "n" }, "<leader>tx", "<cmd>tabclose<CR>")
 map({ "n" }, "<leader>tm", ":tabmove ")
+
+map({ "c" }, "<C-b>", "<Left>");
+map({ "c" }, "<C-f>", "<Right>");
 
 -- image
 

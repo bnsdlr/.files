@@ -6,8 +6,8 @@ foreground = '0xcdcdcd'
 
 # Cursor colors
 [colors.cursor]
-text   = '0x141415'
-cursor = '0xcdcdcd'
+text   = '0xe0def4'
+cursor = '0x524f67'
 
 # Selection colors  
 [colors.selection]
