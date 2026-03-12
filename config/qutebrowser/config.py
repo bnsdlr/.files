@@ -36,10 +36,6 @@ config.bind("sl", "cmd-set-text :session-load ")
 config.bind("sd", "cmd-set-text :session-delete ")
 config.bind("ss", "cmd-set-text :session-save ")
 
-# because yt
-config.bind("j", ":scroll-px 0 150")
-config.bind("k", ":scroll-px 0 -150")
-
 c.colors.webpage.darkmode.enabled = True
 c.colors.webpage.darkmode.policy.page = 'always'
 c.colors.webpage.preferred_color_scheme = 'dark'
