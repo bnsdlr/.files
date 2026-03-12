@@ -173,8 +173,8 @@ for_window [class="com.alacritty.floatingedit"] move position center
 # window rules, you can find the window class using xprop
 for_window [class=".*"] border pixel 4
 assign [class=URxvt] 1
-for_window [class=Viewnior|feh|Audacious|File-roller|Lxappearance|Lxtask|Pavucontrol|upgrade2ultimate.sh|PrismLauncher|Hytale-launcher] floating enable
-for_window [class=URxvt|qutebrowser|Geany|Evince|Soffice|libreoffice*|mpv|Ghb|Xfburn|Gimp*|Inkscape|Vlc|Lxappearance|Audacity] focus
+for_window [class=Viewnior|feh|Audacious|File-roller|Lxappearance|Lxtask|Pavucontrol|upgrade2ultimate.sh|PrismLauncher|Hytale-launcher|Thunar] floating enable
+for_window [class=URxvt|Geany|Evince|Soffice|libreoffice*|mpv|Ghb|Xfburn|Gimp*|Inkscape|Vlc|Lxappearance|Audacity] focus
 for_window [class=Xfburn|GParted|System-config-printer.py|Lxtask|Pavucontrol|Exo-helper*|Lxrandr|Arandr] focus
 
 # class                 border  backgr. text    indicator child_border
