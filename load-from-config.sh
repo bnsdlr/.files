@@ -29,6 +29,10 @@ for arg in "$@"; do
 	esac
 done
 
+if ! $load_all && ! $load_config && ! $load_zshrc && ! $load_doom_d; then
+	echo "you probably should at least specify one of these flags: -a -c -d -z"
+fi
+
 dotfiles=$DOTFILES
 
 if [[ "$dotfiles" == "" ]]; then
