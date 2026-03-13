@@ -45,3 +45,4 @@ alias mountwin="sudo mount -t ntfs-3g /dev/nvme0n1p3 /mnt/windows"
 # script shortcuts
 alias uconf="$DOTFILES/update.sh"
 alias tf="$HOME/.config/scripts/tmux-session-dispensary.sh"
+alias zv="$HOME/.config/scripts/zv.sh"

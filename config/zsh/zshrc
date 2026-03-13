@@ -2,6 +2,7 @@ export DOTFILES="/Users/ben/.files"
 
 export DISABLE_AUTO_UPDATE=true
 
+export PATH="$HOME/.zig/current:$PATH"
 export PATH="$HOME/.emacs.d/bin:$PATH"
 export PATH="/opt/homebrew/opt/ffmpeg-full/bin:$PATH"
 export PATH="/opt/homebrew/opt/imagemagick-full/bin:$PATH"
