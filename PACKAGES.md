@@ -62,6 +62,12 @@ brew install "d12frosted/emacs-plus/emacs-plus@30"
 
 ## Programing Languages
 
+### Zig
+
+Download zig [here](https://ziglang.org/download/).
+
+Then use [this script](./config/scripts/zv.sh) (alias zv) to add and use the downloaded version.
+
 ### Rust
 
 Via the [offical website](https://www.rust-lang.org/tools/install).
