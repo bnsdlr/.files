@@ -41,7 +41,7 @@ vim.pack.add({
 	{ src = "https://github.com/Saghen/blink.cmp" },
 	-- language plugins
 	{ src = "https://github.com/mrcjkb/rustaceanvim" },
-	{ src = "https://github.com/ziglang/zig.vim" },
+	{ src = "https://codeberg.org/ziglang/zig.vim" },
 })
 
 -- require("nvim-treesitter.config").setup({ highlight = { enable = true } })
@@ -207,6 +207,8 @@ map({ "n" }, "<leader>tp", "<cmd>tabprevious<CR>")
 map({ "n" }, "<leader>tc", "<cmd>tabnew<CR>")
 map({ "n" }, "<leader>tx", "<cmd>tabclose<CR>")
 map({ "n" }, "<leader>tm", ":tabmove ")
+
+map({ "n" }, "<leader>m", ":make<CR>")
 
 map({ "c" }, "<C-b>", "<Left>");
 map({ "c" }, "<C-f>", "<Right>");

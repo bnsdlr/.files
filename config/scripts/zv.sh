@@ -6,8 +6,9 @@ case $1 in
 	l|ls|list)
 		echo "Available versions:"
 		for entry in "$ZIG_DIR"/*; do
-			if [[ "$entry" != *"current" ]] && [[ -d "$entry" ]]; then
-				echo "${entry:${#ZIG_DIR}+5}"
+			entry=${entry:${#ZIG_DIR}+1}
+			if [[ "$entry" == "zig-"* ]]; then
+				echo "$entry"
 			fi
 		done
 		;;
