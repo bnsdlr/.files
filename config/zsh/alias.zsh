@@ -31,6 +31,7 @@ alias dot="cd $DOTFILES"
 alias icloud="cd $HOME/Library/Mobile\ Documents/com~apple~CloudDocs"
 
 alias sz="source $HOME/.zshrc"
+alias se="source $HOME/.zshenv"
 
 if command -v exercism &>/dev/null; then
 	alias exer="cd $(exercism workspace)"
