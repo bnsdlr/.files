@@ -21,7 +21,7 @@ add_line_to_file_if_not_exists() {
         printf "Adding line to %s: \"%s\"\n" "$file" "$line"
 		temp="$DOTFILES/tmp-$(basename "$file")"
 		if ! $is_test; then
-        	{ printf "%s\n\n" "$line"; cat "$file"; } > "$temp" && mv "$temp" "$file"
+        	{ cat "$file"; printf "%s\n\n" "$line"; } > "$temp" && mv "$temp" "$file"
 		fi
     fi
 }
