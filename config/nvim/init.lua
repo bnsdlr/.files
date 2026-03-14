@@ -20,8 +20,6 @@ vim.opt.ignorecase = true
 vim.opt.signcolumn = "yes"
 vim.opt.colorcolumn = "100"
 
-vim.g.zig_fmt_autosave = 0
-
 -- plugins
 vim.pack.add({
 	{ src = "https://github.com/vague2k/vague.nvim" },
@@ -234,6 +232,14 @@ vim.lsp.enable({
 	"cssls",
 	"zls",
 })
+
+vim.g.zig_fmt_autosave = 0
+
+vim.lsp.config['zls'] = {
+  cmd = { 'zls' },
+  filetypes = { 'zig' },
+  root_markers = { 'build.zig' },
+}
 
 -- vim.api.nvim_create_autocmd('LspAttach', {
 -- 	group = vim.api.nvim_create_augroup('my.lsp', {}),
