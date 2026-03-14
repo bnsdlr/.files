@@ -1,24 +1,8 @@
-export DOTFILES="/Users/ben/.files"
-
 export DISABLE_AUTO_UPDATE=true
-
-export PATH="$HOME/.zig/current:$PATH"
-export PATH="$HOME/.zig/zls/zig-out/bin:$PATH"
-export PATH="$HOME/.emacs.d/bin:$PATH"
-export PATH="/opt/homebrew/opt/ffmpeg-full/bin:$PATH"
-export PATH="/opt/homebrew/opt/imagemagick-full/bin:$PATH"
-
-export EDITOR="nvim"
-export MANPAGER="nvim +Man!"
-export VISUAL="nvim"
 
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_CUSTOM="$HOME/.config/zsh"
 export TERM=xterm-256color
-
-export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"
-
-export EXERCISM_CONFIG_HOME="$HOME/documents/projects/exercism/config"
 
 ZSH_THEME="my"
 
@@ -30,4 +14,3 @@ fi
 
 source $ZSH/oh-my-zsh.sh
 source "$HOME/.config/zsh/init.zsh"
-source "$HOME/.local/share/bob/env/env.sh" 2>/dev/null

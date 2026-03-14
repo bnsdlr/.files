@@ -9,10 +9,15 @@ non_existent=false
 load_config=false
 load_doom_d=false
 load_zshrc=false
+load_zshenv=false
 verbose=false
 
 for arg in "$@"; do
 	case "$arg" in
+		-h|--h|-help|--help)
+			printf "just look into $0\n"
+			exit 0
+			;;
 		-*) 
 			for ((i=1;i<${#arg};i++)); do
 				case "${arg:i:1}" in
@@ -22,6 +27,7 @@ for arg in "$@"; do
 					c) load_config=true ;;
 					d) load_doom_d=true ;;
 					z) load_zshrc=true ;;
+					e) load_zshenv=true ;;
 					v) verbose=true ;;
 				esac
 			done
@@ -29,8 +35,8 @@ for arg in "$@"; do
 	esac
 done
 
-if ! $load_all && ! $load_config && ! $load_zshrc && ! $load_doom_d; then
-	echo "you probably should at least specify one of these flags: -a -c -d -z"
+if ! $load_all && ! $load_config && ! $load_zshrc && ! $load_zshenv && ! $load_doom_d; then
+	echo "you probably should at least specify one of these flags: -a -c -d -z -e"
 fi
 
 dotfiles=$DOTFILES
@@ -45,6 +51,8 @@ src_doom_d_dir=$HOME/.doom.d
 dst_doom_d_dir=$dotfiles/doom.d
 src_zshrc_file=$HOME/.zshrc
 dst_zshrc_file=$dotfiles/config/zsh/zshrc
+src_zshenv_file=$HOME/.zshenv
+dst_zshenv_file=$dotfiles/config/zsh/zshenv
 
 echo ".files at $dotfiles"
 
@@ -111,6 +119,18 @@ if $load_all || $load_zshrc; then
 
 	if ! $is_test; then
 		cp "$src_zshrc_file" "$dst_zshrc_file"
+	fi
+fi
+
+if $load_all || $load_zshenv; then
+	if $is_test; then
+		echo "would update $dst_zshenv_file with $src_zshenv_file:"
+	fi
+
+	printf "${GREEN}cp $src_zshenv_file $dst_zshenv_file $NC\n"
+
+	if ! $is_test; then
+		cp "$src_zshenv_file" "$dst_zshenv_file"
 	fi
 fi
 

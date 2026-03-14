@@ -1,4 +1,5 @@
 $DOTFILES/config=$HOME/.config
 macos $DOTFILES/config/qutebrowser=$HOME/.qutebrowser
 cp $DOTFILES/config/zsh/zshrc $HOME/.zshrc
+cp $DOTFILES/config/zsh/zshenv $HOME/.zshenv
 $DOTFILES/doom.d=$HOME/.doom.d/

@@ -14,14 +14,14 @@ for arg in "$@"; do
 	esac
 done
 
-add_line_to_zshrc_if_not_exists() {
-    line="$1"
-    if [[ ! $(cat "$HOME/.zshrc" | grep "$line" >> /dev/null; echo $?) -eq 0 ]]; then
-        echo "Adding line to .zshrc: $line"
-        zshrc="$HOME/.zshrc"
-        temp="$DOTFILES/temp-zshrc"
+add_line_to_file_if_not_exists() {
+	file="$1"
+    line="$2"
+    if [[ -f "$file" ]] && ! grep -qF "$line" "$file"; then
+        printf "Adding line to %s: \"%s\"\n" "$file" "$line"
+		temp="$DOTFILES/tmp-$(basename "$file")"
 		if ! $is_test; then
-        	{ echo -e "$line\n"; cat "$zshrc"; } > "$temp" && mv "$temp" "$zshrc"
+        	{ printf "%s\n\n" "$line"; cat "$file"; } > "$temp" && mv "$temp" "$file"
 		fi
     fi
 }
@@ -71,6 +71,7 @@ export DOTFILES="$dotfiles"
 
 config_bf_dotfiles="$HOME/.config-bf-dotfiles"
 zshrc_bf_dotfiles="$HOME/.zshrc-bf-dotfiles"
+zshenv_bf_dotfiles="$HOME/.zshenv-bf-dotfiles"
 doomd_bf_dotfiles="$HOME/.doom.d-bf-dotfiles"
 
 if $remove; then
@@ -91,6 +92,14 @@ if $remove; then
 			if ! $is_test; then
 				cp "$zshrc_bf_dotfiles" "$HOME/.zshrc"
 				rm "$zshrc_bf_dotfiles"
+			fi
+        fi
+
+        if [[ -f "$zshenv_bf_dotfiles" ]]; then
+            echo "Resetting .zshenv..."
+			if ! $is_test; then
+				cp "$zshenv_bf_dotfiles" "$HOME/.zshenv"
+				rm "$zshenv_bf_dotfiles"
 			fi
         fi
 
@@ -116,6 +125,13 @@ else
         echo "Making copy of $HOME/.zshrc to $zshrc_bf_dotfiles"
 		if ! $is_test; then
         	cp "$HOME/.zshrc" "$zshrc_bf_dotfiles"
+		fi
+    fi
+
+    if [[ ! -f "$zshenv_bf_dotfiles" ]]; then
+        echo "Making copy of $HOME/.zshenv to $zshenv_bf_dotfiles"
+		if ! $is_test; then
+        	cp "$HOME/.zshenv" "$zshenv_bf_dotfiles"
 		fi
     fi
 
@@ -150,8 +166,7 @@ else
         done <$file
     done
 
-    dotfiles_export="export DOTFILES=\"$dotfiles\""
-    add_line_to_zshrc_if_not_exists "$dotfiles_export"
+    add_line_to_file_if_not_exists "$HOME/.zshenv" "export DOTFILES=\"$dotfiles\""
 fi
 
 echo "For the changes to take effect you need to source your shell."
