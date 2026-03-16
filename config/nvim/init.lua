@@ -42,7 +42,10 @@ vim.pack.add({
 	{ src = "https://codeberg.org/ziglang/zig.vim" },
 })
 
--- require("nvim-treesitter.config").setup({ highlight = { enable = true } })
+require('nvim-treesitter').install {
+	'zig',
+	'markdown',
+}
 
 local telescope = require "telescope"
 telescope.setup({
