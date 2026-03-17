@@ -29,7 +29,7 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
 	{ src = "https://github.com/nvim-telescope/telescope-ui-select.nvim" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter",        version = "main" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter",        version = "master" },
 	{ src = "https://github.com/mbbill/undotree" },
 	-- image
 	{ src = "https://github.com/3rd/image.nvim" },
@@ -42,10 +42,22 @@ vim.pack.add({
 	{ src = "https://codeberg.org/ziglang/zig.vim" },
 })
 
-require('nvim-treesitter').install {
-	'zig',
-	'markdown',
-}
+-- require('nvim-treesitter').install {
+-- 	'zig',
+-- 	'markdown',
+-- }
+
+require("nvim-treesitter.configs").setup({
+        ensure_installed = {
+			"markdown",
+			"zig",
+            "elixir",
+            "html",
+			"rust",
+			"lua",
+        },
+        highlight = { enable = true },
+})
 
 local telescope = require "telescope"
 telescope.setup({
