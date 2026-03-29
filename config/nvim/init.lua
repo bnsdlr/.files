@@ -20,6 +20,8 @@ vim.opt.ignorecase = true
 vim.opt.signcolumn = "yes"
 vim.opt.colorcolumn = "100"
 
+vim.opt.foldmethod = "marker"
+
 -- plugins
 vim.pack.add({
 	{ src = "https://github.com/vague2k/vague.nvim" },
