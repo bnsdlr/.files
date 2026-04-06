@@ -57,7 +57,9 @@ brew install --cask font-jetbrains-mono-nerd-font
 
 Download zig [here](https://ziglang.org/download/).
 
-Then use [this script](./config/scripts/zv.sh) (alias zv) to add and use the downloaded version.
+Then use [this script](zv) (alias zv) to add and use the downloaded version.
+
+Or use [this script](zv) (alias zv) to install the latest zig from [src](https://codeberg.org/ziglang/zig).
 
 ### Rust
 
@@ -74,3 +76,5 @@ brew "elixir"
 ## Other
 
   - [Oh My Zsh](https://ohmyz.sh)
+
+[zv]:./config/scripts/zv.sh

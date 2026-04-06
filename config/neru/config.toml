@@ -1,12 +1,28 @@
 [general]
+hide_overlay_in_screen_share = true
+
+[theme.dark]
+surface = "#141415"
+accent = "#524F67"
+accent_alt = "#7E98E8"
+on_accent_alt = "#141415"
+text = "#CDCDCD"
+
 [hotkeys]
-"Cmd+Shift+Space" = "hints"
-"Cmd+Shift+G" = "grid"
-"Cmd+Shift+C" = "recursive_grid"
-"Cmd+Shift+S" = "scroll"
+"Ctrl+Shift+Space" = "hints"
+"Ctrl+Shift+G" = "grid"
+"Ctrl+Shift+C" = "recursive_grid"
+"Ctrl+Shift+S" = "scroll"
+"Ctrl+Shift+A" = "toggle-screen-share"
+"Ctrl+Shift+^" = "toggle-cursor-follow-selection"
 
 [hints]
 hint_characters = "arstdhneio"               # Characters used for hint labels
+include_menubar_hints = true
+include_nc_hints = true
+
+[hints.hotkeys]
+"Space" = "action reset"
 
 [grid]
 enabled = true
@@ -22,3 +38,6 @@ keys = "lune"                               # Cell selection keys (must be grid_
 
 [scroll.hotkeys]
 "go" = "action go_top"
+
+[smooth_cursor]
+move_mouse_enabled = true

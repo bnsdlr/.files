@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
+INFO="\x1b[1;34m"
+ERROR="\x1b[1;31m"
+GRAY="\x1b[1;90m"
+NC="\x1b[0m"
+
 ZIG_DIR="$HOME/.zig"
+ZIG_DOWNLOAD_URL=https://ziglang.org/download/
+
+ZLS_DIR="$ZIG_DIR/zls"
+ZLS_REPO="https://github.com/zigtools/zls"
 
 case $1 in 
 	l|ls|list)
@@ -12,8 +21,31 @@ case $1 in
 			fi
 		done
 		;;
+	zls|lsp)
+		if [[ ! -d "$ZLS_DIR" ]]; then
+			mkdir -p "$ZLS_DIR"
+		fi
+
+		if [[ ! -d "$ZLS_DIR/.git" ]]; then 
+			echo -e "${INFO}Clone '$ZLS_REPO' to '$ZLS_DIR'${NC}"
+			git clone $ZLS_REPO $ZLS_DIR
+		else
+			cd $ZLS_DIR
+			echo -e "${INFO}Pull changes from repo${NC}"
+			git pull
+			echo -e "${INFO}Build zls${NC}"
+			zig build -Doptimize=ReleaseSafe
+		fi
+		;;
+	d|download)
+		if [[ "$OSTYPE" == "darwin"* ]]; then
+			open $ZIG_DOWNLOAD_URL
+		else
+			xdg-open $ZIG_DOWNLOAD_URL
+		fi
+		;;
 	a|add)
-		new_zig=$(readlink -f "$2")
+		new_zig=$2
 		dst_version=$3
 
 		if [[ "$dst_version" == "" ]]; then
@@ -33,31 +65,39 @@ case $1 in
 			override=true
 		fi
 
-		if [[ -f "$new_zig" ]]; then
-			if [[ "$new_zig" == *".tar.xz" ]]; then
-				if $override; then
-					echo "rm -rf \"$ZIG_DIR/zig-$dst_version\""
-					rm -rf "$ZIG_DIR/zig-$dst_version"
-				fi
+		if [[ "$new_zig" == *".tar.xz" ]]; then
+			if $override; then
+				echo "rm -rf \"$ZIG_DIR/zig-$dst_version\""
+				rm -rf "$ZIG_DIR/zig-$dst_version"
+			fi
 
-				echo "mkdir \"$ZIG_DIR/zig-$dst_version\""
-				mkdir "$ZIG_DIR/zig-$dst_version"
-				echo "tar xf \"$new_zig\" -C \"$ZIG_DIR/zig-$dst_version\" --strip-components=1"
-				tar xf "$new_zig" -C "$ZIG_DIR/zig-$dst_version" --strip-components=1
-				echo "IMPORTANT!"
-				echo -e "\n\trun to use the added version: zv.sh use $dst_version"
-				
-				# cuz apple
-				if [[ "$OSTYPE" == "darwin"* ]]; then
-					echo "So you can run zig, without any issues:"
-					echo "xattr -dr com.apple.quarantine \"$ZIG_DIR/zig-$dst_version\""
-					xattr -dr com.apple.quarantine "$ZIG_DIR/zig-$dst_version"
-				fi
+			if [[ "$new_zig" == "http"* ]]; then 
+				mkdir -p /tmp/zv/
+				echo "Downloading '$new_zig'"
+				curl -s "$new_zig" -o "/tmp/zv/zig-$dst_version.tar.xz"
+				new_zig="/tmp/zv/zig-$dst_version.tar.xz"
 			else
-				echo "Please provide a .tar.xz file..."
+				new_zig=$(readlink -f "$2")
+				if [[ ! -f "$new_zig" ]]; then
+					echo "Cannot find file '$new_zig'"
+				fi
+			fi
+
+			echo "mkdir \"$ZIG_DIR/zig-$dst_version\""
+			mkdir "$ZIG_DIR/zig-$dst_version"
+			echo "tar xf \"$new_zig\" -C \"$ZIG_DIR/zig-$dst_version\" --strip-components=1"
+			tar xf "$new_zig" -C "$ZIG_DIR/zig-$dst_version" --strip-components=1
+			echo "IMPORTANT!"
+			echo -e "\tto use the installed version run: $0 use $dst_version"
+			
+			# cuz apple
+			if [[ "$OSTYPE" == "darwin"* ]]; then
+				echo -e "\tSo you can run zig, without any issues:"
+				echo -e "\txattr -dr com.apple.quarantine \"$ZIG_DIR/zig-$dst_version\""
+				xattr -dr com.apple.quarantine "$ZIG_DIR/zig-$dst_version"
 			fi
 		else
-			echo "Cannot find $new_zig"
+			echo -e "${ERROR}error${GRAY}:${NC} Please provide a .tar.xz file..."
 		fi
 		;;
 	u|use)
@@ -67,7 +107,7 @@ case $1 in
 			ln -sfn "$ZIG_DIR/zig-$target_version" "$ZIG_DIR/current"
 			echo "now using: $target_version"
 		else
-			echo "Could not find version: \"$target_version\""
+			echo -e "${ERROR}error${GRAY}:${NC} Could not find version: \"$target_version\""
 		fi
 		;;
 	c|current)
@@ -90,7 +130,6 @@ case $1 in
 
 		echo "rm -rf \"$target\""
 		rm -rf "$target"
-
 		;;
 	h|help)
 		echo -e "Zig Version Manager"
@@ -99,14 +138,27 @@ case $1 in
 		echo -e ""
 		echo -e "\t\tlist all awailable zig versions."
 		echo -e ""
+		echo -e "\tzls|lsp"
+		echo -e ""
+		echo -e "\t\tClones the '$ZLS_REPO' and builds it."
+		echo -e ""
+		echo -e "\td|download"
+		echo -e ""
+		echo -e "\t\ttries to open '$ZIG_DOWNLOAD_URL' in a browser."
+		echo -e ""
 		echo -e "\ta|add [zig.tar.xz] [as_version]"
 		echo -e ""
-		echo -e "\t\t[zig.tar.xz] - zig release (can be downloaded from: https://ziglang.org/download/)"
+		echo -e "\t\t[zig.tar.xz] - zig release (can be downloaded from: https://ziglang.org/download/, can be a url to a tar.xz zig build)"
 		echo -e "\t\t[as_version] - a sting representing the version of the zig source code, e.g.: 0.16.0-dev"
+		echo -e ""
+		echo -e "\t\tExample:"
+		echo -e "\t\tzv add https://ziglang.org/builds/zig-aarch64-macos-0.16.0-dev.3121+d34b868bc.tar.xz master"
+		echo -e ""
+		echo -e "\t\tWould download the tar.xz and install it to '$ZIG_DIR/zig-master'"
 		echo -e ""
 		echo -e "\tu|use [version]"
 		echo -e ""
-		echo -e "\t\t[version]    - the zig version you want to use, e.g.: 0.16.0-dev"
+		echo -e "\t\t[version]    - the zig version you want to use, e.g.: master"
 		echo -e ""
 		echo -e "\tc|current"
 		echo -e ""
@@ -118,8 +170,8 @@ case $1 in
 		echo -e ""
 		;;
 	*)
-		echo "Unknown argument: $1"
-		echo "run zv.sh help for more info"
+		$0 h
+		echo -e "${ERROR}error${GRAY}:${NC} Unknown argument: '$1'"
 		;;
 esac
 
