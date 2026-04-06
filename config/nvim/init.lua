@@ -21,7 +21,6 @@ vim.pack.add({
 })
 
 vim.cmd.packadd('nvim.undotree')
-vim.cmd.packadd('nvim.difftool')
 
 -- oil
 require("oil").setup({
