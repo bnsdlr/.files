@@ -37,11 +37,19 @@ sudo systemctl start evremap.service
 brew install qutebrowser
 ```
 
+## Neru 
+
+[neru](https://github.com/y3owk1n/neru)
+
 ## Fonts
 
 ```shell
 brew install --cask font-jetbrains-mono-nerd-font
 ```
+
+## Browser extension
+
+[tridactyl (vim)](https://github.com/tridactyl/tridactyl)
 
 ## Programing Languages
 
