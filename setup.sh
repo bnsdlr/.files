@@ -72,7 +72,6 @@ export DOTFILES="$dotfiles"
 config_bf_dotfiles="$HOME/.config-bf-dotfiles"
 zshrc_bf_dotfiles="$HOME/.zshrc-bf-dotfiles"
 zshenv_bf_dotfiles="$HOME/.zshenv-bf-dotfiles"
-doomd_bf_dotfiles="$HOME/.doom.d-bf-dotfiles"
 
 if $remove; then
     read -p "Are you sure you want to remove the dotfiles and hopefully get your old config back? [y/N]: " continue
@@ -103,14 +102,6 @@ if $remove; then
 			fi
         fi
 
-        if [[ -d "$doomd_bf_dotfiles" ]]; then
-            echo "Resetting .doom.d..."
-            update_directory "$doomd_bf_dotfiles" "$HOME/.doom.d"
-			if ! $is_test; then
-            	rm -rf "$doomd_bf_dotfiles"
-			fi
-        fi
-
         echo "Make sure to delete the $dotfiles directory."
     else
         echo "Exiting"
@@ -133,11 +124,6 @@ else
 		if ! $is_test; then
         	cp "$HOME/.zshenv" "$zshenv_bf_dotfiles"
 		fi
-    fi
-
-    if [[ ! -d "$doomd_bf_dotfiles" ]]; then
-        echo "Making copy of $HOME/.doom.d to $doomd_bf_dotfiles"
-        update_directory "$HOME/.doom.d" "$config_bf_dotfiles" 1
     fi
 
     for file in $(find $dotfiles -name 'map'); do

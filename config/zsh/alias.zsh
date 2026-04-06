@@ -13,7 +13,6 @@ if command -v exercism &>/dev/null; then
 fi
 
 alias vim="nvim"
-alias emacs="emacsclient -c -a 'emacs'"
 
 alias ls="ls -CGA --color=auto"
 alias l="ls"

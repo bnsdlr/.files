@@ -7,7 +7,6 @@ is_test=false
 load_all=false
 non_existent=false
 load_config=false
-load_doom_d=false
 load_zshrc=false
 load_zshenv=false
 verbose=false
@@ -25,7 +24,6 @@ for arg in "$@"; do
 					a) load_all=true ;;
 					n) non_existent=true ;;
 					c) load_config=true ;;
-					d) load_doom_d=true ;;
 					z) load_zshrc=true ;;
 					e) load_zshenv=true ;;
 					v) verbose=true ;;
@@ -35,7 +33,7 @@ for arg in "$@"; do
 	esac
 done
 
-if ! $load_all && ! $load_config && ! $load_zshrc && ! $load_zshenv && ! $load_doom_d; then
+if ! $load_all && ! $load_config && ! $load_zshrc && ! $load_zshenv; then
 	echo "you probably should at least specify one of these flags: -a -c -d -z -e"
 fi
 
@@ -47,8 +45,6 @@ fi
 
 src_config_dir=$HOME/.config
 dst_config_dir=$dotfiles/config
-src_doom_d_dir=$HOME/.doom.d
-dst_doom_d_dir=$dotfiles/doom.d
 src_zshrc_file=$HOME/.zshrc
 dst_zshrc_file=$dotfiles/config/zsh/zshrc
 src_zshenv_file=$HOME/.zshenv
@@ -134,16 +130,3 @@ if $load_all || $load_zshenv; then
 	fi
 fi
 
-if $load_all || $load_doom_d; then
-	if $is_test; then
-		echo "would update $dst_doom_d_dir with $src_doom_d_dir:"
-	fi
-
-	printf "${GREEN}rsync -ria --delete \"$src_doom_d_dir/\" \"$dst_doom_d_dir\"$NC\n"
-
-	if ! $is_test; then
-		rsync -ria --delete "$src_doom_d_dir/" "$dst_doom_d_dir/"
-	elif $verbose; then
-		rsync -ria --dry-run --delete "$src_doom_d_dir/" "$dst_doom_d_dir/"
-	fi
-fi
