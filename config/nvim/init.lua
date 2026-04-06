@@ -1,70 +1,104 @@
-vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:block,r-cr-o:block"
-
-vim.opt.winborder = "single"
-vim.opt.pumborder = "single"
-
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.smartindent = true
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.winborder = "single"
-vim.opt.swapfile = false
-vim.opt.undofile = true
-vim.opt.hlsearch = false
-vim.opt.incsearch = true
-vim.opt.wrap = false
-vim.opt.termguicolors = true
-vim.opt.scrolloff = 8
-vim.opt.ignorecase = true
-vim.opt.signcolumn = "yes"
-vim.opt.colorcolumn = "100"
-
-vim.opt.foldmethod = "marker"
+local border = "single"
 
 -- plugins
 vim.pack.add({
-	{ src = "https://github.com/vague2k/vague.nvim" },
-	{ src = "https://github.com/stevearc/oil.nvim" },
-	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
-	{ src = "https://github.com/aznhe21/actions-preview.nvim" },
-	{ src = "https://github.com/nvim-lua/plenary.nvim" },
-	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
-	{ src = "https://github.com/nvim-telescope/telescope-ui-select.nvim" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter",        version = "master" },
-	{ src = "https://github.com/mbbill/undotree" },
+	"https://github.com/vague2k/vague.nvim",
+	"https://github.com/stevearc/oil.nvim",
+	"https://github.com/nvim-tree/nvim-web-devicons",
+	"https://github.com/nvim-lua/plenary.nvim",
+	"https://github.com/nvim-telescope/telescope.nvim",
+	"https://github.com/nvim-telescope/telescope-ui-select.nvim",
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", branch = "main" },
 	-- image
-	{ src = "https://github.com/3rd/image.nvim" },
+	"https://github.com/3rd/image.nvim",
 	-- lsp
-	{ src = "https://github.com/neovim/nvim-lspconfig" },
-	{ src = "https://github.com/mason-org/mason.nvim" },
-	{ src = "https://github.com/Saghen/blink.cmp" },
+	"https://github.com/neovim/nvim-lspconfig",
+	"https://github.com/mason-org/mason.nvim",
+	{ src = "https://github.com/Saghen/blink.cmp", branch = "v1" },
 	-- language plugins
-	{ src = "https://github.com/mrcjkb/rustaceanvim" },
-	{ src = "https://codeberg.org/ziglang/zig.vim" },
+	"https://github.com/mrcjkb/rustaceanvim",
+	"https://codeberg.org/ziglang/zig.vim",
 })
 
--- require('nvim-treesitter').install {
--- 	'zig',
--- 	'markdown',
--- }
+vim.cmd.packadd('nvim.undotree')
+vim.cmd.packadd('nvim.difftool')
 
-require("nvim-treesitter.configs").setup({
-        ensure_installed = {
-			"markdown",
-			"zig",
-            "elixir",
-            "html",
-			"rust",
-			"lua",
-        },
-        highlight = { enable = true },
+-- oil
+require("oil").setup({
+	lsp_file_methods = {
+		enabled = true,
+		timeout_ms = 1000,
+		autosave_changes = true,
+	},
+	columns = {
+		-- "permissions",
+		"icon",
+	},
+	float = {
+		max_width = 0.7,
+		max_height = 0.6,
+		border = border,
+	},
+	view_options = {
+		show_hidden = true,
+		is_always_hidden = function(name, _)
+			return name:match("%.%.") ~= nil
+		end,
+	},
+	delete_to_trash = true,
 })
+
+-- options
+vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:block,r-cr-o:block"
+
+vim.opt.colorcolumn = "100"
+vim.opt.foldmethod = "marker"
+vim.opt.hlsearch = false
+vim.opt.ignorecase = true
+vim.opt.incsearch = true
+vim.opt.number = true
+vim.opt.pumborder = border
+vim.opt.relativenumber = true
+vim.opt.scrolloff = 8
+vim.opt.shiftwidth = 4
+vim.opt.signcolumn = "yes"
+vim.opt.smartindent = true
+vim.opt.swapfile = false
+vim.opt.tabstop = 4
+vim.opt.termguicolors = true
+vim.opt.undofile = true
+vim.opt.winborder = border
+vim.opt.wrap = false
+
+-- colorscheme
+vim.cmd('colorscheme vague')
+vim.cmd('hi statusline guibg=NONE')
+
+-- only highlight with treesitter
+vim.cmd('syntax off')
+
+vim.api.nvim_create_autocmd('FileType', {
+    callback = function() pcall(vim.treesitter.start) end,
+})
+
+require('nvim-treesitter').install {
+	"bash",
+	"elixir",
+	"git_config",
+	"git_rebase",
+	"html",
+	"javascript",
+	"lua",
+	"markdown",
+	"rust",
+	"zig",
+	"zsh",
+}
 
 local telescope = require "telescope"
 telescope.setup({
 	defaults = {
-		preview = { treesitter = false },
+		preview = { treesitter = true },
 		color_devicons = true,
 		sorting_strategy = "ascending",
 		borderchars = { "", "", "", "", "", "", "", "" },
@@ -79,86 +113,6 @@ telescope.setup({
 	}
 })
 telescope.load_extension("ui-select")
-
-require("actions-preview").setup {
-	backend = { "telescope" },
-	telescope = vim.tbl_extend(
-		"force",
-		require("telescope.themes").get_dropdown(), {}
-	)
-}
-
-require("oil").setup({
-	lsp_file_methods = {
-		enabled = true,
-		timeout_ms = 1000,
-		autosave_changes = true,
-	},
-	columns = {
-		"permissions",
-		"icon",
-	},
-	float = {
-		max_width = 0.7,
-		max_height = 0.6,
-		border = "single",
-	},
-	view_options = {
-		show_hidden = true,
-		is_always_hidden = function(name, _)
-			return name:match("%.%.") ~= nil
-		end,
-	},
-})
-
-local function get_plugins()
-	local active_plugins = {}
-	local unused_plugins = {}
-
-	for _, plugin in ipairs(vim.pack.get()) do
-		if plugin.active then
-			table.insert(active_plugins, plugin.spec.name)
-		else
-			table.insert(unused_plugins, plugin.spec.src)
-		end
-	end
-
-	-- vim.print(active_plugins)
-	-- vim.print(unused_plugins)
-
-	return active_plugins, unused_plugins
-end
-
-local function pack_update()
-	local active_plugins, _ = get_plugins()
-
-	if #active_plugins == 0 then
-		print("No active plugins.")
-		return
-	end
-
-	local choice = vim.fn.confirm("Update active plugins?", "&Yes\n&No", 2)
-	if choice == 1 then
-		vim.pack.update(active_plugins)
-	end
-end
-
-local function pack_clean()
-	local _, unused_plugins = get_plugins()
-
-	if #unused_plugins == 0 then
-		print("No unused plugins.")
-		return
-	end
-
-	local choice = vim.fn.confirm("Remove unused plugins?", "&Yes\n&No", 2)
-	if choice == 1 then
-		vim.pack.del(unused_plugins)
-	end
-end
-
-vim.api.nvim_create_user_command("PackClean", pack_clean, {})
-vim.api.nvim_create_user_command("PackUpdate", pack_update, {})
 
 local builtin = require("telescope.builtin")
 local map = vim.keymap.set
@@ -182,11 +136,10 @@ map({ "n" }, "<leader>so", builtin.oldfiles, { desc = "Telescope oldfiles" })
 map({ "n" }, "<leader>st", builtin.builtin, { desc = "Telescope builtins" })
 map({ "n" }, "<leader>sr", builtin.registers, { desc = "Telescope registers" })
 map({ "n" }, "<leader>sc", builtin.colorscheme, { desc = "Telescope colorschemes" })
-map({ "n" }, "<leader>sa", require("actions-preview").code_actions)
 
 map({ "n" }, "<leader>v", "<cmd>e $MYVIMRC<CR>'\"")
 
-map({ "n" }, "<leader>u", vim.cmd.UndotreeToggle)
+map({ "n" }, "<leader>u", vim.cmd.Undotree)
 
 map({ "n" }, "<C-d>", "<C-d>zz")
 map({ "n" }, "<C-u>", "<C-u>zz")
@@ -284,13 +237,10 @@ require('blink.cmp').setup({
 })
 
 map({ "n" }, "K", function() vim.lsp.buf.hover { max_height = 25, max_width = 120 } end)
-map({ "n" }, "gd", vim.lsp.buf.definition)
+-- map({ "n" }, "gd", vim.lsp.buf.definition)
 map({ "n" }, "gt", vim.lsp.buf.type_definition)
 map({ "n" }, "<leader>ld", vim.diagnostic.open_float)
 map({ "n" }, "<leader>lf", vim.lsp.buf.format)
 map({ "n" }, "<leader>lr", builtin.lsp_references)
 
--- colorscheme
-vim.cmd('colorscheme vague')
-vim.cmd('hi statusline guibg=NONE')
-
+require"vim._core.ui2".enable{}
