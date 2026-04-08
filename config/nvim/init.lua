@@ -241,7 +241,7 @@ require('blink.cmp').setup({
 })
 
 map({ "n" }, "K", function() vim.lsp.buf.hover { max_height = 25, max_width = 120 } end)
--- map({ "n" }, "gd", vim.lsp.buf.definition)
+map({ "n" }, "gd", vim.lsp.buf.definition)
 map({ "n" }, "gt", vim.lsp.buf.type_definition)
 map({ "n" }, "<leader>ld", vim.diagnostic.open_float)
 map({ "n" }, "<leader>lf", vim.lsp.buf.format)
