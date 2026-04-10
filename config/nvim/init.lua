@@ -1,5 +1,8 @@
 local border = "single"
 
+-- bind :w to :up
+vim.cmd('ca w up')
+
 -- plugins
 vim.pack.add({
 	"https://github.com/vague2k/vague.nvim",
