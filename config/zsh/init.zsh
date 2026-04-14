@@ -50,6 +50,8 @@ ansi() {
         echo -en "${ESC}[48;2;${i};50;200m ${RESET}"
     done
     echo -e " (If smooth, your terminal supports Truecolor)"
+	echo -e "\n${ESC}[1mForeground: ESC[38;2;{r};{g};{b}m${ESC}[0m"
+	echo -e "${ESC}[1mBackground: ESC[48;2;{r};{g};{b}m${ESC}[0m"
 
 	# 4. Cursor Control Reference
 	echo -e "\n${ESC}[1mCursor Control Sequences:${RESET}"
