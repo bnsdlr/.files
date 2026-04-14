@@ -7,7 +7,7 @@ cd "$dotfiles"
 echo "Pulling updates..."
 
 git fetch --prune origin
-git reset --hard origin/main
+git reset --hard origin/master
 git clean -f -d
 
 ./setup.sh
