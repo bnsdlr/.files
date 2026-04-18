@@ -138,6 +138,8 @@ map({ "n" }, "<leader>g", builtin.live_grep, { desc = "Telescope live grep" })
 map({ "n" }, "<leader>sm", builtin.man_pages, { desc = "Telescope man pages" })
 map({ "n" }, "<leader>sh", builtin.help_tags, { desc = "Telescope help tags" })
 
+map({ "n" }, "<leader>G", builtin.git_commits, { desc = "Telescope git_commit" })
+
 map({ "n" }, "<leader>sb", builtin.buffers, { desc = "Telescope buffers" })
 map({ "n" }, "<leader>so", builtin.oldfiles, { desc = "Telescope oldfiles" })
 map({ "n" }, "<leader>st", builtin.builtin, { desc = "Telescope builtins" })
