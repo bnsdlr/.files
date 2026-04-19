@@ -8,8 +8,43 @@ NC="\x1b[0m"
 ZIG_DIR="$HOME/.zig"
 ZIG_DOWNLOAD_URL=https://ziglang.org/download/
 
-ZLS_DIR="$ZIG_DIR/zls"
 ZLS_REPO="https://github.com/zigtools/zls"
+
+update_zls() {
+	version="$1"
+
+	if [[ "$version" == "" ]]; then
+		error "Missing argument (version)"
+		exit 1
+	fi
+
+	zls_dir="$ZIG_DIR/zls-$version"
+
+	if [[ ! -d "$zls_dir" ]]; then
+		mkdir -p "$zls_dir"
+	fi
+
+	if [[ ! -d "$zls_dir/.git" ]]; then 
+		echo -e "${INFO}Clone branch '$version' '$ZLS_REPO' to '$zls_dir'${NC}"
+		if ! git clone -b "$version" "$ZLS_REPO" "$zls_dir"; then
+			exit 1
+		fi
+	else
+		cd $zls_dir
+		echo -e "${INFO}Pull changes from repo${NC}"
+		if git pull | grep "Your branch is up to date"; then 
+			echo "Branch up to date";
+			exit 0
+		fi
+	fi
+
+	echo -e "${INFO}Build zls-$version${NC}"
+	zig build -Doptimize=ReleaseSafe
+}
+
+error() {
+	echo -e "${ERROR}error${GRAY}:${NC} $1"
+}
 
 case $1 in 
 	l|ls|list)
@@ -17,25 +52,42 @@ case $1 in
 		for entry in "$ZIG_DIR"/*; do
 			entry=${entry:${#ZIG_DIR}+1}
 			if [[ "$entry" == "zig-"* ]]; then
-				echo "$entry"
+				echo "${entry:4}"
 			fi
 		done
 		;;
 	zls|lsp)
-		if [[ ! -d "$ZLS_DIR" ]]; then
-			mkdir -p "$ZLS_DIR"
-		fi
-
-		if [[ ! -d "$ZLS_DIR/.git" ]]; then 
-			echo -e "${INFO}Clone '$ZLS_REPO' to '$ZLS_DIR'${NC}"
-			git clone $ZLS_REPO $ZLS_DIR
-		else
-			cd $ZLS_DIR
-			echo -e "${INFO}Pull changes from repo${NC}"
-			git pull
-			echo -e "${INFO}Build zls${NC}"
-			zig build -Doptimize=ReleaseSafe
-		fi
+		case $2 in
+			l|ls|list)
+				echo "Available zls versions:"
+				for entry in "$ZIG_DIR"/*; do
+					entry=${entry:${#ZIG_DIR}+1}
+					if [[ "$entry" == "zls-"* ]]; then
+						echo "${entry:4}"
+					fi
+				done
+				;;
+			u|use)
+				target_version=$3
+				if [[ "$target_version" != "" ]] && [[ -d "$ZIG_DIR/zls-$target_version" ]]; then
+					echo "ln -sfn \"$ZIG_DIR/zls-$target_version\" \"$ZIG_DIR/zls\""
+					ln -sfn "$ZIG_DIR/zls-$target_version" "$ZIG_DIR/zls"
+					echo "now using: $target_version"
+				else
+					error "Could not find version: \"$target_version\""
+				fi
+				;;
+			a|add)
+				update_zls $3
+				echo -e "Remember running '$0 zls use $3', to use the version"
+				;;
+			c|current)
+				echo "$(readlink $ZIG_DIR/zls)"
+				;;
+			update)
+				update_zls "master"
+				;;
+		esac
 		;;
 	d|download)
 		if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -90,14 +142,13 @@ case $1 in
 			echo "IMPORTANT!"
 			echo -e "\tto use the installed version run: $0 use $dst_version"
 			
-			# cuz apple
 			if [[ "$OSTYPE" == "darwin"* ]]; then
 				echo -e "\tSo you can run zig, without any issues:"
 				echo -e "\txattr -dr com.apple.quarantine \"$ZIG_DIR/zig-$dst_version\""
 				xattr -dr com.apple.quarantine "$ZIG_DIR/zig-$dst_version"
 			fi
 		else
-			echo -e "${ERROR}error${GRAY}:${NC} Please provide a .tar.xz file..."
+			error "Please provide a .tar.xz file..."
 		fi
 		;;
 	u|use)
@@ -107,7 +158,7 @@ case $1 in
 			ln -sfn "$ZIG_DIR/zig-$target_version" "$ZIG_DIR/current"
 			echo "now using: $target_version"
 		else
-			echo -e "${ERROR}error${GRAY}:${NC} Could not find version: \"$target_version\""
+			error "Could not find version: \"$target_version\""
 		fi
 		;;
 	c|current)
@@ -171,7 +222,7 @@ case $1 in
 		;;
 	*)
 		$0 h
-		echo -e "${ERROR}error${GRAY}:${NC} Unknown argument: '$1'"
+		error "Unknown argument: '$1'"
 		;;
 esac
 

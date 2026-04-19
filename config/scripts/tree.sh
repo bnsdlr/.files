@@ -28,8 +28,18 @@ print_contents() {
 
 path="."
 
-if [[ $1 != "" ]]; then
+if [[ $1 != "" ]] && [[ $1 != "-"* ]]; then
 	path="$1"
 fi
 
-print_contents "$path" 0
+if [[ "$1" == "-w" ]]; then
+	secs=$2
+	secs=${secs:-1}
+	while true; do
+		clear
+		print_contents "$path" 0
+		sleep $secs
+	done
+else
+	print_contents "$path" 0
+fi
