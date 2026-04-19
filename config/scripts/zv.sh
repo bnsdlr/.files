@@ -32,8 +32,7 @@ update_zls() {
 	else
 		cd $zls_dir
 		echo -e "${INFO}Pull changes from repo${NC}"
-		if git pull | grep "Your branch is up to date"; then 
-			echo "Branch up to date";
+		if git pull | grep "Already up to date."; then 
 			exit 0
 		fi
 	fi
@@ -84,7 +83,7 @@ case $1 in
 			c|current)
 				echo "$(readlink $ZIG_DIR/zls)"
 				;;
-			update)
+			update|install)
 				update_zls "master"
 				;;
 		esac
@@ -162,7 +161,10 @@ case $1 in
 		fi
 		;;
 	c|current)
-		echo "$(readlink $ZIG_DIR/current)"
+		zig_path=$(readlink $ZIG_DIR/current)
+		zls_path=$(readlink $ZIG_DIR/zls)
+		echo "zig: ${zig_path:${#ZIG_DIR}+5}"
+		echo "zls: ${zls_path:${#ZIG_DIR}+5}"
 		;;
 	delete)
 		version=$2
@@ -189,10 +191,6 @@ case $1 in
 		echo -e ""
 		echo -e "\t\tlist all awailable zig versions."
 		echo -e ""
-		echo -e "\tzls|lsp"
-		echo -e ""
-		echo -e "\t\tClones the '$ZLS_REPO' and builds it."
-		echo -e ""
 		echo -e "\td|download"
 		echo -e ""
 		echo -e "\t\ttries to open '$ZIG_DOWNLOAD_URL' in a browser."
@@ -218,6 +216,24 @@ case $1 in
 		echo -e "\tdelete [version]"
 		echo -e ""
 		echo -e "\t\t[version]    - deletes the specified zig version."
+		echo -e ""
+		echo -e "ZLS (LSP)"
+		echo -e ""
+		echo -e "\tzls|lsp update"
+		echo -e ""
+		echo -e "\t\tClones the '$ZLS_REPO' and builds it."
+		echo -e ""
+		echo -e "\tzls|lsp use <version>"
+		echo -e ""
+		echo -e "\t\tUse the specified zls version"
+		echo -e ""
+		echo -e "\tzls|lsp l|ls|list"
+		echo -e ""
+		echo -e "\t\tList all zls versions"
+		echo -e ""
+		echo -e "\tzls|lsp a|add <version>"
+		echo -e ""
+		echo -e "\t\tInstall the version."
 		echo -e ""
 		;;
 	*)
