@@ -1,5 +1,4 @@
-# Vague.nvim theme for Alacritty
-# A cool, dark, low contrast colorscheme. Pastel yet vivid, like a fleeting memory.
+# vague.nvim for ghostty
 
 palette = 0=#141415
 palette = 1=#d8647e
