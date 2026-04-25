@@ -1,0 +1,25 @@
+# Vague.nvim theme for Alacritty
+# A cool, dark, low contrast colorscheme. Pastel yet vivid, like a fleeting memory.
+
+palette = 0=#141414
+palette = 1=#8A8A8A
+palette = 2=#929292
+palette = 3=#AEAEAE
+palette = 4=#8C8C8C
+palette = 5=#AAAAAA
+palette = 6=#ADADAD
+palette = 7=#cdcdcd
+palette = 8=#636363
+palette = 9=#8A8A8A
+palette = 10=#929292
+palette = 11=#C7C7C7
+palette = 12=#999999
+palette = 13=#AAAAAA
+palette = 14=#CACACA
+palette = 15=#C5C5C5
+background = #141415
+foreground = #cdcdcd
+cursor-color = #cdcdcd
+cursor-text = #141415
+selection-background = #363636
+selection-foreground = #cdcdcd

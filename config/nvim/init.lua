@@ -74,6 +74,37 @@ vim.opt.winborder = border
 vim.opt.wrap = false
 
 -- colorscheme
+require('vague').setup({
+  	transparent = true,
+  	bold = true,
+  	italic = true,
+  	on_highlights = function(hl, colors) end,
+  	colors = {
+		-- bg = '#141414',
+		-- inactiveBg = '#202020',
+		-- fg = '#cdcdcd',
+		-- floatBorder = '#878787',
+		-- line = '#2b2b2b',
+		-- comment = '#6c6c6c',
+		-- builtin = '#c4c4c4',
+		-- func = '#b39292',
+		-- string = '#d0b7a1',
+		-- number = '#a2a2a2',
+		-- property = '#cccccc',
+		-- constant = '#c0c0c0',
+		-- parameter = '#adadad',
+		-- visual = '#363636',
+		-- error = '#bb818e',
+		-- warning = '#d5bb9a',
+		-- hint = '#b3b3b3',
+		-- operator = '#a2a2a2',
+		-- keyword = '#7f92a1',
+		-- type = '#acacac',
+		-- search = '#525252',
+		-- plus = '#829474',
+		-- delta = '#d5bb9a',
+  	},
+})
 vim.cmd('colorscheme vague')
 vim.cmd('hi statusline guibg=NONE')
 
