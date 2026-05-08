@@ -176,6 +176,7 @@ map({ "n" }, "<leader>so", builtin.oldfiles, { desc = "Telescope oldfiles" })
 map({ "n" }, "<leader>st", builtin.builtin, { desc = "Telescope builtins" })
 map({ "n" }, "<leader>sr", builtin.registers, { desc = "Telescope registers" })
 map({ "n" }, "<leader>sc", builtin.colorscheme, { desc = "Telescope colorschemes" })
+map({ "n" }, "<leader>sa", builtin.marks, { desc = "Telescope marks" })
 
 map({ "n" }, "<leader>v", "<cmd>e $MYVIMRC<CR>'\"")
 
@@ -246,6 +247,11 @@ vim.lsp.config['zls'] = {
   cmd = { 'zls' },
   filetypes = { 'zig' },
   root_markers = { 'build.zig' },
+  -- settings = {
+  --  zls = {
+  --   build_on_save_args = { "check", "test" },
+  --  }
+  -- }
 }
 
 -- vim.api.nvim_create_autocmd('LspAttach', {
@@ -284,3 +290,17 @@ map({ "n" }, "<leader>lf", vim.lsp.buf.format)
 map({ "n" }, "<leader>lr", builtin.lsp_references)
 
 require"vim._core.ui2".enable{}
+
+local t = {
+	["m"] = "a",
+	["n"] = "b",
+	["e"] = "c",
+	["i"] = "d",
+	["o"] = "e",
+};
+
+for key, char in pairs(t) do
+	map({ "n" }, "m<C-" .. key .. ">", "m" .. string.upper(char))
+	map({ "n" }, "<C-" .. key .. ">", "'" .. string.upper(char))
+end
+
