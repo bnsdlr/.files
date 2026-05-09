@@ -214,8 +214,6 @@ map({ "n" }, "<leader>tc", "<cmd>tabnew<CR>")
 map({ "n" }, "<leader>tx", "<cmd>tabclose<CR>")
 map({ "n" }, "<leader>tm", ":tabmove ")
 
-map({ "n" }, "<leader>m", ":make<CR>")
-
 map({ "c" }, "<C-b>", "<Left>");
 map({ "c" }, "<C-f>", "<Right>");
 
@@ -303,4 +301,15 @@ for key, char in pairs(marks_table) do
 	vim.keymap.set({ "n" }, "d<C-" .. key .. ">", "<cmd>delm " .. char .. "<CR>")
 	vim.keymap.set({ "n" }, "<C-" .. key .. ">", "'" .. char)
 end
+
+map({ "n" }, "<leader>mc", function()
+	for _, value in pairs(marks_table) do
+		vim.api.nvim_del_mark(value)
+	end
+end)
+map({ "n" }, "<leader>ml", function()
+	for key, value in pairs(marks_table) do
+		vim.notify(string.format("<C-%s>: %s", key, vim.api.nvim_get_mark(value, {})[4]))
+	end
+end)
 
