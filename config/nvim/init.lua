@@ -289,6 +289,8 @@ map({ "n" }, "<leader>lr", builtin.lsp_references)
 
 require"vim._core.ui2".enable{}
 
+-- file marks
+
 local marks_table = {
 	["m"] = "A",
 	["e"] = "B",
@@ -297,9 +299,12 @@ local marks_table = {
 	["k"] = "E",
 };
 for key, char in pairs(marks_table) do
-	vim.keymap.set({ "n" }, "m<C-" .. key .. ">", "m" .. char)
+	vim.keymap.set({ "n" }, "m<C-" .. key .. ">", function()
+		vim.cmd("normal m" .. char)
+		vim.notify(string.format("Mark [%s] set to '%s'", char, vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(0))))
+	end)
 	vim.keymap.set({ "n" }, "d<C-" .. key .. ">", "<cmd>delm " .. char .. "<CR>")
-	vim.keymap.set({ "n" }, "<C-" .. key .. ">", "'" .. char)
+	vim.keymap.set({ "n" }, "<C-" .. key .. ">", "'" .. char .. "'\"")
 end
 
 map({ "n" }, "<leader>mc", function()
@@ -308,8 +313,25 @@ map({ "n" }, "<leader>mc", function()
 	end
 end)
 map({ "n" }, "<leader>ml", function()
-	for key, value in pairs(marks_table) do
-		vim.notify(string.format("<C-%s>: %s", key, vim.api.nvim_get_mark(value, {})[4]))
+	local sorted_keys = {}
+	for key, _ in pairs(marks_table) do table.insert(sorted_keys, key) end
+	table.sort(sorted_keys)
+
+	for _, key in ipairs(sorted_keys) do
+		vim.notify(string.format("<C-%s>: %s", key, vim.api.nvim_get_mark(marks_table[key], {})[4]))
 	end
 end)
+
+-- will save them for each project each
+local workspace_path = vim.fn.getcwd()
+local cache_dir = vim.fn.stdpath("data")
+local project_name = vim.fn.fnamemodify(workspace_path, ":t")
+local project_dir = cache_dir .. "/myshada/" .. project_name
+
+if vim.fn.isdirectory(project_dir) == 0 then
+	vim.fn.mkdir(project_dir, "p")
+end
+
+local shadafile = project_dir .. "/" .. vim.fn.sha256(workspace_path):sub(1, 8) .. ".shada"
+vim.opt.shadafile = shadafile
 
