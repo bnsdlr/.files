@@ -291,16 +291,14 @@ map({ "n" }, "<leader>lr", builtin.lsp_references)
 
 require"vim._core.ui2".enable{}
 
-local t = {
-	["m"] = "a",
-	["n"] = "b",
-	["e"] = "c",
-	["i"] = "d",
-	["o"] = "e",
+local marks = require('marks')
+local marks_table = {
+	["m"] = "A",
+	["n"] = "B",
+	["e"] = "C",
+	["i"] = "D",
+	["o"] = "E",
 };
-
-for key, char in pairs(t) do
-	map({ "n" }, "m<C-" .. key .. ">", "m" .. string.upper(char))
-	map({ "n" }, "<C-" .. key .. ">", "'" .. string.upper(char))
-end
+marks.map(marks_table)
+map({ "n" }, "m<C-c>", function() marks.edit(marks_table) end)
 
