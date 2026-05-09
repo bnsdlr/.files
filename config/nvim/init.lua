@@ -291,14 +291,16 @@ map({ "n" }, "<leader>lr", builtin.lsp_references)
 
 require"vim._core.ui2".enable{}
 
-local marks = require('marks')
 local marks_table = {
 	["m"] = "A",
-	["n"] = "B",
-	["e"] = "C",
-	["i"] = "D",
-	["o"] = "E",
+	["e"] = "B",
+	["i"] = "C",
+	["s"] = "D",
+	["k"] = "E",
 };
-marks.map(marks_table)
-map({ "n" }, "m<C-c>", function() marks.edit(marks_table) end)
+for key, char in pairs(marks_table) do
+	vim.keymap.set({ "n" }, "m<C-" .. key .. ">", "m" .. char)
+	vim.keymap.set({ "n" }, "d<C-" .. key .. ">", "<cmd>delm " .. char .. "<CR>")
+	vim.keymap.set({ "n" }, "<C-" .. key .. ">", "'" .. char)
+end
 
