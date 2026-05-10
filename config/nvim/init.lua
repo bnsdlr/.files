@@ -229,13 +229,14 @@ require("image").setup({
 require "mason".setup()
 
 vim.lsp.enable({
-	"lua_ls",
-	"jsonls",
-	"svelte",
-	"pyright",
-	"html",
-	"tsgo",
+	"clangd",
 	"cssls",
+	"html",
+	"jsonls",
+	"lua_ls",
+	"pyright",
+	"svelte",
+	"tsgo",
 	"zls",
 })
 
@@ -294,7 +295,7 @@ require"vim._core.ui2".enable{}
 local marks_table = {
 	["m"] = "A",
 	["e"] = "B",
-	["i"] = "C",
+	["j"] = "C",
 	["s"] = "D",
 	["k"] = "E",
 };
