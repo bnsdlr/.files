@@ -3,12 +3,12 @@ stty -ixon
 
 # go {{{
 DIRS=(
-	"$HOME/documents/notes/"*/*
+	"$(pwd)"
+	"$HOME/documents/projects/"*
 	"$HOME/documents/projects/"*/*
+	"$HOME/documents/notes/"*
 	"$HOME/documents/reading"
 	"$HOME/documents"
-	"$HOME/.config"
-	"$(pwd)"
 )
 
 go() {
