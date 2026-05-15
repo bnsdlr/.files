@@ -1,6 +1,44 @@
 # so i can press ctrl+s without the terminal freezing
 stty -ixon
 
+# go {{{
+DIRS=(
+	"$HOME/documents/notes/"*/*
+	"$HOME/documents/projects/"*/*
+	"$HOME/documents/reading"
+	"$HOME/documents"
+	"$HOME/.config"
+	"$(pwd)"
+)
+
+go() {
+	if [[ $# -lt 1 ]]; then
+		echo "no argument"
+		return
+	fi
+
+	pat=$1
+
+	declare -a results
+
+	for dir in ${DIRS[@]}; do
+		if [[ $(basename "$dir") == "$pat"* ]]; then
+			results+=("$dir")
+		fi
+	done
+
+	if [[ $# -gt 1 ]]; then
+		num=$(($2 + 1))
+		echo "${results[$num]}"
+		cd "${results[$num]}"
+	else
+		echo "${results[1]}"
+		cd "${results[1]}"
+	fi
+}
+# }}}
+
+# ansi {{{
 ansi() {
     local ESC="\x1b"
     local RESET="${ESC}[0m"
@@ -82,5 +120,6 @@ ansi() {
 
 	echo -e "\n${ESC}[1mMore info: ${ESC}[21;4mhttps://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797${RESET}"
 }
+# }}}
 
 source "$HOME/.config/zsh/alias.zsh"
