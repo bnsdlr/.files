@@ -1,14 +1,17 @@
 # so i can press ctrl+s without the terminal freezing
 stty -ixon
 
+last_path=""
+
 # go {{{
 DIRS=(
+	"$HOME/documents"
+	"$HOME/documents/projects/"
 	"$(pwd)"
 	"$HOME/documents/projects/"*
 	"$HOME/documents/projects/"*/*
 	"$HOME/documents/notes/"*
 	"$HOME/documents/reading"
-	"$HOME/documents"
 )
 
 go() {
@@ -31,12 +34,46 @@ go() {
 		num=$(($2 + 1))
 		echo "${results[$num]}"
 		cd "${results[$num]}"
+		last_path="$results[$num]"
 	else
 		echo "${results[1]}"
 		cd "${results[1]}"
+		last_path="$results[1]"
 	fi
 }
 # }}}
+
+create() {
+	if [[ $# -lt 2 ]]; then
+		echo "to less argument"
+		return
+	fi
+
+	dir=""
+
+	if [[ $# -gt 2 ]]; then
+		go "$1" "$2"
+		dir="$3"
+	else
+		go "$1"
+		dir="$2"
+	fi
+
+	if [[ ! -d "$dir" ]]; then
+		mkdir "$dir"
+	fi
+
+	last_path="$last_path/$dir"
+	cd "$dir"
+}
+
+co() {
+	create $@
+	if [[ $last_path != "" ]]; then
+		$HOME/.config/scripts/tmux-session-dispensary.sh "$last_path"
+		echo "$last_path"
+	fi
+}
 
 # ansi {{{
 ansi() {
