@@ -1,79 +1,134 @@
 # so i can press ctrl+s without the terminal freezing
 stty -ixon
 
+# go {{{
 last_path=""
 
-# go {{{
-DIRS=(
-	"$HOME/documents"
-	"$HOME/documents/projects/"
-	"$(pwd)"
-	"$HOME/documents/projects/"*
-	"$HOME/documents/projects/"*/*
-	"$HOME/documents/notes/"*
-	"$HOME/documents/reading"
-)
+_find_match() {
+    if [[ $# -lt 1 ]]; then
+        echo "error: no argument provided" >&2
+        return 1
+    fi
+
+	local DIRS=(
+		"$HOME/downloads"
+		"$HOME/documents"
+		"$HOME/documents/projects"
+		"$HOME/.zig"
+		"$(pwd)"/*
+		"$HOME/documents/projects/"*
+		"$HOME/documents/projects/"*/*
+		"$HOME/documents/notes/"*
+		"$HOME/documents/reading"
+		"$HOME/documents/reading/"*
+	)
+
+    local pat="$1"
+    local -a results=()
+
+    for dir in "${DIRS[@]}"; do
+        if [[ -d "$dir" && $(basename "$dir") == "$pat"* ]]; then
+            results+=("$dir")
+        fi
+    done
+
+    if [[ ${#results[@]} -eq 0 ]]; then
+        echo "No match found for '$pat'" >&2
+        last_path=""
+        return 1
+    fi
+
+    local num=1
+    if [[ $# -gt 1 ]]; then
+        num="$2"
+    fi
+
+    last_path="${results[$num]}"
+}
 
 go() {
-	if [[ $# -lt 1 ]]; then
-		echo "no argument"
-		return
-	fi
-
-	pat=$1
-
-	declare -a results
-
-	for dir in ${DIRS[@]}; do
-		if [[ $(basename "$dir") == "$pat"* ]]; then
-			results+=("$dir")
-		fi
-	done
-
-	if [[ $# -gt 1 ]]; then
-		num=$(($2 + 1))
-		echo "${results[$num]}"
-		cd "${results[$num]}"
-		last_path="$results[$num]"
-	else
-		echo "${results[1]}"
-		cd "${results[1]}"
-		last_path="$results[1]"
-	fi
+    case "$1" in
+        -dr|--dry-run)
+            _find_match "${@:2}"
+            [[ -n "$last_path" ]] && echo "cd \"$last_path\""
+            ;;
+        *)
+            _find_match "$@"
+            if [[ -n "$last_path" ]]; then
+                echo "$last_path"
+                cd "$last_path" || return 1
+            fi
+            ;;
+    esac
 }
-# }}}
 
 create() {
-	if [[ $# -lt 2 ]]; then
-		echo "to less argument"
-		return
-	fi
+    local dry_run=false
+	local no_go=false
 
-	dir=""
+    case "$1" in 
+        -dr|--dry-run)
+            dry_run=true 
+            shift 
+            ;; 
+		-ngo)
+			local no_go=true
+			shift
+			;;
+    esac
 
-	if [[ $# -gt 2 ]]; then
-		go "$1" "$2"
-		dir="$3"
-	else
-		go "$1"
-		dir="$2"
-	fi
+    if [[ $# -lt 2 ]]; then
+        echo "error: at least 2 args required: <pattern> <new_dir>" >&2
+        return 1
+    fi
 
-	if [[ ! -d "$dir" ]]; then
-		mkdir "$dir"
-	fi
+    local dir=""
 
-	last_path="$last_path/$dir"
-	cd "$dir"
+    if [[ $# -gt 2 ]]; then
+        _find_match "$1" "$2"
+        dir="$3"
+    else
+        _find_match "$1"
+        dir="$2"
+    fi
+
+    [[ -z "$last_path" ]] && return 1
+
+    local new_full_path="$last_path/$dir"
+
+    if [[ ! -d "$new_full_path" ]]; then
+        if $dry_run; then
+            echo "mkdir -p \"$new_full_path\""
+        else
+            mkdir -p "$new_full_path"
+        fi
+    fi
+
+    last_path="$new_full_path"
+
+    if $dry_run || $no_go; then
+        echo "cd \"$last_path\""
+    else
+        cd "$last_path" || return 1
+        echo "$last_path"
+    fi
 }
 
 co() {
-	create $@
-	if [[ $last_path != "" ]]; then
-		$HOME/.config/scripts/tmux-session-dispensary.sh "$last_path"
-		echo "$last_path"
-	fi
+    create -ngo "$@"
+    case "$1" in 
+        -dr|--dry-run)
+            echo "dry run: would open '$last_path' in a new tmux session"
+            ;; 
+        *)
+            if [[ -n "$last_path" ]]; then
+                "$HOME/.config/scripts/tmux-session-dispensary.sh" "$last_path"
+                echo "opened tmux session at: $last_path"
+            fi
+            ;;
+    esac
 }
+# }}}
 
 # ansi {{{
 ansi() {

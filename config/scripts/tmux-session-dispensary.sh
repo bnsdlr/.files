@@ -3,6 +3,7 @@
 
 DIRS=(
     "$HOME/documents/notes/"*
+    "$HOME/documents/projects"
     "$HOME/documents/projects/"*
     "$HOME/documents/reading"
     "$(pwd)"

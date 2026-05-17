@@ -1,8 +1,5 @@
 local border = "single"
 
--- bind :w to :up
-vim.cmd('ca w up')
-
 -- plugins
 vim.pack.add({
 	"https://github.com/vague2k/vague.nvim",
@@ -74,37 +71,6 @@ vim.opt.winborder = border
 vim.opt.wrap = false
 
 -- colorscheme
-require('vague').setup({
-  	transparent = true,
-  	bold = true,
-  	italic = true,
-  	on_highlights = function(hl, colors) end,
-  	colors = {
-		-- bg = '#141414',
-		-- inactiveBg = '#202020',
-		-- fg = '#cdcdcd',
-		-- floatBorder = '#878787',
-		-- line = '#2b2b2b',
-		-- comment = '#6c6c6c',
-		-- builtin = '#c4c4c4',
-		-- func = '#b39292',
-		-- string = '#d0b7a1',
-		-- number = '#a2a2a2',
-		-- property = '#cccccc',
-		-- constant = '#c0c0c0',
-		-- parameter = '#adadad',
-		-- visual = '#363636',
-		-- error = '#bb818e',
-		-- warning = '#d5bb9a',
-		-- hint = '#b3b3b3',
-		-- operator = '#a2a2a2',
-		-- keyword = '#7f92a1',
-		-- type = '#acacac',
-		-- search = '#525252',
-		-- plus = '#829474',
-		-- delta = '#d5bb9a',
-  	},
-})
 vim.cmd('colorscheme vague')
 vim.cmd('hi statusline guibg=NONE')
 
@@ -246,26 +212,7 @@ vim.lsp.config['zls'] = {
   cmd = { 'zls' },
   filetypes = { 'zig' },
   root_markers = { 'build.zig' },
-  -- settings = {
-  --  zls = {
-  --   build_on_save_args = { "check", "test" },
-  --  }
-  -- }
 }
-
--- vim.api.nvim_create_autocmd('LspAttach', {
--- 	group = vim.api.nvim_create_augroup('my.lsp', {}),
--- 	callback = function(args)
--- 		local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
--- 		if client:supports_method('textDocument/completion') then
--- 			-- Optional: trigger autocompletion on EVERY keypress. May be slow!
--- 			local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
--- 			client.server_capabilities.completionProvider.triggerCharacters = chars
--- 			vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
--- 		end
--- 	end,
--- })
--- vim.cmd [[set completeopt+=menuone,noselect,popup]]
 
 require('blink.cmp').setup({
 	fuzzy = { implementation = "lua" },
@@ -289,50 +236,4 @@ map({ "n" }, "<leader>lf", vim.lsp.buf.format)
 map({ "n" }, "<leader>lr", builtin.lsp_references)
 
 require"vim._core.ui2".enable{}
-
--- file marks
-
-local marks_table = {
-	["m"] = "A",
-	["e"] = "B",
-	["j"] = "C",
-	["s"] = "D",
-	["k"] = "E",
-};
-for key, char in pairs(marks_table) do
-	vim.keymap.set({ "n" }, "m<C-" .. key .. ">", function()
-		vim.cmd("normal m" .. char)
-		vim.notify(string.format("Mark [%s] set to '%s'", char, vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(0))))
-	end)
-	vim.keymap.set({ "n" }, "d<C-" .. key .. ">", "<cmd>delm " .. char .. "<CR>")
-	vim.keymap.set({ "n" }, "<C-" .. key .. ">", "'" .. char .. "'\"")
-end
-
-map({ "n" }, "<leader>mc", function()
-	for _, value in pairs(marks_table) do
-		vim.api.nvim_del_mark(value)
-	end
-end)
-map({ "n" }, "<leader>ml", function()
-	local sorted_keys = {}
-	for key, _ in pairs(marks_table) do table.insert(sorted_keys, key) end
-	table.sort(sorted_keys)
-
-	for _, key in ipairs(sorted_keys) do
-		vim.notify(string.format("<C-%s>: %s", key, vim.api.nvim_get_mark(marks_table[key], {})[4]))
-	end
-end)
-
--- will save them for each project each
-local workspace_path = vim.fn.getcwd()
-local cache_dir = vim.fn.stdpath("data")
-local project_name = vim.fn.fnamemodify(workspace_path, ":t")
-local project_dir = cache_dir .. "/myshada/" .. project_name
-
-if vim.fn.isdirectory(project_dir) == 0 then
-	vim.fn.mkdir(project_dir, "p")
-end
-
-local shadafile = project_dir .. "/" .. vim.fn.sha256(workspace_path):sub(1, 8) .. ".shada"
-vim.opt.shadafile = shadafile
 
