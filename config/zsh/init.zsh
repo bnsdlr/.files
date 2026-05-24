@@ -15,7 +15,6 @@ _find_match() {
 		"$HOME/documents"
 		"$HOME/documents/projects"
 		"$HOME/.zig"
-		"$(pwd)"/*
 		"$HOME/documents/projects/"*
 		"$HOME/documents/projects/"*/*
 		"$HOME/documents/notes/"*
