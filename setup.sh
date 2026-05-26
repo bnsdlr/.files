@@ -56,10 +56,15 @@ if ! $is_test; then
 		# dock
 		defaults write com.apple.dock autohide -bool true
 		defaults write com.apple.dock mru-spaces -bool true
+		defaults write com.apple.dock "show-recents" -bool "false"
+		defaults write com.apple.dock "autohide-delay" -float "0.0"
+		killall Dock
 		# finder
 		defaults write com.apple.finder AppleShowAllExtensions -bool true
 		defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
 		defaults write com.apple.finder FXRemoveOldTrashItems -bool true
+		defaults write com.apple.finder CreateDesktop FALSE
+		killall Finder
 		# disable Ctrl + Space, because of tmux prefix
 		defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 60 "{ enabled = 0; value = { parameters = (32, 49, 262144); type = standard; }; }"
 	fi
