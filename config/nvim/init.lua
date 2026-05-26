@@ -55,6 +55,7 @@ vim.opt.colorcolumn = "100"
 vim.opt.foldmethod = "marker"
 vim.opt.hlsearch = false
 vim.opt.ignorecase = true
+vim.opt.smartcase = true
 vim.opt.incsearch = true
 vim.opt.number = true
 vim.opt.pumborder = border
