@@ -213,7 +213,22 @@ vim.lsp.config['zls'] = {
   cmd = { 'zls' },
   filetypes = { 'zig' },
   root_markers = { 'build.zig' },
+  settings = {
+	  zls = {
+		  enable_build_on_save = true,
+	  }
+  }
 }
+
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = { "*.zig", "*.zon" },
+  callback = function(_)
+    vim.lsp.buf.code_action({
+      context = { only = { "source.fixAll" } },
+      apply = true,
+    })
+  end
+})
 
 require('blink.cmp').setup({
 	fuzzy = { implementation = "lua" },
