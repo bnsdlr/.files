@@ -20,7 +20,6 @@ vim.pack.add({
 	-- themes
 	"https://github.com/vague2k/vague.nvim",
 	"https://github.com/metalelf0/black-metal-theme-neovim",
-	"https://github.com/rebelot/kanagawa.nvim",
 	"https://github.com/webhooked/kanso.nvim",
 })
 
@@ -119,6 +118,7 @@ telescope.setup({
 })
 telescope.load_extension("ui-select")
 
+-- maps{{{
 local builtin = require("telescope.builtin")
 local map = vim.keymap.set
 vim.g.mapleader = " "
@@ -178,15 +178,24 @@ map({ "n" }, "<C-t><C-x>", "<cmd>tabclose<CR>")
 map({ "c" }, "<C-b>", "<Left>");
 map({ "c" }, "<C-f>", "<Right>");
 
--- image
+map({ "i" }, "<C-a>", "<Home>")
+map({ "i" }, "<C-e>", "<End>")
+map({ "i" }, "<C-b>", "<Left>")
+map({ "i" }, "<C-f>", "<Right>")
+map({ "i" }, "<C-p>", "<Up>")
+map({ "i" }, "<C-n>", "<Down>")
+map({ "i" }, "<C-k>", "<C-o><C-r>")
+map({ "i" }, "<C-u>", "<C-o>u")
+-- }}}
 
+-- image
 require("image").setup({
   max_width_window_percentage = 100,
   max_height_window_percentage = 80,
   scale_factor = 1.0,
 })
 
--- lsp
+-- lsp{{{
 require "mason".setup()
 
 vim.lsp.enable({
@@ -234,137 +243,23 @@ map({ "n" }, "gt", vim.lsp.buf.type_definition)
 map({ "n" }, "<leader>ld", vim.diagnostic.open_float)
 map({ "n" }, "<leader>lf", vim.lsp.buf.format)
 map({ "n" }, "<leader>lr", builtin.lsp_references)
+-- }}}
 
 require"vim._core.ui2".enable{}
-
-map({ "i" }, "<C-a>", "<Home>")
-map({ "i" }, "<C-e>", "<End>")
-map({ "i" }, "<C-b>", "<Left>")
-map({ "i" }, "<C-f>", "<Right>")
-map({ "i" }, "<C-p>", "<Up>")
-map({ "i" }, "<C-n>", "<Down>")
-map({ "i" }, "<C-k>", "<C-o><C-r>")
-map({ "i" }, "<C-u>", "<C-o>u")
 
 -- colorscheme{{{
 -- vim.cmd('colorscheme vague')
 vim.cmd('hi statusline guibg=NONE')
 
-require("black-metal").setup({-- {{{
-  theme = "bathory",
-  -- Can be one of: 'light' | 'dark', or set via vim.o.background
-  variant = "dark",
-  -- Use an alternate, lighter bg
-  alt_bg = false,
-  -- If true, docstrings will be highlighted like strings, otherwise they will be
-  -- highlighted like comments. Note, behavior is dependent on the language server.
-  colored_docstrings = true,
-  -- If true, highlights the {sign,fold} column the same as cursorline
-  cursorline_gutter = true,
-  -- If true, highlights the gutter darker than the bg
-  dark_gutter = false,
-  -- if true favor treesitter highlights over semantic highlights
-  favor_treesitter_hl = false,
-  -- Don't set background of floating windows. Recommended for when using floating
-  -- windows with borders.
-  plain_float = false,
-  -- Show the end-of-buffer character
-  show_eob = true,
-  -- If true, enable the vim terminal colors
-  term_colors = true,
-  -- Keymap (in normal mode) to toggle between light and dark variants.
-  toggle_variant_key = nil,
-  -- Don't set background
-  transparent = false,
-
-  -----DIAGNOSTICS and CODE STYLE-----
-  --
-  diagnostics = {
-    darker = true, -- Darker colors for diagnostic
-    undercurl = true, -- Use undercurl for diagnostics
-    background = true, -- Use background color for virtual text
-  },
-  -- The following table accepts values the same as the `gui` option for normal
-  -- highlights. For example, `bold`, `italic`, `underline`, `none`.
-  code_style = {
-    comments = "italic",
-    conditionals = "none",
-    functions = "none",
-    keywords = "none",
-    headings = "bold", -- Markdown headings
-    operators = "none",
-    keyword_return = "none",
-    strings = "none",
-    variables = "none",
-  },
-
-  plugin = {
-    cmp = { -- works for nvim.cmp and blink.nvim
-      -- Don't highlight lsp-kind items. Only the current selection will be highlighted.
-      plain = false,
-      -- Reverse lsp-kind items' highlights in blink/cmp menu.
-      reverse = false,
-    },
-  },
-  colors = {},
-  highlights = {},
-})-- }}}
-require('kanagawa').setup({-- {{{
-    compile = false,             -- enable compiling the colorscheme
-    undercurl = true,            -- enable undercurls
-    commentStyle = { italic = true },
-    functionStyle = {},
-    keywordStyle = { italic = true},
-    statementStyle = { bold = true },
-    typeStyle = {},
-    transparent = false,         -- do not set background color
-    dimInactive = false,         -- dim inactive window `:h hl-NormalNC`
-    terminalColors = true,       -- define vim.g.terminal_color_{0,17}
-    colors = {                   -- add/modify theme and palette colors
-        palette = {},
-        theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
-    },
-    overrides = function(colors) -- add/modify highlights
-        return {}
-    end,
-    theme = "dragon",              -- Load "wave" theme
-    background = {               -- map the value of 'background' option to a theme
-        dark = "dragon",           -- try "dragon" !
-        light = "lotus"
-    },
-})-- }}}
-require('kanso').setup({-- {{{
-    bold = true,                 -- enable bold fonts
-    italics = true,             -- enable italics
-    compile = false,             -- enable compiling the colorscheme
-    undercurl = true,            -- enable undercurls
-    commentStyle = { italic = true },
-    functionStyle = {},
-    keywordStyle = { italic = true},
-    statementStyle = {},
-    typeStyle = {},
-    transparent = false,         -- do not set background color
-    dimInactive = false,         -- dim inactive window `:h hl-NormalNC`
-    terminalColors = true,       -- define vim.g.terminal_color_{0,17}
-    colors = {                   -- add/modify theme and palette colors
-        palette = {},
-        theme = { zen = {}, pearl = {}, ink = {}, all = {} },
-    },
-    overrides = function(colors) -- add/modify highlights
-        return {}
-    end,
-    background = {               -- map the value of 'background' option to a theme
-        dark = "ink",           -- try "zen", "mist" or "pearl" !
-        light = "pearl"         -- try "zen", "mist" or "ink" !
-    },
-    foreground = "default",      -- "default" or "saturated" (can also be a table like background)
-    minimal = false,             -- reduced color palette for a more minimal look
-})-- }}}
+require("black-metal").setup({
+  -- theme = "bathory",
+  favor_treesitter_hl = true,
+})
+require('kanso').setup({ minimal = false })
 
 local current_theme = nil
 local THEMES = {
 	["vague"] = "vague",
-	["kanagawa"] = "Kanagawa Dragon",
 	["kanso"] = "Kanso Ink",
 	["black-metal"] = {
 		["darkthrone"] = "Black Metal",
@@ -457,11 +352,18 @@ end
 
 local function RandomTheme()
 	local rand = random_key(THEMES)
-	while current_theme == rand and #THEMES > 1 do
+	local count = 0
+	while current_theme == rand and count < 3 do
+		count = count + 1
 		rand = random_key(THEMES)
 	end
+	print(rand, current_theme)
 	current_theme = rand
 	swap_theme(rand, false)
+end
+
+local function CurTheme()
+	vim.notify(get_cur_theme(), vim.log.levels.INFO)
 end
 
 swap_theme(get_cur_theme(), false)
@@ -469,6 +371,7 @@ swap_theme(get_cur_theme(), false)
 
 vim.api.nvim_create_user_command("SwapTheme", SwapTheme, { nargs = 1 })
 vim.api.nvim_create_user_command("RandomTheme", RandomTheme, {})
+vim.api.nvim_create_user_command("CurTheme", CurTheme, {})
 
 map({ "n" }, "<leader>t", RandomTheme)
 
