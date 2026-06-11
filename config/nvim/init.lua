@@ -2,7 +2,6 @@ local border = "single"
 
 -- plugins
 vim.pack.add({
-	"https://github.com/vague2k/vague.nvim",
 	"https://github.com/stevearc/oil.nvim",
 	"https://github.com/nvim-tree/nvim-web-devicons",
 	"https://github.com/nvim-lua/plenary.nvim",
@@ -18,6 +17,11 @@ vim.pack.add({
 	-- language plugins
 	"https://github.com/mrcjkb/rustaceanvim",
 	"https://codeberg.org/ziglang/zig.vim",
+	-- themes
+	"https://github.com/vague2k/vague.nvim",
+	"https://github.com/metalelf0/black-metal-theme-neovim",
+	"https://github.com/rebelot/kanagawa.nvim",
+	"https://github.com/webhooked/kanso.nvim",
 })
 
 vim.cmd.packadd('nvim.undotree')
@@ -70,10 +74,6 @@ vim.opt.termguicolors = true
 vim.opt.undofile = true
 vim.opt.winborder = border
 vim.opt.wrap = false
-
--- colorscheme
-vim.cmd('colorscheme vague')
-vim.cmd('hi statusline guibg=NONE')
 
 -- only highlight with treesitter
 vim.cmd('syntax off')
@@ -171,15 +171,9 @@ map({ "n" }, "<C-t><C-n>", "<cmd>tabnext<CR>")
 map({ "n" }, "<C-t>p", "<cmd>tabprevious<CR>")
 map({ "n" }, "<C-t><C-p>", "<cmd>tabprevious<CR>")
 map({ "n" }, "<C-t>c", "<cmd>tabnew<CR>")
-map({ "n" }, "<C-t><C-c>", "<cmd>tabnew<CR>") -- not working
+map({ "n" }, "<C-t><C-c>", "<cmd>tabnew<CR>")
 map({ "n" }, "<C-t>x", "<cmd>tabclose<CR>")
 map({ "n" }, "<C-t><C-x>", "<cmd>tabclose<CR>")
-
-map({ "n" }, "<leader>tn", "<cmd>tabnext<CR>")
-map({ "n" }, "<leader>tp", "<cmd>tabprevious<CR>")
-map({ "n" }, "<leader>tc", "<cmd>tabnew<CR>")
-map({ "n" }, "<leader>tx", "<cmd>tabclose<CR>")
-map({ "n" }, "<leader>tm", ":tabmove ")
 
 map({ "c" }, "<C-b>", "<Left>");
 map({ "c" }, "<C-f>", "<Right>");
@@ -220,16 +214,6 @@ vim.lsp.config['zls'] = {
   }
 }
 
-vim.api.nvim_create_autocmd('BufWritePre', {
-  pattern = { "*.zig", "*.zon" },
-  callback = function(_)
-    vim.lsp.buf.code_action({
-      context = { only = { "source.fixAll" } },
-      apply = true,
-    })
-  end
-})
-
 require('blink.cmp').setup({
 	fuzzy = { implementation = "lua" },
 	sources = { default = { 'lsp', 'path', 'buffer' } },
@@ -253,3 +237,250 @@ map({ "n" }, "<leader>lr", builtin.lsp_references)
 
 require"vim._core.ui2".enable{}
 
+map({ "i" }, "<C-a>", "<Home>")
+map({ "i" }, "<C-e>", "<End>")
+map({ "i" }, "<C-b>", "<Left>")
+map({ "i" }, "<C-f>", "<Right>")
+map({ "i" }, "<C-p>", "<Up>")
+map({ "i" }, "<C-n>", "<Down>")
+map({ "i" }, "<C-k>", "<C-o><C-r>")
+map({ "i" }, "<C-u>", "<C-o>u")
+
+-- colorscheme{{{
+-- vim.cmd('colorscheme vague')
+vim.cmd('hi statusline guibg=NONE')
+
+require("black-metal").setup({-- {{{
+  theme = "bathory",
+  -- Can be one of: 'light' | 'dark', or set via vim.o.background
+  variant = "dark",
+  -- Use an alternate, lighter bg
+  alt_bg = false,
+  -- If true, docstrings will be highlighted like strings, otherwise they will be
+  -- highlighted like comments. Note, behavior is dependent on the language server.
+  colored_docstrings = true,
+  -- If true, highlights the {sign,fold} column the same as cursorline
+  cursorline_gutter = true,
+  -- If true, highlights the gutter darker than the bg
+  dark_gutter = false,
+  -- if true favor treesitter highlights over semantic highlights
+  favor_treesitter_hl = false,
+  -- Don't set background of floating windows. Recommended for when using floating
+  -- windows with borders.
+  plain_float = false,
+  -- Show the end-of-buffer character
+  show_eob = true,
+  -- If true, enable the vim terminal colors
+  term_colors = true,
+  -- Keymap (in normal mode) to toggle between light and dark variants.
+  toggle_variant_key = nil,
+  -- Don't set background
+  transparent = false,
+
+  -----DIAGNOSTICS and CODE STYLE-----
+  --
+  diagnostics = {
+    darker = true, -- Darker colors for diagnostic
+    undercurl = true, -- Use undercurl for diagnostics
+    background = true, -- Use background color for virtual text
+  },
+  -- The following table accepts values the same as the `gui` option for normal
+  -- highlights. For example, `bold`, `italic`, `underline`, `none`.
+  code_style = {
+    comments = "italic",
+    conditionals = "none",
+    functions = "none",
+    keywords = "none",
+    headings = "bold", -- Markdown headings
+    operators = "none",
+    keyword_return = "none",
+    strings = "none",
+    variables = "none",
+  },
+
+  plugin = {
+    cmp = { -- works for nvim.cmp and blink.nvim
+      -- Don't highlight lsp-kind items. Only the current selection will be highlighted.
+      plain = false,
+      -- Reverse lsp-kind items' highlights in blink/cmp menu.
+      reverse = false,
+    },
+  },
+  colors = {},
+  highlights = {},
+})-- }}}
+require('kanagawa').setup({-- {{{
+    compile = false,             -- enable compiling the colorscheme
+    undercurl = true,            -- enable undercurls
+    commentStyle = { italic = true },
+    functionStyle = {},
+    keywordStyle = { italic = true},
+    statementStyle = { bold = true },
+    typeStyle = {},
+    transparent = false,         -- do not set background color
+    dimInactive = false,         -- dim inactive window `:h hl-NormalNC`
+    terminalColors = true,       -- define vim.g.terminal_color_{0,17}
+    colors = {                   -- add/modify theme and palette colors
+        palette = {},
+        theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
+    },
+    overrides = function(colors) -- add/modify highlights
+        return {}
+    end,
+    theme = "dragon",              -- Load "wave" theme
+    background = {               -- map the value of 'background' option to a theme
+        dark = "dragon",           -- try "dragon" !
+        light = "lotus"
+    },
+})-- }}}
+require('kanso').setup({-- {{{
+    bold = true,                 -- enable bold fonts
+    italics = true,             -- enable italics
+    compile = false,             -- enable compiling the colorscheme
+    undercurl = true,            -- enable undercurls
+    commentStyle = { italic = true },
+    functionStyle = {},
+    keywordStyle = { italic = true},
+    statementStyle = {},
+    typeStyle = {},
+    transparent = false,         -- do not set background color
+    dimInactive = false,         -- dim inactive window `:h hl-NormalNC`
+    terminalColors = true,       -- define vim.g.terminal_color_{0,17}
+    colors = {                   -- add/modify theme and palette colors
+        palette = {},
+        theme = { zen = {}, pearl = {}, ink = {}, all = {} },
+    },
+    overrides = function(colors) -- add/modify highlights
+        return {}
+    end,
+    background = {               -- map the value of 'background' option to a theme
+        dark = "ink",           -- try "zen", "mist" or "pearl" !
+        light = "pearl"         -- try "zen", "mist" or "ink" !
+    },
+    foreground = "default",      -- "default" or "saturated" (can also be a table like background)
+    minimal = false,             -- reduced color palette for a more minimal look
+})-- }}}
+
+local current_theme = nil
+local THEMES = {
+	["vague"] = "vague",
+	["kanagawa"] = "Kanagawa Dragon",
+	["kanso"] = "Kanso Ink",
+	["black-metal"] = {
+		["darkthrone"] = "Black Metal",
+		["emperor"] = "Black Metal",
+		["taake"] = "Black Metal",
+		["thyrfing"] = "Black Metal",
+		["windir"] = "Black Metal",
+		["impaled-nazarene"] = "Black Metal",
+		["bathory"] = "Black Metal (Bathory)",
+		["burzum"] = "Black Metal (Burzum)",
+		["dark-funeral"] = "Black Metal (Dark Funeral)",
+		["gorgoroth"] = "Black Metal (Gorgoroth)",
+		["immortal"] = "Black Metal (Immortal)",
+		["khold"] = "Black Metal (Khold)",
+		["marduk"] = "Black Metal (Marduk)",
+		["mayhem"] = "Black Metal (Mayhem)",
+		["nile"] = "Black Metal (Nile)",
+		["venom"] = "Black Metal (Venom)",
+	},
+-- Arthur
+-- Belafonte Night
+-- Flexoki Dark
+-- Red Planet
+}
+
+local function ghostty_theme_name(t, key)
+	for k, v in pairs(t) do
+		if type(v) == "table" then
+			local name = ghostty_theme_name(t[k], key)
+			if name ~= nil then return name end
+		else
+			if k == key then return v end
+		end
+	end
+	return nil
+end
+
+local function open_cur_theme_file(mode)
+	local nvim_config_dir = vim.call("stdpath", "data")
+	local current_theme_file = nvim_config_dir .. "/current_theme"
+	local fd = vim.uv.fs_open(current_theme_file, mode, tonumber("644", 8))
+	if fd == nil then
+		vim.notify("Could not open " .. current_theme_file, vim.log.levels.ERROR)
+		return
+	end
+	return fd
+end
+
+local function swap_theme(name, verbose)
+	local fd = open_cur_theme_file("w")
+	if fd == nil then return end
+	vim.uv.fs_write(fd, name, nil)
+
+	if verbose then vim.notify("New theme: " .. name, vim.log.levels.INFO) end
+	vim.cmd("colorscheme " .. name)
+
+	local ghostty_name = ghostty_theme_name(THEMES, name)
+
+	if ghostty_name == nil then
+		if verbose then vim.notify(name .. " has no equvivalent ghostty theme.", vim.log.levels.INFO) end
+	else
+		if verbose then vim.notify("Setting gostty theme to " .. ghostty_name, vim.log.levels.INFO) end
+		os.execute("$HOME/.config/scripts/switch-theme.sh \"" .. ghostty_name .. "\" >/dev/null 2>&1")
+	end
+end
+
+local function get_cur_theme()
+	local fd = open_cur_theme_file("r")
+	if fd == nil then return end
+	local cur = vim.uv.fs_read(fd, 1000, nil)
+	if cur == "" then return "vague" else return cur end
+end
+
+local function SwapTheme(opts)
+	swap_theme(opts.fargs[1], true)
+end
+
+local function random_key(t)
+	local keyset = {}
+	for key, _ in pairs(t) do
+		table.insert(keyset, key)
+	end
+	local key = keyset[math.random(#keyset)]
+	if type(THEMES[key]) == "table" then
+		return random_key(THEMES[key])
+	else
+		return key
+	end
+end
+
+local function RandomTheme()
+	local rand = random_key(THEMES)
+	while current_theme == rand and #THEMES > 1 do
+		rand = random_key(THEMES)
+	end
+	current_theme = rand
+	swap_theme(rand, false)
+end
+
+swap_theme(get_cur_theme(), false)
+-- RandomTheme()
+
+vim.api.nvim_create_user_command("SwapTheme", SwapTheme, { nargs = 1 })
+vim.api.nvim_create_user_command("RandomTheme", RandomTheme, {})
+
+map({ "n" }, "<leader>t", RandomTheme)
+
+vim.api.nvim_create_autocmd("Signal", {
+	pattern = "SIGUSR1",
+	group = vim.api.nvim_create_augroup("switch_theme_on_SIGUSR1", {}),
+	callback = function()
+		RandomTheme()
+		vim.schedule(function()
+		  vim.cmd("redraw!")
+		end)
+	end,
+	nested = true,
+})
+-- }}}
