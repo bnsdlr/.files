@@ -1,4 +1,5 @@
 local border = "single"
+local default_theme = "vague"
 
 -- plugins
 vim.pack.add({
@@ -257,16 +258,16 @@ require("black-metal").setup({
 })
 require('kanso').setup({ minimal = false })
 
-local current_theme = nil
 local THEMES = {
 	["vague"] = "vague",
 	["kanso"] = "Kanso Ink",
 	["black-metal"] = {
-		["darkthrone"] = "Black Metal",
-		["emperor"] = "Black Metal",
-		["taake"] = "Black Metal",
-		["thyrfing"] = "Black Metal",
-		["windir"] = "Black Metal",
+		-- dont have equvivalent:
+		-- ["darkthrone"] = "Black Metal",
+		-- ["emperor"] = "Black Metal",
+		-- ["taake"] = "Black Metal",
+		-- ["thyrfing"] = "Black Metal",
+		-- ["windir"] = "Black Metal",
 		["impaled-nazarene"] = "Black Metal",
 		["bathory"] = "Black Metal (Bathory)",
 		["burzum"] = "Black Metal (Burzum)",
@@ -297,21 +298,48 @@ local function ghostty_theme_name(t, key)
 	return nil
 end
 
-local function open_cur_theme_file(mode)
+local function get_cur_theme_file_path()
 	local nvim_config_dir = vim.call("stdpath", "data")
-	local current_theme_file = nvim_config_dir .. "/current_theme"
-	local fd = vim.uv.fs_open(current_theme_file, mode, tonumber("644", 8))
+	return nvim_config_dir .. "/current_theme"
+end
+
+local function retry_open_cur_theme_file(mode)
+	local current_theme_file = get_cur_theme_file_path()
+	local fd, err, _ = vim.uv.fs_open(current_theme_file, mode, tonumber("644", 8))
 	if fd == nil then
-		vim.notify("Could not open " .. current_theme_file, vim.log.levels.ERROR)
+		vim.notify("" .. err, vim.log.levels.ERROR)
 		return
 	end
 	return fd
 end
 
-local function swap_theme(name, verbose)
-	local fd = open_cur_theme_file("w")
-	if fd == nil then return end
-	vim.uv.fs_write(fd, name, nil)
+local function open_cur_theme_file(mode)
+	local current_theme_file = get_cur_theme_file_path()
+	local fd, err, _ = vim.uv.fs_open(current_theme_file, mode, tonumber("644", 8))
+	if fd == nil then
+		fd, err = vim.uv.fs_open(current_theme_file, "w", tonumber("664", 8))
+		if fd == nil then
+			vim.notify("" .. err, vim.log.levels.ERROR)
+		else
+			vim.uv.fs_write(fd, default_theme)
+			return retry_open_cur_theme_file(mode)
+		end
+		return
+	end
+	return fd
+end
+
+local function swap_theme(name, verbose, update_cur_theme_file, update_ghostty_theme)
+	if update_cur_theme_file then
+		local fd = open_cur_theme_file("w")
+		if fd == nil then return end
+		local _, err = vim.uv.fs_write(fd, name, nil)
+		vim.uv.fs_close(fd)
+		if err ~= nil then
+			vim.notify(err, vim.log.levels.ERROR)
+			return
+		end
+	end
 
 	if verbose then vim.notify("New theme: " .. name, vim.log.levels.INFO) end
 	vim.cmd("colorscheme " .. name)
@@ -320,7 +348,7 @@ local function swap_theme(name, verbose)
 
 	if ghostty_name == nil then
 		if verbose then vim.notify(name .. " has no equvivalent ghostty theme.", vim.log.levels.INFO) end
-	else
+	elseif update_ghostty_theme then
 		if verbose then vim.notify("Setting gostty theme to " .. ghostty_name, vim.log.levels.INFO) end
 		os.execute("$HOME/.config/scripts/switch-theme.sh \"" .. ghostty_name .. "\" >/dev/null 2>&1")
 	end
@@ -328,13 +356,14 @@ end
 
 local function get_cur_theme()
 	local fd = open_cur_theme_file("r")
-	if fd == nil then return end
+	if fd == nil then return default_theme end
 	local cur = vim.uv.fs_read(fd, 1000, nil)
-	if cur == "" then return "vague" else return cur end
+	vim.uv.fs_close(fd)
+	if cur == "" then return default_theme else return cur end
 end
 
 local function SwapTheme(opts)
-	swap_theme(opts.fargs[1], true)
+	swap_theme(opts.fargs[1], true, true, true)
 end
 
 local function random_key(t)
@@ -351,35 +380,37 @@ local function random_key(t)
 end
 
 local function RandomTheme()
+	local current_theme = get_cur_theme()
 	local rand = random_key(THEMES)
 	local count = 0
 	while current_theme == rand and count < 3 do
 		count = count + 1
 		rand = random_key(THEMES)
 	end
-	print(rand, current_theme)
 	current_theme = rand
-	swap_theme(rand, false)
+	swap_theme(rand, false, true, true)
 end
 
 local function CurTheme()
-	vim.notify(get_cur_theme(), vim.log.levels.INFO)
+	vim.notify("Current theme: " .. get_cur_theme(), vim.log.levels.INFO)
 end
 
-swap_theme(get_cur_theme(), false)
--- RandomTheme()
+swap_theme(get_cur_theme(), false, false, false)
 
 vim.api.nvim_create_user_command("SwapTheme", SwapTheme, { nargs = 1 })
 vim.api.nvim_create_user_command("RandomTheme", RandomTheme, {})
 vim.api.nvim_create_user_command("CurTheme", CurTheme, {})
 
-map({ "n" }, "<leader>t", RandomTheme)
+map({ "n" }, "<leader>t", function()
+	RandomTheme()
+	os.execute("pkill -USR1 nvim")
+end)
 
 vim.api.nvim_create_autocmd("Signal", {
 	pattern = "SIGUSR1",
 	group = vim.api.nvim_create_augroup("switch_theme_on_SIGUSR1", {}),
 	callback = function()
-		RandomTheme()
+		swap_theme(get_cur_theme(), false, false, false)
 		vim.schedule(function()
 		  vim.cmd("redraw!")
 		end)

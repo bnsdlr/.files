@@ -5,7 +5,7 @@ window-decoration = false
 
 background-opacity = 1
 
-theme = "Kanso Ink"
+theme = "vague"
 
 font-family = JetBrainsMono Nerd Font
 font-size = 18
