@@ -8,8 +8,7 @@ c.editor.command = [
     "--class",
     "com.alacritty.floatingedit",
     "-e",
-    "zsh",
-    "-c",
+    "zsh", "-c",
     "export DONT_START_TMUX=1; $HOME/.local/share/bob/nvim-bin/nvim {file} \"+call cursor({line}, {column})\""
 ]
 

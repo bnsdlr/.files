@@ -22,6 +22,8 @@ vim.pack.add({
 	"https://github.com/vague2k/vague.nvim",
 	"https://github.com/metalelf0/black-metal-theme-neovim",
 	"https://github.com/webhooked/kanso.nvim",
+	{ src = "https://github.com/rose-pine/neovim", name = "rose-pine" },
+	"https://github.com/savq/melange-nvim",
 })
 
 vim.cmd.packadd('nvim.undotree')
@@ -74,6 +76,7 @@ vim.opt.termguicolors = true
 vim.opt.undofile = true
 vim.opt.winborder = border
 vim.opt.wrap = false
+vim.opt.termguicolors = false
 
 -- only highlight with treesitter
 vim.cmd('syntax off')
@@ -258,27 +261,31 @@ require("black-metal").setup({
 })
 require('kanso').setup({ minimal = false })
 
+local function update_ghostty_theme(name)
+	os.execute("$HOME/.config/scripts/switch-theme.sh \"" .. name .. "\" >/dev/null 2>&1")
+end
+
 local THEMES = {
-	["vague"] = "vague",
-	["kanso"] = "Kanso Ink",
+	["belafonte"] = { callback = function()
+		vim.opt.termguicolors = false
+		update_ghostty_theme("Belafonte Night")
+	end },
+	["rose-pine"] = { nvim = true, callback = function() update_ghostty_theme("Rose Pine") end },
+	["melange"] = { nvim = true, callback = function() update_ghostty_theme("Melange Dark") end },
+	["vague"] = { nvim = true, callback = function() update_ghostty_theme("vague") end },
+	["kanso"] = { nvim = true, callback = function() update_ghostty_theme("Kanso Ink") end },
 	["black-metal"] = {
-		-- dont have equvivalent:
-		-- ["darkthrone"] = "Black Metal",
-		-- ["emperor"] = "Black Metal",
-		-- ["taake"] = "Black Metal",
-		-- ["thyrfing"] = "Black Metal",
-		-- ["windir"] = "Black Metal",
-		["impaled-nazarene"] = "Black Metal",
-		["bathory"] = "Black Metal (Bathory)",
-		["burzum"] = "Black Metal (Burzum)",
-		["dark-funeral"] = "Black Metal (Dark Funeral)",
-		["gorgoroth"] = "Black Metal (Gorgoroth)",
-		["immortal"] = "Black Metal (Immortal)",
-		["khold"] = "Black Metal (Khold)",
-		["marduk"] = "Black Metal (Marduk)",
-		["mayhem"] = "Black Metal (Mayhem)",
-		["nile"] = "Black Metal (Nile)",
-		["venom"] = "Black Metal (Venom)",
+		["impaled-nazarene"] = { nvim = true, callback = function() update_ghostty_theme("Black Metal") end },
+		["bathory"] = { nvim = true, callback = function() update_ghostty_theme("Black Metal (Bathory)") end },
+		["burzum"] = { nvim = true, callback = function() update_ghostty_theme("Black Metal (Burzum)") end },
+		["dark-funeral"] = { nvim = true, callback = function() update_ghostty_theme("Black Metal (Dark Funeral)") end },
+		["gorgoroth"] = { nvim = true, callback = function() update_ghostty_theme("Black Metal (Gorgoroth)") end },
+		["immortal"] = { nvim = true, callback = function() update_ghostty_theme("Black Metal (Immortal)") end },
+		["khold"] = { nvim = true, callback = function() update_ghostty_theme("Black Metal (Khold)") end },
+		["marduk"] = { nvim = true, callback = function() update_ghostty_theme("Black Metal (Marduk)") end },
+		["mayhem"] = { nvim = true, callback = function() update_ghostty_theme("Black Metal (Mayhem)") end },
+		["nile"] = { nvim = true, callback = function() update_ghostty_theme("Black Metal (Nile)") end },
+		["venom"] = { nvim = true, callback = function() update_ghostty_theme("Black Metal (Venom)") end },
 	},
 -- Arthur
 -- Belafonte Night
@@ -286,11 +293,11 @@ local THEMES = {
 -- Red Planet
 }
 
-local function ghostty_theme_name(t, key)
+local function theme_opts(t, key)
 	for k, v in pairs(t) do
-		if type(v) == "table" then
-			local name = ghostty_theme_name(t[k], key)
-			if name ~= nil then return name end
+		if type(v) == "table" and v.callback == nil then
+			local opts = theme_opts(v, key)
+			if opts ~= nil then return opts end
 		else
 			if k == key then return v end
 		end
@@ -329,7 +336,7 @@ local function open_cur_theme_file(mode)
 	return fd
 end
 
-local function swap_theme(name, verbose, update_cur_theme_file, update_ghostty_theme)
+local function swap_theme(name, verbose, update_cur_theme_file, run_callback)
 	if update_cur_theme_file then
 		local fd = open_cur_theme_file("w")
 		if fd == nil then return end
@@ -341,16 +348,23 @@ local function swap_theme(name, verbose, update_cur_theme_file, update_ghostty_t
 		end
 	end
 
-	if verbose then vim.notify("New theme: " .. name, vim.log.levels.INFO) end
-	vim.cmd("colorscheme " .. name)
+	vim.notify("New theme: " .. name, vim.log.levels.INFO)
 
-	local ghostty_name = ghostty_theme_name(THEMES, name)
+	local opts = theme_opts(THEMES, name)
+	vim.inspect(opts)
 
-	if ghostty_name == nil then
+	if opts == nil then
 		if verbose then vim.notify(name .. " has no equvivalent ghostty theme.", vim.log.levels.INFO) end
-	elseif update_ghostty_theme then
-		if verbose then vim.notify("Setting gostty theme to " .. ghostty_name, vim.log.levels.INFO) end
-		os.execute("$HOME/.config/scripts/switch-theme.sh \"" .. ghostty_name .. "\" >/dev/null 2>&1")
+	else
+		if type(opts.nvim) == "boolean" then
+			vim.cmd("colorscheme " .. name)
+		elseif type(opts.nvim) == "string" then
+			vim.cmd("colorscheme " .. opts.nvim)
+		end
+
+		if run_callback and opts.callback ~= nil then
+			opts.callback()
+		end
 	end
 end
 
@@ -372,7 +386,7 @@ local function random_key(t)
 		table.insert(keyset, key)
 	end
 	local key = keyset[math.random(#keyset)]
-	if type(THEMES[key]) == "table" then
+	if type(THEMES[key]) == "table" and THEMES[key].callback == nil then
 		return random_key(THEMES[key])
 	else
 		return key
@@ -417,4 +431,5 @@ vim.api.nvim_create_autocmd("Signal", {
 	end,
 	nested = true,
 })
+
 -- }}}
