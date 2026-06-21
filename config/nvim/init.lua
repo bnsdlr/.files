@@ -24,6 +24,7 @@ vim.pack.add({
 	"https://github.com/webhooked/kanso.nvim",
 	{ src = "https://github.com/rose-pine/neovim", name = "rose-pine" },
 	"https://github.com/savq/melange-nvim",
+	"https://github.com/ellisonleao/gruvbox.nvim",
 })
 
 vim.cmd.packadd('nvim.undotree')
@@ -72,11 +73,9 @@ vim.opt.signcolumn = "yes"
 vim.opt.smartindent = true
 vim.opt.swapfile = false
 vim.opt.tabstop = 4
-vim.opt.termguicolors = true
 vim.opt.undofile = true
 vim.opt.winborder = border
 vim.opt.wrap = false
-vim.opt.termguicolors = false
 
 -- only highlight with treesitter
 vim.cmd('syntax off')
@@ -255,6 +254,7 @@ require"vim._core.ui2".enable{}
 -- vim.cmd('colorscheme vague')
 vim.cmd('hi statusline guibg=NONE')
 
+require("gruvbox").setup({ contrast = "", invert_signs = true })
 require("black-metal").setup({
   -- theme = "bathory",
   favor_treesitter_hl = true,
@@ -266,10 +266,8 @@ local function update_ghostty_theme(name)
 end
 
 local THEMES = {
-	["belafonte"] = { callback = function()
-		vim.opt.termguicolors = false
-		update_ghostty_theme("Belafonte Night")
-	end },
+	["belafonte-night"] = { nvim = true, callback = function() update_ghostty_theme("Belafonte Night") end },
+	["gruvbox"] = { nvim = true, callback = function() update_ghostty_theme("Gruvbox Dark") end },
 	["rose-pine"] = { nvim = true, callback = function() update_ghostty_theme("Rose Pine") end },
 	["melange"] = { nvim = true, callback = function() update_ghostty_theme("Melange Dark") end },
 	["vague"] = { nvim = true, callback = function() update_ghostty_theme("vague") end },
@@ -287,10 +285,6 @@ local THEMES = {
 		["nile"] = { nvim = true, callback = function() update_ghostty_theme("Black Metal (Nile)") end },
 		["venom"] = { nvim = true, callback = function() update_ghostty_theme("Black Metal (Venom)") end },
 	},
--- Arthur
--- Belafonte Night
--- Flexoki Dark
--- Red Planet
 }
 
 local function theme_opts(t, key)
@@ -366,6 +360,7 @@ local function swap_theme(name, verbose, update_cur_theme_file, run_callback)
 			opts.callback()
 		end
 	end
+	vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
 end
 
 local function get_cur_theme()
