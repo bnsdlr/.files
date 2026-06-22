@@ -4,20 +4,23 @@ stty -ixon
 export TERM=xterm-256color
 
 # prompt
-autoload -U colors && colors
+autoload -Uz compinit && compinit
+autoload -Uz vcs_info
 
-git_prompt_info() {
-  local branch
-  branch=$(git branch 2>/dev/null | grep '*' | sed 's/* //')
-  [[ -z "$branch" ]] && return
+bindkey '^P' up-line-or-search
+bindkey '^N' down-line-or-search
 
-  local dirty
-  [[ -n $(git status --porcelain 2>/dev/null) ]] && dirty=" %{$fg[yellow]%}✗"
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
-  echo "%{$fg_bold[magenta]%}${branch}${dirty}%{$reset_color%} "
-}
+precmd() { vcs_info }
+zstyle ':vcs_info:*:*' check-for-changes true
+zstyle ':vcs_info:*:*' unstagedstr '%F{yellow}✗%f '
+zstyle ':vcs_info:*:*' stagedstr '%F{yellow}✗%f '
+zstyle ':vcs_info:*:*' formats '%b %u%c'
 
-PROMPT='%(?:%{$fg_bold[green]%}›:%{$fg_bold[red]%}›) %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
+setopt PROMPT_SUBST
+PROMPT='%(?:%{%F{green}%}›:%{%F{red}%}›) %F{cyan}%c%f %F{magenta}${vcs_info_msg_0_}%f'
 
 # aliases
 unalias g 2>/dev/null
@@ -25,7 +28,11 @@ unalias f 2>/dev/null
 
 alias icloud="cd $HOME/Library/Mobile\ Documents/com~apple~CloudDocs"
 
+alias sz="source $HOME/.zshrc"
+alias se="source $HOME/.zshenv"
+
 alias vim="nvim"
+alias ..="cd .."
 
 alias ls="ls -CGA --color=auto"
 
