@@ -1,16 +1,164 @@
-export DISABLE_AUTO_UPDATE=true
+# so i can press ctrl+s without the terminal freezing
+stty -ixon
 
-export ZSH="$HOME/.oh-my-zsh"
-export ZSH_CUSTOM="$HOME/.config/zsh"
 export TERM=xterm-256color
 
-ZSH_THEME="my"
+# prompt
+autoload -U colors && colors
 
-plugins=(git)
+git_prompt_info() {
+  local branch
+  branch=$(git branch 2>/dev/null | grep '*' | sed 's/* //')
+  [[ -z "$branch" ]] && return
 
-if [[ "$TMUX" == "" ]]; then
-    ~/.config/scripts/tmux-session-dispensary.sh ~
-fi
+  local dirty
+  [[ -n $(git status --porcelain 2>/dev/null) ]] && dirty=" %{$fg[yellow]%}✗"
 
-source $ZSH/oh-my-zsh.sh
-source "$HOME/.config/zsh/init.zsh"
+  echo "%{$fg_bold[magenta]%}${branch}${dirty}%{$reset_color%} "
+}
+
+PROMPT='%(?:%{$fg_bold[green]%}›:%{$fg_bold[red]%}›) %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
+
+# aliases
+unalias g 2>/dev/null
+unalias f 2>/dev/null
+
+alias icloud="cd $HOME/Library/Mobile\ Documents/com~apple~CloudDocs"
+
+alias vim="nvim"
+
+alias ls="ls -CGA --color=auto"
+
+alias mountwin="sudo mount -t ntfs-3g /dev/nvme0n1p3 /mnt/windows"
+
+# script shortcuts
+alias uconf="$DOTFILES/update.sh"
+alias tf="$HOME/.config/scripts/tmux-session-dispensary.sh"
+alias zv="$HOME/.config/scripts/zv.sh"
+
+# go
+last_path=""
+
+_find_match() {
+    if [[ $# -lt 1 ]]; then
+        echo "error: no argument provided" >&2
+        return 1
+    fi
+
+	local DIRS=(
+		"$HOME/downloads"
+		"$HOME/documents"
+		"$HOME/documents/projects"
+		"$HOME/.zig"
+		"$HOME/documents/projects/"*
+		"$HOME/documents/projects/"*/*
+		"$HOME/documents/notes/"*
+		"$HOME/documents/reading"
+		"$HOME/documents/reading/"*
+	)
+
+    local pat="$1"
+    local -a results=()
+
+    for dir in "${DIRS[@]}"; do
+        if [[ -d "$dir" && $(basename "$dir") == "$pat"* ]]; then
+            results+=("$dir")
+        fi
+    done
+
+    if [[ ${#results[@]} -eq 0 ]]; then
+        echo "No match found for '$pat'" >&2
+        last_path=""
+        return 1
+    fi
+
+    local num=1
+    if [[ $# -gt 1 ]]; then
+        num="$2"
+    fi
+
+    last_path="${results[$num]}"
+}
+
+go() {
+    case "$1" in
+        -dr|--dry-run)
+            _find_match "${@:2}"
+            [[ -n "$last_path" ]] && echo "cd \"$last_path\""
+            ;;
+        *)
+            _find_match "$@"
+            if [[ -n "$last_path" ]]; then
+                echo "$last_path"
+                cd "$last_path" || return 1
+            fi
+            ;;
+    esac
+}
+
+create() {
+    local dry_run=false
+	local no_go=false
+
+    case "$1" in 
+        -dr|--dry-run)
+            dry_run=true 
+            shift 
+            ;; 
+		-ngo)
+			local no_go=true
+			shift
+			;;
+    esac
+
+    if [[ $# -lt 2 ]]; then
+        echo "error: at least 2 args required: <pattern> <new_dir>" >&2
+        return 1
+    fi
+
+    local dir=""
+
+    if [[ $# -gt 2 ]]; then
+        _find_match "$1" "$2"
+        dir="$3"
+    else
+        _find_match "$1"
+        dir="$2"
+    fi
+
+    [[ -z "$last_path" ]] && return 1
+
+    local new_full_path="$last_path/$dir"
+
+    if [[ ! -d "$new_full_path" ]]; then
+        if $dry_run; then
+            echo "mkdir -p \"$new_full_path\""
+        else
+            mkdir -p "$new_full_path"
+        fi
+    fi
+
+    last_path="$new_full_path"
+
+    if $dry_run || $no_go; then
+        echo "cd \"$last_path\""
+    else
+        cd "$last_path" || return 1
+        echo "$last_path"
+    fi
+}
+
+co() {
+    create -ngo "$@"
+    case "$1" in 
+        -dr|--dry-run)
+            echo "dry run: would open '$last_path' in a new tmux session"
+            ;; 
+        *)
+            if [[ -n "$last_path" ]]; then
+                "$HOME/.config/scripts/tmux-session-dispensary.sh" "$last_path"
+                echo "opened tmux session at: $last_path"
+            fi
+            ;;
+    esac
+}
