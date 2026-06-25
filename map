@@ -1,4 +1,16 @@
-$DOTFILES/config=$HOME/.config
-macos $DOTFILES/config/qutebrowser=$HOME/.qutebrowser
-cp $DOTFILES/config/zsh/zshrc $HOME/.zshrc
-cp $DOTFILES/config/zsh/zshenv $HOME/.zshenv
+link "./config/zsh/zshrc" 	~/.zshrc 				any
+link "./config/zsh/zshenv" 	~/.zshenv				any
+link "./config/alacritty" 	~/.config/alacritty 	any
+link "./config/btop" 		~/.config/btop			any
+link "./config/evremap" 	~/.config/evremap		linux
+link "./config/ghostty" 	~/.config/ghostty		any
+link "./config/i3" 			~/.config/i3			linux
+link "./config/i3status" 	~/.config/i3status		linux
+link "./config/karabiner" 	~/.config/karabiner		macos
+link "./config/kitty" 		~/.config/kitty			none
+link "./config/nvim" 		~/.config/nvim			any
+link "./config/qutebrowser" ~/.config/qutebrowser	any
+link "./config/ripgrep" 	~/.config/ripgrep		any
+link "./config/tmux" 		~/.config/tmux			any
+link "./scripts" 			~/scripts				any
+link "./wallpapers" 		~/wallpapers			any

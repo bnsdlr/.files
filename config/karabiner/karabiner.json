@@ -92,7 +92,7 @@
                                     "key_code": "f",
                                     "modifiers": { "mandatory": ["option"] }
                                 },
-                                "to": [{ "shell_command": "~/.config/scripts/maximize-window.sh" }],
+                                "to": [{ "shell_command": "~/scripts/maximize-window.sh" }],
                                 "type": "basic"
                             }
                         ]

@@ -1,0 +1,128 @@
+#!/usr/bin/env bash
+
+NC="\x1b[0m"
+P="\x1b[35m"
+RUN="\x1b[1;36mrun\x1b[2m:$NC"
+ERROR="\x1b[1;31merror\x1b[2m:$NC"
+WARN="\x1b[1;33mwarn\x1b[2m:$NC"
+INFO="\x1b[1;34minfo\x1b[2m:$NC"
+
+cwd="$(pwd)"
+
+# force=false
+
+cmd="$1"
+
+shift
+
+unknown_arg=false
+
+for arg in "$@"; do
+	case "$arg" in
+		# -f|--force)
+		# 	force=true
+		# 	;;
+		*)
+			echo -e "$ERROR unknown arg '$arg'"
+			unknown_arg=true
+			;;
+	esac
+done
+
+if $unknown_arg; then exit 1; fi
+
+printed_warn=false
+
+is_on_right_os() {
+	local os="$1"
+}
+
+link() {
+	local src=$(readlink -f "$(echo "$1" | tr -d '"')")
+	local target="${2/#\~/$HOME}"
+
+	local os="$3"
+
+	case "$os" in
+		any) ;;
+		none) return ;;
+		macos) if [[ "$OSTYPE" != "darwin"* ]]; then return; fi ;;
+		linux) if [[ "$OSTYPE" != "linux"* ]]; then return; fi ;;
+		*)
+			echo -e "$ERROR invalid os '$os'"
+			return
+			;;
+	esac
+
+	if [[ -e "$target" ]]; then 
+		# if $force; then
+		# 	echo -e "$RUN rm -rf \"$target\""
+		# 	rm -rf "$target"
+		# else
+		if [[ -L "$target" ]] && [[ "$(readlink -f "$target")" == "$src" ]]; then
+			echo -e "$INFO $P'$src'$NC is already symliked"
+		else
+			echo -e "$ERROR skipping $P'$src'$NC because $P'$target'$NC already exists"
+			printed_warn=true
+		fi
+		return
+		# fi
+	fi
+
+	echo -e "$RUN ln -fs $P\"$src\" $target$NC"
+	ln -fs "$src" "$target"
+}
+
+unlink() {
+	local src=$(readlink -f $(echo "$1" | tr -d '"'))
+	local target="${2/#\~/$HOME}"
+	local os="$3"
+
+	case "$os" in
+		any) ;;
+		none) return ;;
+		macos) if [[ "$OSTYPE" != "darwin"* ]]; then return; fi ;;
+		linux) if [[ "$OSTYPE" != "linux"* ]]; then return; fi ;;
+		*)
+			echo -e "$ERROR invalid os '$os'"
+			return
+			;;
+	esac
+
+	if [[ -L "$target" ]]; then
+		target_sym=$(readlink -f "$target")
+		if [[ "$target_sym" == "$src" ]]; then
+			echo -e "$RUN rm \"$target\""
+			rm "$target"
+		else
+			echo -e "$WARN symlink $P'$target'$NC -> $P'$src'$NC does not match $P'$target_sym'$NC, skipping"
+		fi
+	fi
+}
+
+install() {
+	echo -e "$INFO Installing config$NC"
+
+	while read -r m src target os; do
+		link "$src" "$target" "$os"
+	done < <(tr -s '[ \t]' ' ' < map)
+
+	if $printed_warn; then
+		# echo -e "Use the '--force' flag to overwrite anyway..."
+		echo -e "$WARN You should delete or move the entries."
+	fi
+}
+
+uninstall() {
+	echo -e "$INFO Uninstalling config$NC"
+
+	while read -r m src target os; do
+		unlink "$src" "$target" "$os"
+	done < <(tr -s '[ \t]' ' ' < map)
+}
+
+case "$cmd" in
+	i|install) install ;;
+	ui|uninstall) uninstall ;;
+	*) echo -e "$ERROR unknown sub command '$cmd'" ;;
+esac

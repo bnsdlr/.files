@@ -59,7 +59,6 @@ require("oil").setup({
 vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:block,r-cr-o:block"
 
 vim.opt.colorcolumn = "100"
-vim.opt.foldmethod = "marker"
 vim.opt.hlsearch = false
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
@@ -121,7 +120,7 @@ telescope.setup({
 })
 telescope.load_extension("ui-select")
 
--- maps{{{
+-- maps
 local builtin = require("telescope.builtin")
 local map = vim.keymap.set
 vim.g.mapleader = " "
@@ -189,7 +188,6 @@ map({ "i" }, "<C-p>", "<Up>")
 map({ "i" }, "<C-n>", "<Down>")
 map({ "i" }, "<C-k>", "<C-o><C-r>")
 map({ "i" }, "<C-u>", "<C-o>u")
--- }}}
 
 -- image
 require("image").setup({
@@ -198,7 +196,7 @@ require("image").setup({
   scale_factor = 1.0,
 })
 
--- lsp{{{
+-- lsp
 require "mason".setup()
 
 vim.lsp.enable({
@@ -246,11 +244,10 @@ map({ "n" }, "gt", vim.lsp.buf.type_definition)
 map({ "n" }, "<leader>ld", vim.diagnostic.open_float)
 map({ "n" }, "<leader>lf", vim.lsp.buf.format)
 map({ "n" }, "<leader>lr", builtin.lsp_references)
--- }}}
 
 require"vim._core.ui2".enable{}
 
--- colorscheme{{{
+-- colorscheme
 -- vim.cmd('colorscheme vague')
 vim.cmd('hi statusline guibg=NONE')
 
@@ -262,7 +259,7 @@ require("black-metal").setup({
 require('kanso').setup({ minimal = false })
 
 local function update_ghostty_theme(name)
-	os.execute("$HOME/.config/scripts/switch-theme.sh \"" .. name .. "\" >/dev/null 2>&1")
+	os.execute("$HOME/scripts/switch-theme.sh \"" .. name .. "\" >/dev/null 2>&1")
 end
 
 local THEMES = {
@@ -342,7 +339,7 @@ local function swap_theme(name, verbose, update_cur_theme_file, run_callback)
 		end
 	end
 
-	vim.notify("New theme: " .. name, vim.log.levels.INFO)
+	vim.notify("theme: " .. name, vim.log.levels.INFO)
 
 	local opts = theme_opts(THEMES, name)
 	vim.inspect(opts)
@@ -426,5 +423,3 @@ vim.api.nvim_create_autocmd("Signal", {
 	end,
 	nested = true,
 })
-
--- }}}

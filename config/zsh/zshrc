@@ -16,33 +16,40 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 precmd() { vcs_info }
 zstyle ':vcs_info:*:*' check-for-changes true
-zstyle ':vcs_info:*:*' unstagedstr '%F{yellow}✗%f '
-zstyle ':vcs_info:*:*' stagedstr '%F{yellow}✗%f '
-zstyle ':vcs_info:*:*' formats '%b %u%c'
+zstyle ':vcs_info:git*+set-message:*' hooks git-dirty
+
++vi-git-dirty() {
+  local dirty
+  dirty=$(git status --porcelain 2>/dev/null)
+  if [[ -n "$dirty" ]]; then
+    hook_com[staged]='%F{yellow}✗%f '
+  else
+    hook_com[staged]=''
+  fi
+}
+
+zstyle ':vcs_info:*' formats '%F{magenta}%b%f %c'
 
 setopt PROMPT_SUBST
-PROMPT='%(?:%{%F{green}%}›:%{%F{red}%}›) %F{cyan}%c%f %F{magenta}${vcs_info_msg_0_}%f'
+PROMPT='%(?:%{%F{green}%}›:%{%F{red}%}›) %F{cyan}%c%f ${vcs_info_msg_0_}'
 
 # aliases
-unalias g 2>/dev/null
-unalias f 2>/dev/null
-
 alias icloud="cd $HOME/Library/Mobile\ Documents/com~apple~CloudDocs"
 
 alias sz="source $HOME/.zshrc"
 alias se="source $HOME/.zshenv"
 
-alias vim="nvim"
 alias ..="cd .."
+alias -- -="popd > /dev/null"
+alias cd="pushd > /dev/null"
 
 alias ls="ls -CGA --color=auto"
 
 alias mountwin="sudo mount -t ntfs-3g /dev/nvme0n1p3 /mnt/windows"
 
 # script shortcuts
-alias uconf="$DOTFILES/update.sh"
-alias tf="$HOME/.config/scripts/tmux-session-dispensary.sh"
-alias zv="$HOME/.config/scripts/zv.sh"
+alias tf="$HOME/scripts/tmux-session-dispensary.sh"
+alias zv="$HOME/scripts/zv.sh"
 
 # go
 last_path=""
@@ -58,6 +65,7 @@ _find_match() {
 		"$HOME/documents"
 		"$HOME/documents/projects"
 		"$HOME/.zig"
+		"$HOME/dotfiles"
 		"$HOME/documents/projects/"*
 		"$HOME/documents/projects/"*/*
 		"$HOME/documents/notes/"*
@@ -164,9 +172,10 @@ co() {
             ;; 
         *)
             if [[ -n "$last_path" ]]; then
-                "$HOME/.config/scripts/tmux-session-dispensary.sh" "$last_path"
+                "$HOME/scripts/tmux-session-dispensary.sh" "$last_path"
                 echo "opened tmux session at: $last_path"
             fi
             ;;
     esac
 }
+

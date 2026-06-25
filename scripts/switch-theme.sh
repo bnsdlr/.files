@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-config="$HOME/.config"
-ghostty_config_path="$config/ghostty/config"
+ghostty_config_path="$HOME/.config/ghostty/config"
 
 theme="$1"
 
@@ -13,7 +12,13 @@ sed -i '' -e "s/^theme *=.*/theme = \"$theme\"/" "$ghostty_config_path"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then 
 	echo "Reloading Ghostty config..."
-	osascript "$config/scripts/reload-ghostty-config.scpt"
+	osascript <<'EOF'
+		tell application "System Events"
+			tell process "Ghostty"
+				click menu item "Reload Configuration" of menu "Ghostty" of menu bar item "Ghostty" of menu bar 1
+			end tell
+		end tell
+	EOF
 else
 	echo "Reloading of config is not implemented for $OSTYPE"
 fi
